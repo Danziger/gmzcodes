@@ -1,4 +1,6 @@
-# [gmzcodes.com](http://gmzcodes.com)
+# GMZcodes
+
+**http://gmzcodes.com**
 
 My personal website.
 
