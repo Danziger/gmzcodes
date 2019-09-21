@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="UTF-8">
+
+  <title>GMZcodes \ Dani Gámez Franco \ CTO, Lead Frontend Architect, Computer Science Engineer, Entrepreneur</title>
+
+  <meta property="og:title" content="GMZcodes \ Dani Gámez Franco \ CTO, Lead Frontend Architect, Computer Science Engineer, Entrepreneur" />
+  <meta property="og:description" content="Dani Gámez Franco's personal website." />
+  <meta property="og:image" content="https://gmzcodes.com/static/images/og-images/dani-gamez-franco-personal-website.png" />
+  <meta property="og:image:alt" content="Dani Gámez Franco's personal website." />
+  <meta property="og:url" content="https://gmzcodes.com/" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:creator" content="@gmzcodes" />
+
+  <meta name="title" content="GMZcodes \ Dani Gámez Franco \ CTO, Lead Frontend Architect, Computer Science Engineer, Entrepreneur" />
+  <meta name="description" content="Dani Gámez Franco's personal website." />
+  <meta name="author" content="Dani Gámez Franco" />
+  <meta name="keywords" content="Dani Gámez, Dani Gámez Franco, JS, TS, React, NodeJS, MongoDB, Python, Blockchain, AI, ML, CTO, Lead Frontend Architect, Computer Science Engineer, Entrepreneur" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <link rel="canonical" href="https://gmzcodes.com/" />
+
+  <link href="https://fonts.googleapis.com/css?family=Cardo:700|Josefin+Sans&display=swap" rel="stylesheet">
+  
+  <style>
+    ::selection {
+      background: yellow;
+    }
+
+    ::-moz-selection {
+      background: yellow;
+    }
+
+    body {
+      max-width: 800px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 0;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 18px;
+      line-height: 1.25;
+      color: #00F;
+    }
+    
+    #container {
+      padding: 128px 0 16px;
+      margin: 0 16px;
+    }
+
+    .h1 {
+      margin: 0;
+      font-family: 'Cardo', serif;
+      font-size: 64px;
+      line-height: 1;
+    }
+
+    .name,
+    .title {
+      display: block;
+      padding-top: 16px;
+    }
+
+    .title {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    p {
+      margin: 0;
+      padding-top: 16px;
+    }
+
+    .links {      
+      padding-top: 16px;
+      user-select: none;
+    }
+
+    a {
+      overflow: hidden;
+    }
+
+    a,
+    a:link,
+    a:visited,
+    a:hover,
+    a:active {
+      color: #000;
+      text-decoration: none;
+    }
+
+    .underline {
+      position: relative;
+      box-shadow: inset 0 -2px #F0F;
+    }
+
+    a:hover > .underline {
+      box-shadow: inset 0 -8px #F0F;
+    }
+
+    #canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    #cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    #cursor::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: #000;
+      backface-visibility: hidden;
+      mix-blend-mode: difference;
+    }
+
+    #footer {
+      position: fixed;
+      bottom: 16px;
+      left: 0;
+      width: 100%;
+    }
+
+    #colors {
+      list-style: none;
+      margin: 0 auto;
+      max-width: 800px;
+      padding: 0;
+      transform: translate(8px);
+    }
+
+    .color {
+      width: 32px;
+      height: 32px;
+      float: left;
+      margin-left: 8px;
+      border-radius: 128px;
+      transition: transform ease-in 100ms;
+      box-shadow: 0 0 16px 0 var(--color, rgba(0, 0, 0, .25));
+    }
+
+    .color:hover {
+      box-shadow: 0 0 24px 8px var(--color, rgba(0, 0, 0, .25));
+      transform: scale(1.25);
+    }
+
+  </style>
+</head>
+
+<body>
+  <main id="container">
+    <header id="header">
+      <h1 class="h1">
+        <strong class="name">Dani Gámez Franco</strong>
+        <span class="title">CTO, Lead Frontend Architect, Computer Science Engineer, Entrepreneur</span>
+      </h1>
+  
+      <p>JS, TS, React, NodeJS, MongoDB, Python, Blockchain, AI/ML</p>
+    </header>
+
+    <section class="links"> 
+      <a href="https://www.linkedin.com/in/danigamezfranco/" target="_blank"><span class="underline">LinkedIn</span></a>
+      <a href="https://stackoverflow.com/users/3723993/danziger" target="_blank"><span class="underline">StackOverflow</span></a>
+      <a href="https://github.com/danziger" target="_blank"><span class="underline">GitHub</span></a>
+      <a href="https://www.quora.com/profile/Dani-Gámez-Franco" target="_blank"><span class="underline">Quora</span></a>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <ul id="colors">
+      <li class="color" style="background: white; --color: rgba(0, 0, 0, .125); "></li>
+      <li class="color" style="background: yellow; --color: rgba(255, 255, 0, .5); "></li>
+      <li class="color" style="background: magenta; --color: rgba(255, 0, 255, .5); "></li>
+      <li class="color" style="background: blue; --color: rgba(0, 0, 255, .5); "></li>
+      <li class="color" style="background: black; --color: rgba(0, 0, 0, .25); "></li>
+    </ul>
+  </footer>
+
+  <canvas id="canvas"></canvas>
+
+  <span id="cursor"></span>
+
+  <script>
+    
+    const scale = window.devicePixelRatio || 1;
+    const unit = 8;
+    const scaledUnit = unit * scale;
+    const header = document.getElementById('header');
+    const colors = document.getElementById('colors');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const cursor = document.getElementById('cursor');
+
+    let color = 'black';
+    let drawing = false;
+    let lastX = null;
+    let lastY = null;
+
+    // let lastWidth = window.innerWidth;
+    // let lastHeight = window.innerHeight;
+    let offsetLeft = (window.innerWidth % unit) / 2 | 0; // TODO: From the canvas container
+    let offsetTop = (window.innerHeigh  % unit) / 2 | 0; // TODO: From the canvas container
+
+    // TODO: Undo (canvas snapshots)
+    // TODO: Resize and keep image
+    // TODO: Keys to block trajectory
+
+    canvas.setAttribute('width', window.innerWidth * scale);
+    canvas.setAttribute('height', window.innerHeight * scale);
+
+    // let timeoutID = null;
+
+    window.onresize = () => {
+      // clearTimeout(timeoutID);
+      
+      resetCanvas();
+
+      // timeoutID = setTimeout(resetCanvas, 500);
+    };
+
+    document.ontouchstart = (e) => {
+      drawing = true;
+      lastX = Math.floor((e.pageX - offsetLeft) / unit);
+      lastY = Math.floor((e.pageY - offsetTop) / unit);
+      
+      paintPixel(lastX, lastY);
+    };
+    
+    document.onmousedown = (e) => {
+      const { which, target } = e;
+
+      if (colors.contains(target)) {
+        return;
+      }
+
+      if (!header.contains(target)) {
+        e.preventDefault();
+      }
+
+      if (which !== 2) {
+        drawing = true;
+        lastX = Math.floor((e.pageX - offsetLeft) / unit);
+        lastY = Math.floor((e.pageY - offsetTop) / unit);
+        
+        ctx.fillStyle = which === 3 ? 'white' : color;
+        
+        paintPixel(lastX, lastY);
+      }
+    };
+
+    document.ontouchend = document.ontouchcancel = document.onmouseup = document.onmouseleave = (e) => {
+      drawing = false;
+    };
+
+    document.ontouchmove = document.onmousemove = (e) => {  
+      const { pageX } = e.touches ? e.touches[0] : e;
+      const { pageY } = e.touches ? e.touches[0] : e;
+
+      const x = Math.floor((pageX - offsetLeft) / unit);
+      const y = Math.floor((pageY - offsetTop) / unit);
+        
+      requestAnimationFrame(() => {
+        cursor.style.transform = `translate(${ x * unit + offsetLeft }px, ${ y * unit + offsetTop }px)`;
+      });
+
+      if (drawing) {
+        const w = Math.abs(x - lastX);
+        const h = Math.abs(y - lastY);
+        
+        if (w === 0 && h === 0) {
+          paintPixel(x, y);
+        } else if (w > h) {
+          lineLandscape(lastX, lastY, x, y);
+        } else {
+          linePortrait(lastX, lastY, x, y);
+        }
+      
+        lastX = x;
+        lastY = y;
+      }
+    };
+
+    document.oncontextmenu = (e) => {
+      const { target } = e;
+
+      if (!target || (target.tagName !== 'A' && target.parentElement.tagName !== 'A' && window.getSelection().toString() === '')) {
+        e.preventDefault();
+      }
+    };
+
+    colors.onclick = ({ target }) => {
+      // TODO: Use buttons here.
+
+      if (target.tagName === 'LI') {
+        ctx.fillStyle = color = target.style.backgroundColor;
+      }
+    };
+
+    function resetCanvas() {
+      // if (lastWidth >= window.innerWidth && lastHeight >= window.innerHeight) {
+      //   return;
+      // }
+
+      // const copyCanvas = document.createElement('canvas');
+      
+      // TODO: Take max between last and current width and height!
+      
+      // copyCanvas.setAttribute('width', lastWidth * scale);
+      // copyCanvas.setAttribute('height', lastHeight * scale);  
+      // copyCanvas.getContext('2d').drawImage(canvas, 0, 0);
+      
+      canvas.setAttribute('width', window.innerWidth * scale);
+      canvas.setAttribute('height', window.innerHeight * scale);
+      
+      // ctx.drawImage(copyCanvas, Math.ceil((window.innerWidth - lastWidth) / 2), 0);
+      
+      // lastWidth = window.innerWidth;
+      // lastHeight = window.innerHeight;
+      // offsetLeft = (window.innerWidth % unit) / 2 | 0; // TODO: From the canvas container
+      // offsetTop = (window.innerHeight % unit) / 2 | 0; // TODO: From the canvas container
+    }
+
+    function paintPixel(x, y) {
+      ctx.fillRect(x * scaledUnit + offsetLeft, y * scaledUnit + offsetTop, scaledUnit, scaledUnit);
+    }
+
+    function lineLandscape(x0, y0, x1, y1) {
+      if (x0 > x1) {
+        [x0, x1] = [x1, x0];
+        [y0, y1] = [y1, y0];
+      }
+      
+      const dx = x1 - x0;
+      const dy = Math.abs(y1 - y0);
+      const yi = y0 > y1 ? -1 : 1;
+      
+      let D = 2 * dy - dx;  
+      let y = y0;
+
+      for (let x = x0; x <= x1; ++x) {
+        paintPixel(x, y);
+        
+        if (D > 0) {
+          y += yi;
+          D -= 2 * dx;
+        }
+        
+        D += 2 * dy;
+      }
+    }
+
+    function linePortrait(x0, y0, x1, y1) {
+      if (y0 > y1) {
+        [x0, x1] = [x1, x0];
+        [y0, y1] = [y1, y0];
+      }
+      
+      const dx = Math.abs(x1 - x0);
+      const dy = y1 - y0;
+      const xi = x0 > x1 ? -1 : 1;
+      
+      let D = 2 * dx - dy;  
+      let x = x0;
+
+      for (let y = y0; y <= y1; ++y) {
+        paintPixel(x, y);
+        
+        if (D > 0) {
+          x += xi;
+          D -= 2 * dy;
+        }
+        
+        D += 2 * dx;
+      }
+    }
+
+  </script>
+</body>
+
+</html>
