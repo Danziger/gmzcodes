@@ -1,7 +1,7 @@
 # GMZcodes
 
-**http://gmzcodes.com**
+**https://gmzcodes.com**
 
 My personal website.
 
-Working on the new version...
+Well, actually just a placeholder with some basic data and linsk to various profiles for now.
