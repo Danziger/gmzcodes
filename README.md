@@ -1,6 +1,6 @@
 # GMZcodes
 
-**http://gmzcodes.com**
+**https://gmzcodes.com**
 
 My personal website.
 
