@@ -48,6 +48,7 @@
       font-size: 18px;
       line-height: 1.25;
       color: #00F;
+      overscroll-behavior: none;
     }
 
     #content {
@@ -141,6 +142,11 @@
       height: 8px;
       pointer-events: none;
       z-index: 1000;
+      visibility: hidden;
+    }
+
+    .hover #cursor {
+      visibility: visible;
     }
 
     #cursor::before {
@@ -166,11 +172,12 @@
       list-style: none;
       margin: 0 auto;
       max-width: 800px;
-      padding: 0;
-      transform: translate(8px);
+      padding: 0 16px;
+      box-sizing: border-box;
     }
 
-    .color {
+    .color,
+    #refresh {
       width: 32px;
       height: 32px;
       float: left;
@@ -180,8 +187,27 @@
       box-shadow: 0 0 16px 0 var(--color, rgba(0, 0, 0, .25));
     }
 
+    .color:first-child,
+    .color:last-child {
+      margin: 0;
+    }
+
+    #refresh {
+      float: right;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: white;
+      color: red;
+      transform: rotate(45deg);
+      margin: 0;
+    }
+
     .hover .color:hover,
-    .color:active {
+    .color:active,
+    .hover #refresh:hover,
+    #refresh:active {
       box-shadow: 0 0 24px 8px var(--color, rgba(0, 0, 0, .25));
       transform: scale(1.25);
     }
@@ -218,6 +244,8 @@
           <li class="color" style="background: magenta; --color: rgba(255, 0, 255, .5); "></li>
           <li class="color" style="background: blue; --color: rgba(0, 0, 255, .5); "></li>
           <li class="color" style="background: black; --color: rgba(0, 0, 0, .25); "></li>
+          
+          <li id="refresh" style="--color: rgba(255, 0, 0, .25); ">+</li>
         </ul>
       </footer>
 
@@ -347,6 +375,8 @@
         ctx.fillStyle = color = target.style.backgroundColor;
       }
     };
+
+    document.getElementById('refresh').onclick = () => location.reload();
 
     function resetCanvas() {
       // if (lastWidth >= window.innerWidth && lastHeight >= window.innerHeight) {

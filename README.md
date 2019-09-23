@@ -24,3 +24,7 @@ TODO
 
 - Add a better mobile mode that can lock/unlock the scroll.
 - Disable selection completely?
+- Multitouch on mobile.
+- Custom color selector.
+- Download/share your creation.
+- Screenshot mode.
