@@ -18,3 +18,9 @@
 </p>
 
 <br />
+
+TODO
+----
+
+- Add a better mobile mode that can lock/unlock the scroll.
+- Disable selection completely?

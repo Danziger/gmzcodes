@@ -38,17 +38,35 @@
     }
 
     body {
-      max-width: 800px;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
       margin: 0 auto;
-      min-height: 100vh;
-      padding: 0;
       font-family: 'Josefin Sans', sans-serif;
       font-size: 18px;
       line-height: 1.25;
       color: #00F;
     }
-    
+
+    #content {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
     #container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    #main {
       padding: 128px 0 16px;
       margin: 0 16px;
     }
@@ -89,7 +107,7 @@
     a,
     a:link,
     a:visited,
-    a:hover,
+    .hover a:hover,
     a:active {
       color: #000;
       text-decoration: none;
@@ -100,7 +118,8 @@
       box-shadow: inset 0 -2px #F0F;
     }
 
-    a:hover > .underline {
+    .hover a:hover > .underline,
+    a:active > .underline {
       box-shadow: inset 0 -8px #F0F;
     }
 
@@ -161,7 +180,8 @@
       box-shadow: 0 0 16px 0 var(--color, rgba(0, 0, 0, .25));
     }
 
-    .color:hover {
+    .hover .color:hover,
+    .color:active {
       box-shadow: 0 0 24px 8px var(--color, rgba(0, 0, 0, .25));
       transform: scale(1.25);
     }
@@ -170,40 +190,50 @@
 </head>
 
 <body>
-  <main id="container">
-    <header id="header">
-      <h1 class="h1">
-        <strong class="name">Dani Gámez Franco</strong>
-        <span class="title">CTO, Lead Frontend Architect, Computer Science Engineer, Entrepreneur</span>
-      </h1>
-  
-      <p>JS, TS, React, NodeJS, MongoDB, Python, Blockchain, AI/ML</p>
-    </header>
+  <div id="content">
+    <div id="container">
 
-    <section class="links"> 
-      <a href="https://www.linkedin.com/in/danigamezfranco/" target="_blank"><span class="underline">LinkedIn</span></a>
-      <a href="https://stackoverflow.com/users/3723993/danziger" target="_blank"><span class="underline">StackOverflow</span></a>
-      <a href="https://github.com/danziger" target="_blank"><span class="underline">GitHub</span></a>
-      <a href="https://www.quora.com/profile/Dani-Gámez-Franco" target="_blank"><span class="underline">Quora</span></a>
-    </section>
-  </main>
+      <main id="main">
+        <header id="header">
+          <h1 class="h1">
+            <strong class="name">Dani Gámez Franco</strong>
+            <span class="title">CTO, Lead Frontend Architect, Computer Science Engineer, Entrepreneur</span>
+          </h1>
+      
+          <p>JS, TS, React, NodeJS, MongoDB, Python, Blockchain, AI/ML</p>
+        </header>
 
-  <footer id="footer">
-    <ul id="colors">
-      <li class="color" style="background: white; --color: rgba(0, 0, 0, .125); "></li>
-      <li class="color" style="background: yellow; --color: rgba(255, 255, 0, .5); "></li>
-      <li class="color" style="background: magenta; --color: rgba(255, 0, 255, .5); "></li>
-      <li class="color" style="background: blue; --color: rgba(0, 0, 255, .5); "></li>
-      <li class="color" style="background: black; --color: rgba(0, 0, 0, .25); "></li>
-    </ul>
-  </footer>
+        <section class="links"> 
+          <a href="https://www.linkedin.com/in/danigamezfranco/" target="_blank"><span class="underline">LinkedIn</span></a>
+          <a href="https://stackoverflow.com/users/3723993/danziger" target="_blank"><span class="underline">StackOverflow</span></a>
+          <a href="https://github.com/danziger" target="_blank"><span class="underline">GitHub</span></a>
+          <a href="https://www.quora.com/profile/Dani-Gámez-Franco" target="_blank"><span class="underline">Quora</span></a>
+        </section>
+      </main>
 
-  <canvas id="canvas"></canvas>
+      <footer id="footer">
+        <ul id="colors">
+          <li class="color" style="background: white; --color: rgba(0, 0, 0, .125); "></li>
+          <li class="color" style="background: yellow; --color: rgba(255, 255, 0, .5); "></li>
+          <li class="color" style="background: magenta; --color: rgba(255, 0, 255, .5); "></li>
+          <li class="color" style="background: blue; --color: rgba(0, 0, 255, .5); "></li>
+          <li class="color" style="background: black; --color: rgba(0, 0, 0, .25); "></li>
+        </ul>
+      </footer>
 
-  <span id="cursor"></span>
+      <canvas id="canvas"></canvas>
+
+      <span id="cursor"></span>
+    
+    </div>
+  </div>
 
   <script>
-    
+
+    if (!/Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      document.body.classList.add('hover');
+    }
+        
     const scale = window.devicePixelRatio || 1;
     const unit = 8;
     const scaledUnit = unit * scale;
