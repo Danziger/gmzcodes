@@ -29,13 +29,6 @@
   <link href="https://fonts.googleapis.com/css?family=Cardo:700|Josefin+Sans&display=swap" rel="stylesheet">
   
   <style>
-    ::selection {
-      background: yellow;
-    }
-
-    ::-moz-selection {
-      background: yellow;
-    }
 
     body {
       position: fixed;
@@ -49,6 +42,25 @@
       line-height: 1.25;
       color: #00F;
       overscroll-behavior: none;
+      user-select: none;
+    }
+
+    #logoLink {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 12px 0px 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    #logoImg {
+      width: 32px;
+      margin-right: 16px;
+      transform: translate(0, -2px);
     }
 
     #content {
@@ -60,6 +72,7 @@
       overflow-x: hidden;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+      background: white;
     }
 
     #container {
@@ -68,8 +81,10 @@
     }
     
     #main {
+      position: relative;
       padding: 128px 0 16px;
       margin: 0 16px;
+      z-index: 100;
     }
 
     .h1 {
@@ -98,7 +113,6 @@
 
     .links {      
       padding-top: 16px;
-      user-select: none;
     }
 
     a {
@@ -131,7 +145,6 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: -1;
     }
 
     #cursor {
@@ -143,14 +156,16 @@
       pointer-events: none;
       z-index: 1000;
       visibility: hidden;
+      mix-blend-mode: difference;
+      background: white;
     }
 
     .hover #cursor {
       visibility: visible;
     }
 
-    #cursor::before {
-      content: '';
+    /*#cursor::before {
+      content: '""';
       position: absolute;
       top: 0;
       left: 0;
@@ -159,16 +174,19 @@
       background: #000;
       backface-visibility: hidden;
       mix-blend-mode: difference;
-    }
+    }*/
 
     #footer {
       position: fixed;
       bottom: 16px;
       left: 0;
       width: 100%;
+      z-index: 100;
     }
 
     #colors {
+      display: flex;
+      align-items: flex-start;
       list-style: none;
       margin: 0 auto;
       max-width: 800px;
@@ -177,14 +195,17 @@
     }
 
     .color,
+    #customInput,
+    #customSample,
     #refresh {
+      display: block;
       width: 32px;
       height: 32px;
-      float: left;
       margin-left: 8px;
       border-radius: 128px;
       transition: transform ease-in 100ms;
-      box-shadow: 0 0 16px 0 var(--color, rgba(0, 0, 0, .25));
+      box-shadow: 0 0 24px 4px var(--color, rgba(0, 0, 0, .25));
+      cursor: pointer;
     }
 
     .color:first-child,
@@ -192,8 +213,38 @@
       margin: 0;
     }
 
+    #customWrapper {
+      position: relative;
+      margin-left: 8px;
+    }
+
+    #customInput {      
+      border: 0;
+      box-sizing: border-box;
+      outline: none;
+      margin: 0;
+      padding: 0 0 0 32px;
+      width: 32px;
+      transition: width ease-in 100ms, padding ease-in 100ms;
+    }
+
+    #customInput:focus {
+      box-shadow: 0 0 24px 8px var(--color, rgba(0, 0, 0, .25));
+      padding: 0 8px 0 40px;
+      width: 128px;
+    }
+
+    #customSample {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      margin: 0;
+      width: 24px;
+      height: 24px;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .0625);
+    }
+
     #refresh {
-      float: right;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -201,7 +252,7 @@
       background: white;
       color: red;
       transform: rotate(45deg);
-      margin: 0;
+      margin: 0 0 0 auto;
     }
 
     .hover .color:hover,
@@ -220,6 +271,10 @@
     <div id="container">
 
       <main id="main">
+        <nav>
+          <a id="logoLink" href="https://gmzcodes.com"><img id="logoImg" src="static/gmzcodes-t-e-64.png" />GMZcodes</a>
+        </nav>
+
         <header id="header">
           <h1 class="h1">
             <strong class="name">Dani Gámez Franco</strong>
@@ -244,6 +299,13 @@
           <li class="color" style="background: magenta; --color: rgba(255, 0, 255, .5); "></li>
           <li class="color" style="background: blue; --color: rgba(0, 0, 255, .5); "></li>
           <li class="color" style="background: black; --color: rgba(0, 0, 0, .25); "></li>
+
+          <!---
+          <li id="customWrapper">
+            <label id="customSample" for="customInput"></label>
+            <input type="text" id="customInput" style="--color: rgba(0, 0, 0, .125); " />
+          </li>
+          -->
           
           <li id="refresh" style="--color: rgba(255, 0, 0, .25); ">+</li>
         </ul>
@@ -251,7 +313,7 @@
 
       <canvas id="canvas"></canvas>
 
-      <span id="cursor"></span>
+      <span id="cursor" style="display: none; "></span>
     
     </div>
   </div>
@@ -332,7 +394,15 @@
       drawing = false;
     };
 
+    document.body.onmouseout = (e) => {
+      if (!e.relatedTarget && !e.toElement) {
+        cursor.style.display = 'none';
+      }
+    };
+
     document.ontouchmove = document.onmousemove = (e) => {  
+      cursor.style.display = 'block';
+
       const { pageX } = e.touches ? e.touches[0] : e;
       const { pageY } = e.touches ? e.touches[0] : e;
 

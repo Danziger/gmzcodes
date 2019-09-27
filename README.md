@@ -22,6 +22,11 @@
 TODO
 ----
 
+- Separate JS.
+- Add ServiceWorker.
+- User proper HTML elements: Buttons...
+- Make this fully accessible?
+- Add manifest.json.
 - Add a better mobile mode that can lock/unlock the scroll.
 - Disable selection completely?
 - Multitouch on mobile.
