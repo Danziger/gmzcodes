@@ -21,14 +21,32 @@
   <meta name="author" content="Dani Gámez Franco" />
   <meta name="keywords" content="Dani Gámez, Dani Gámez Franco, JS, TS, React, NodeJS, MongoDB, Python, Blockchain, AI, ML, CTO, Lead Frontend Architect, Computer Science Engineer, Entrepreneur" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="google-site-verification" content="UylIr5AFjfxJObGXbDFnAg_2BC7U0Cz1ymt42TCuYKY" />
+  <meta name="screen-orientation" content="portrait">
   <meta name="theme-color" content="white" />
+  <meta name="google-site-verification" content="UylIr5AFjfxJObGXbDFnAg_2BC7U0Cz1ymt42TCuYKY" />
   
-  <link rel="shortcut icon" href="./favicon.ico" />
-  <link rel="manifest" href="./manifest.json" />
-  <link rel="canonical" href="https://gmzcodes.com/" />
+  <script defer src="main.js"></script>
 
-  <link href="https://fonts.googleapis.com/css?family=Cardo:700|Josefin+Sans&display=swap" rel="stylesheet" media="all" />
+  <link rel="canonical" href="https://gmzcodes.com/" />
+  <link rel="manifest" href="manifest.json" />
+
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+
+  <link rel="icon" href="static/gmzcodes-t-e-16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="static/gmzcodes-t-e-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="static/gmzcodes-t-e-48.png" type="image/png" sizes="48x48">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="static/gmzcodes-s-e-57.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="static/gmzcodes-s-e-76.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="static/gmzcodes-s-e-120.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="static/gmzcodes-s-e-152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="static/gmzcodes-s-e-167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="static/gmzcodes-s-e-180.png">
+
+  <link rel="icon" sizes="192x192" href="static/gmzcodes-s-e-192.png">
+  <link rel="icon" sizes="128x128" href="static/gmzcodes-s-e-128.png">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cardo:700|Josefin+Sans&display=swap" media="all" />
   
   <script type="application/ld+json">
     {
@@ -289,6 +307,7 @@
     }
 
   </style>
+
 </head>
 
 <body>
@@ -343,216 +362,6 @@
     
     </div>
   </div>
-
-  <script>
-
-    if (!/Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      document.body.classList.add('hover');
-    }
-        
-    const scale = window.devicePixelRatio || 1;
-    const unit = 8;
-    const scaledUnit = unit * scale;
-    const header = document.getElementById('header');
-    const colors = document.getElementById('colors');
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    const cursor = document.getElementById('cursor');
-
-    let color = 'black';
-    let drawing = false;
-    let lastX = null;
-    let lastY = null;
-
-    // let lastWidth = window.innerWidth;
-    // let lastHeight = window.innerHeight;
-    let offsetLeft = (window.innerWidth % unit) / 2 | 0; // TODO: From the canvas container
-    let offsetTop = (window.innerHeigh  % unit) / 2 | 0; // TODO: From the canvas container
-
-    // TODO: Undo (canvas snapshots)
-    // TODO: Resize and keep image
-    // TODO: Keys to block trajectory
-
-    canvas.setAttribute('width', window.innerWidth * scale);
-    canvas.setAttribute('height', window.innerHeight * scale);
-
-    // let timeoutID = null;
-
-    window.onresize = () => {
-      // clearTimeout(timeoutID);
-      
-      resetCanvas();
-
-      // timeoutID = setTimeout(resetCanvas, 500);
-    };
-
-    document.ontouchstart = (e) => {
-      drawing = true;
-      lastX = Math.floor((e.pageX - offsetLeft) / unit);
-      lastY = Math.floor((e.pageY - offsetTop) / unit);
-      
-      paintPixel(lastX, lastY);
-    };
-    
-    document.onmousedown = (e) => {
-      const { which, target } = e;
-
-      if (colors.contains(target)) {
-        return;
-      }
-
-      if (!header.contains(target)) {
-        e.preventDefault();
-      }
-
-      if (which !== 2) {
-        drawing = true;
-        lastX = Math.floor((e.pageX - offsetLeft) / unit);
-        lastY = Math.floor((e.pageY - offsetTop) / unit);
-        
-        ctx.fillStyle = which === 3 ? 'white' : color;
-        
-        paintPixel(lastX, lastY);
-      }
-    };
-
-    document.ontouchend = document.ontouchcancel = document.onmouseup = document.onmouseleave = (e) => {
-      drawing = false;
-    };
-
-    document.body.onmouseout = (e) => {
-      if (!e.relatedTarget && !e.toElement) {
-        cursor.style.display = 'none';
-      }
-    };
-
-    document.ontouchmove = document.onmousemove = (e) => {  
-      cursor.style.display = 'block';
-
-      const { pageX } = e.touches ? e.touches[0] : e;
-      const { pageY } = e.touches ? e.touches[0] : e;
-
-      const x = Math.floor((pageX - offsetLeft) / unit);
-      const y = Math.floor((pageY - offsetTop) / unit);
-        
-      requestAnimationFrame(() => {
-        cursor.style.transform = `translate(${ x * unit + offsetLeft }px, ${ y * unit + offsetTop }px)`;
-      });
-
-      if (drawing) {
-        const w = Math.abs(x - lastX);
-        const h = Math.abs(y - lastY);
-        
-        if (w === 0 && h === 0) {
-          paintPixel(x, y);
-        } else if (w > h) {
-          lineLandscape(lastX, lastY, x, y);
-        } else {
-          linePortrait(lastX, lastY, x, y);
-        }
-      
-        lastX = x;
-        lastY = y;
-      }
-    };
-
-    document.oncontextmenu = (e) => {
-      const { target } = e;
-
-      if (!target || (target.tagName !== 'A' && target.parentElement.tagName !== 'A' && window.getSelection().toString() === '')) {
-        e.preventDefault();
-      }
-    };
-
-    colors.onclick = ({ target }) => {
-      // TODO: Use buttons here.
-
-      if (target.tagName === 'LI') {
-        ctx.fillStyle = color = target.style.backgroundColor;
-      }
-    };
-
-    document.getElementById('refresh').onclick = () => location.reload();
-
-    function resetCanvas() {
-      // if (lastWidth >= window.innerWidth && lastHeight >= window.innerHeight) {
-      //   return;
-      // }
-
-      // const copyCanvas = document.createElement('canvas');
-      
-      // TODO: Take max between last and current width and height!
-      
-      // copyCanvas.setAttribute('width', lastWidth * scale);
-      // copyCanvas.setAttribute('height', lastHeight * scale);  
-      // copyCanvas.getContext('2d').drawImage(canvas, 0, 0);
-      
-      canvas.setAttribute('width', window.innerWidth * scale);
-      canvas.setAttribute('height', window.innerHeight * scale);
-      
-      // ctx.drawImage(copyCanvas, Math.ceil((window.innerWidth - lastWidth) / 2), 0);
-      
-      // lastWidth = window.innerWidth;
-      // lastHeight = window.innerHeight;
-      // offsetLeft = (window.innerWidth % unit) / 2 | 0; // TODO: From the canvas container
-      // offsetTop = (window.innerHeight % unit) / 2 | 0; // TODO: From the canvas container
-    }
-
-    function paintPixel(x, y) {
-      ctx.fillRect(x * scaledUnit + offsetLeft, y * scaledUnit + offsetTop, scaledUnit, scaledUnit);
-    }
-
-    function lineLandscape(x0, y0, x1, y1) {
-      if (x0 > x1) {
-        [x0, x1] = [x1, x0];
-        [y0, y1] = [y1, y0];
-      }
-      
-      const dx = x1 - x0;
-      const dy = Math.abs(y1 - y0);
-      const yi = y0 > y1 ? -1 : 1;
-      
-      let D = 2 * dy - dx;  
-      let y = y0;
-
-      for (let x = x0; x <= x1; ++x) {
-        paintPixel(x, y);
-        
-        if (D > 0) {
-          y += yi;
-          D -= 2 * dx;
-        }
-        
-        D += 2 * dy;
-      }
-    }
-
-    function linePortrait(x0, y0, x1, y1) {
-      if (y0 > y1) {
-        [x0, x1] = [x1, x0];
-        [y0, y1] = [y1, y0];
-      }
-      
-      const dx = Math.abs(x1 - x0);
-      const dy = y1 - y0;
-      const xi = x0 > x1 ? -1 : 1;
-      
-      let D = 2 * dx - dy;  
-      let x = x0;
-
-      for (let y = y0; y <= y1; ++y) {
-        paintPixel(x, y);
-        
-        if (D > 0) {
-          x += xi;
-          D -= 2 * dy;
-        }
-        
-        D += 2 * dx;
-      }
-    }
-
-  </script>
 </body>
 
 </html>
