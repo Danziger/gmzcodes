@@ -11,7 +11,6 @@ const CACHE_URLS = [
   '/static/gmzcodes-t-e-32.png',
   '/static/gmzcodes-t-e-48.png',
   '/static/gmzcodes-t-e-64.png',
-  'https://fonts.googleapis.com/css?family=Cardo:700|Josefin+Sans&display=swap',
 ];
 
 self.addEventListener('install', (e) => {
