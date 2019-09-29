@@ -29,3 +29,4 @@ TODO
 - Custom color selector.
 - Download/share your creation.
 - Screenshot mode.
+- Add a basic Webpack setup to minify the code.
