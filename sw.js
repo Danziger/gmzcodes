@@ -1,4 +1,4 @@
-const CACHE_NAME = 'com.gmzcodes.cache.v1';
+const CACHE_NAME = 'com.gmzcodes.cache.v3';
 
 const CACHE_WHITELIST = [CACHE_NAME];
 
