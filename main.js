@@ -1,19 +1,3 @@
-/* TODO:
-
-  - Undo (canvas snapshots).
-
-  - Resize and keep image.
-
-  - Keys to block trajectory.
-
-  - Custom color.
-
-  - Change cursor size.
-
-  - Select colors with keys.
-
-  - Create a GMZPaint class for all the drawing logic.
-*/
 
 // VARIABLES:
 
@@ -210,7 +194,7 @@ function handleMouseOut(e) {
 function handleColorSelected({ target }) {
   // TODO: Use buttons here.
   
-  if (target.tagName === 'LI') {
+  if (target.tagName === 'LI' && target.style.backgroundColor) {
     ctx.fillStyle = color = target.style.backgroundColor;
   }
 }
