@@ -1,11 +1,13 @@
 <h1 align="center">GMZcodes</h1>
 
 <p align="center">
-    👨‍💻 My personal website.
+    👨‍💻 My personal website PWA built using JavaScript, SCSS, HTML5 (inclulding a <code>&lt;canvas&gt;</code>, can you spot it?)!
 </p><p align="center">
     🚀 Check it out at <a href="https://gmzcodes.com">https://gmzcodes.com</a>!
 </p><p align="center">
-    ⏳ Well, actually just a placeholder site with some basic data and links to various profiles for now.
+    ⏳ Well, actually it's just a placeholder site with some basic data and profiles, for now.
+</p><p align="center">
+    💩 No IE or Edge. Get the f**k off my property!
 </p>
 
 <br />
@@ -35,4 +37,4 @@ TODO
 - Make this fully accessible?
 - Add a better mobile mode that can lock/unlock the scroll.
 - Custom color selector (console).
-
+- Add a warning message if using unsupported browsers.
