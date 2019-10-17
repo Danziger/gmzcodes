@@ -83,6 +83,7 @@ Ongoing Work (TODOs)
 
 - Add a basic Webpack setup to minify the code.
 - Create a GMZPaint class for all the drawing logic.
+- Deploy from `dist` directory. See https://medium.com/linagora-engineering/deploying-your-js-app-to-github-pages-the-easy-way-or-not-1ef8c48424b7.
 - Screenshot mode.
 
 
