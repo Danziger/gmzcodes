@@ -1,7 +1,7 @@
 <h1 align="center">GMZcodes</h1>
 
 <p align="center">
-    👨‍💻 My personal website.
+    👨‍💻 My personal website PWA built using JavaScript, SCSS, HTML5 (inclulding a super cool `<canvas>` so that you can ad a bit of you on my site!
 </p><p align="center">
     🚀 Check it out at <a href="https://gmzcodes.com">https://gmzcodes.com</a>!
 </p><p align="center">
