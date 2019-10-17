@@ -6,6 +6,8 @@
     🚀 Check it out at <a href="https://gmzcodes.com">https://gmzcodes.com</a>!
 </p><p align="center">
     ⏳ Well, actually it's just a placeholder site with some basic data and profiles, for now.
+</p><p align="center">
+    💩 No IE or Edge. Get the f**k off my property!
 </p>
 
 <br />
