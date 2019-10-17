@@ -32,3 +32,4 @@ TODO
 - Download/share your creation.
 - Screenshot mode.
 - Add a basic Webpack setup to minify the code.
+- Add a warning message if using unsuported browsers.
