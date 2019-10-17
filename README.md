@@ -5,7 +5,7 @@
 </p><p align="center">
     🚀 Check it out at <a href="https://gmzcodes.com">https://gmzcodes.com</a>!
 </p><p align="center">
-    ⏳ Well, actually just a placeholder site with some basic data and links to various profiles for now.
+    ⏳ Well, actually it's just a placeholder site with some basic data and profiles, for now.
 </p>
 
 <br />
