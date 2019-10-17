@@ -22,11 +22,17 @@
 TODO
 ----
 
-- User proper HTML elements: Buttons...
-- Make this fully accessible?
-- Add a better mobile mode that can lock/unlock the scroll.
-- Multitouch on mobile.
-- Custom color selector.
+- User proper HTML elements (<button>) and add hover styles to link at the top.
+- Night mode.
+- Fix eraser bug.
+- More colors, color sorting and color palette window.
+- Breakpoints for main text size.
+- Better layout (centered but aligned to left).
 - Download/share your creation.
 - Screenshot mode.
 - Add a basic Webpack setup to minify the code.
+- Multitouch on mobile.
+- Make this fully accessible?
+- Add a better mobile mode that can lock/unlock the scroll.
+- Custom color selector (console).
+
