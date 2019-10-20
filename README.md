@@ -45,7 +45,7 @@ Ongoing Work (TODOs)
 
 * User proper HTML elements (button), and add hover/focus styles to them and to link at the top.
 * Better layout (text should be centered but aligned to left).
-* Offline warning and confirmation when trying to open a link.
+* Offline warning.
 * Add rulers to the sides of the page.
 - Dynamically resized bottom menu that can accommodate more actions.
 - Add a better mobile mode that can lock/unlock the scroll if needed.
@@ -63,8 +63,8 @@ Ongoing Work (TODOs)
 ### Easter Eggs
 
 * Night mode.
-* Custom color selector (console).
-* Random color palette on load: cyberpunk, halloween, christmas
+* Random color palette on load: cyberpunk, halloween, christmas.
+- Custom color selector (console).
 
 
 ### Canvas

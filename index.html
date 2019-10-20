@@ -94,6 +94,12 @@
       cursor: none;
     }
 
+    .fallback.hover,
+    .fallback.hover a,
+    .fallback.hover button {
+      cursor: auto;
+    }
+
     @keyframes shake {
       0% { transform: translate(1px, 1px) rotate(0deg); }
       10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -169,9 +175,26 @@
       z-index: 100;
     }
 
-    #torino-1,
-    #torino-2 {
+    .image-container {
+      position: relative;
+      max-width: 600px;
+      width: 100%;
       margin-top: 16px;
+    }
+
+    .picture {
+      position: relative;
+      background: rgba(0, 0, 0, .0625);
+      border-radius: 2px;
+      overflow: hidden;
+      display: block;
+    }
+
+    .img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
     }
 
     .h1 {
@@ -540,10 +563,16 @@
           </h1>
 
           <p>So... Get the f**k off my site!</p>
-      
-          <!-- TODO: Wrap in <picture> and add placeholder to preserve aspect ratio -->
-          <img id="torino-1" class="image" src="static/images/gifs/get-off-my-lawn-gran-torino.gif" alt="Get off my lawn scene from Gran Torino" />
-          <img id="torino-2" class="image" src="static/images/gifs/gran-torino-finger-gun.gif" alt="Finger gun scene from Gran Torino" />
+
+          <div class="image-container">         
+            <picture id="torino-1" class="picture" style="padding-bottom: 40%; ">
+              <img class="img" src="static/images/gifs/get-off-my-lawn-gran-torino.gif" alt="Get off my lawn scene from Gran Torino" />
+            </picture>
+  
+            <picture id="torino-2" class="picture" style="padding-bottom: 41.8%; ">
+              <img class="img" src="static/images/gifs/gran-torino-finger-gun.gif" alt="Finger gun scene from Gran Torino" />
+            </picture>
+          </div>
 
           <p>You can get in touch using:</p>
         </header>

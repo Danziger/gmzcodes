@@ -70,6 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
   cursorPosition = document.getElementById('cursor-position');
   ctx = canvas.getContext('2d');
 
+  // Enable desktop functionality if not on mobile:
+
+  if (!/Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    isDesktop = true;
+
+    body.classList.add('hover');
+  }
+
   // Check if the browser supports all the functionality we need:
 
   let supported = false;
@@ -89,22 +97,19 @@ document.addEventListener('DOMContentLoaded', () => {
     header.setAttribute('hidden', true);
     header.setAttribute('aria-hidden', true);
 
+    // Leave only 1 of the two Gran Torino images, randomly:
+
     const torinoImage = document.getElementById(`torino-${ Math.round(Math.random()) + 1 }`);
 
-    if (torinoImage) {
-      torinoImage.setAttribute('hidden', true);
-      torinoImage.setAttribute('aria-hidden', true);
-    } 
+    if (torinoImage) torinoImage.remove();
+
+    // Delete the custom cursor and re-enable the default cursor:
+
+    if (cursor) cursor.remove();
+
+    body.classList.add('fallback');
     
     return;
-  }
-
-  // Enable desktop functionality if not on mobile:
-
-  if (!/Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    isDesktop = true;
-
-    body.classList.add('hover');
   }
 
   // Init canvas size:
