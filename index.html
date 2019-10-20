@@ -88,6 +88,20 @@
       user-select: none;
     }
 
+    @keyframes shake {
+      0% { transform: translate(1px, 1px) rotate(0deg); }
+      10% { transform: translate(-1px, -2px) rotate(-1deg); }
+      20% { transform: translate(-3px, 0px) rotate(1deg); }
+      30% { transform: translate(3px, 2px) rotate(0deg); }
+      40% { transform: translate(1px, -1px) rotate(1deg); }
+      50% { transform: translate(-1px, 2px) rotate(-1deg); }
+      60% { transform: translate(-3px, 1px) rotate(0deg); }
+      70% { transform: translate(3px, 1px) rotate(-1deg); }
+      80% { transform: translate(-1px, -1px) rotate(1deg); }
+      90% { transform: translate(1px, 2px) rotate(0deg); }
+      100% { transform: translate(1px, -2px) rotate(-1deg); }
+    }
+
     #logoLink {
       position: absolute;
       top: 0;
@@ -99,12 +113,18 @@
       display: flex;
       align-items: center;
       outline: none;
+      overflow: visible;
     }
 
     #logoImg {
       width: 32px;
       margin-right: 16px;
       transform: translate(0, -2px);
+    }
+
+    .hover #logoLink:hover > #logoImg {
+      animation: shake 0.5s;
+      animation-iteration-count: infinite;
     }
 
     #content {
@@ -223,7 +243,7 @@
 
     #footer {
       position: fixed;
-      bottom: 16px;
+      bottom: 0;
       left: 0;
       width: 100%;
       z-index: 100;
@@ -235,28 +255,88 @@
       list-style: none;
       margin: 0 auto;
       max-width: 800px;
-      padding: 0 16px;
+      padding: 0 12px;
       box-sizing: border-box;
     }
 
-    .color,
-    #customInput,
-    #customSample,
-    #refresh {
+    .color__item {
       display: block;
-      width: 32px;
-      height: 32px;
-      margin-left: 8px;
-      border-radius: 128px;
-      transition: transform ease-in 100ms;
-      box-shadow: 0 0 24px 4px var(--color, rgba(0, 0, 0, .25));
-      cursor: pointer;
-      outline: none;
     }
 
-    .color:first-child,
-    .color:last-child {
-      margin: 0;
+    .color__item--right {
+      margin-left: auto;
+    }
+
+    .color__sample {
+      position: relative;
+      border: 0;
+      outline: none;
+      padding: 4px 4px 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 128px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-sizing: content-box;
+      background: transparent;
+      color: var(--color, #000);
+    }
+
+    .color__sample::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      bottom: 16px;
+      left: 4px;
+      z-index: -1;
+      border-radius: 128px;
+      background: var(--bg, #FFF);
+      transition: transform ease-in 100ms;
+      box-shadow: 0 0 24px 4px var(--shadow, rgba(0, 0, 0, .25));
+    }
+
+    .color__sample::after {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      width: 0;
+      height: 0;
+      z-index: -1;
+      background: #000;
+      border-radius: 100%;
+      transform: translate(-50%, 50%);
+      transition: all ease-in 100ms;
+    }
+
+    .hover.focus-visible .color__sample:focus::after {
+      width: 6px;
+      height: 6px;
+    }
+
+    .color__sample--isCurrent::after {
+      width: 10px;
+      height: 10px;
+    }
+
+    .hover .color__sample:hover::before,
+    .color__sample:active::before {
+      transform: scale(1.25);
+      box-shadow: 0 0 24px 8px var(--shadow, rgba(0, 0, 0, .25));
+    }
+
+    #refresh > .button__symbol {
+      transform: rotate(45deg);
+    }
+
+    /*
+    .color,
+    #customInput,
+    #customSample {
     }
 
     #customWrapper {
@@ -274,7 +354,7 @@
       transition: width ease-in 100ms, padding ease-in 100ms;
     }
 
-    #customInput:focus {
+    .focus-visible #customInput:focus {
       box-shadow: 0 0 24px 8px var(--color, rgba(0, 0, 0, .25));
       padding: 0 8px 0 40px;
       width: 128px;
@@ -289,25 +369,7 @@
       height: 24px;
       box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .0625);
     }
-
-    #refresh {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      background: #FFF;
-      color: #F00;
-      transform: rotate(45deg);
-      margin: 0 0 0 auto;
-    }
-
-    .hover .color:hover,
-    .color:active,
-    .hover #refresh:hover,
-    #refresh:active {
-      box-shadow: 0 0 24px 8px var(--color, rgba(0, 0, 0, .25));
-      transform: scale(1.25);
-    }
+    */
 
   </style>
 
@@ -342,11 +404,25 @@
 
       <footer id="footer">
         <ul id="colors">
-          <li class="color" style="background: #FFF; --color: rgba(0, 0, 0, .125); "></li>
-          <li class="color" style="background: #FF0; --color: rgba(255, 255, 0, .5); "></li>
-          <li class="color" style="background: #F0F; --color: rgba(255, 0, 255, .5); "></li>
-          <li class="color" style="background: #00F; --color: rgba(0, 0, 255, .5); "></li>
-          <li class="color" style="background: #000; --color: rgba(0, 0, 0, .25); "></li>
+          <li class="color__item">
+            <button class="color__sample" style="--bg: #FFF; --shadow: rgba(0, 0, 0, .125); " aria-label="White (#FFF)"></button>
+          </li>
+
+          <li class="color__item">
+            <button class="color__sample" style="--bg: #FF0; --shadow: rgba(255, 200, 0, .75); " aria-label="Yellow (#FF0)"></button>
+          </li>
+
+          <li class="color__item">
+            <button class="color__sample" style="--bg: #F0F; --shadow: rgba(255, 0, 255, .5); " aria-label="Magenta (#F0F)"></button>
+          </li>
+
+          <li class="color__item">
+            <button class="color__sample" style="--bg: #00F; --shadow: rgba(0, 0, 255, .5); " aria-label="Blue (#00F)"></button>
+          </li>
+
+          <li class="color__item">
+            <button class="color__sample color__sample--isCurrent" style="--bg: #000; --shadow: rgba(0, 0, 0, .5); " aria-label="Black (#000)"></button>
+          </li>
 
           <!--
           <li id="customWrapper">
@@ -355,7 +431,11 @@
           </li>
           -->
           
-          <li id="refresh" style="--color: rgba(255, 0, 0, .25); ">+</li>
+          <li class="color__item color__item--right">
+            <button class="color__sample" id="refresh" style="--bg: #FFF; --shadow: rgba(255, 0, 0, .25); --color: #F00;" aria-label="Clear">
+              <span class="button__symbol" aria-hidden="true">+</span>
+            </button>
+          </li>
         </ul>
       </footer>
 

@@ -89,6 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('contextmenu', handleContextMenu);
 
   if (isDesktop) {
+    document.addEventListener('keydown', handleKeyDown);
+
     body.addEventListener('mouseenter', handleMouseEnter);
     body.addEventListener('mouseout', handleMouseOut);
   }
@@ -181,6 +183,20 @@ function handleContextMenu(e) {
   }
 }
 
+function handleKeyDown({ key }) {
+  console.log(key);
+
+  switch (key.toUpperCase()) {
+    case 'TAB':
+      body.classList.add('focus-visible');
+      break;
+
+    case 'ESCAPE':
+        body.classList.remove('focus-visible');
+      break;
+  }
+}
+
 function handleMouseEnter(e) {
   cursor.style.display = 'block';
 }
@@ -192,11 +208,19 @@ function handleMouseOut(e) {
 }
 
 function handleColorSelected({ target }) {
-  // TODO: Use buttons here.
-  
-  if (target.tagName === 'LI' && target.style.backgroundColor) {
-    ctx.fillStyle = color = target.style.backgroundColor;
-  }
+  if (target.tagName !== 'BUTTON')  return;
+
+  // TODO: Check if color sample or other type of button...
+
+  const backgroundColor = window.getComputedStyle(target).getPropertyValue('--bg');
+
+  ctx.fillStyle = color = backgroundColor;
+
+  const currentSample = document.querySelector('.color__sample--isCurrent');
+
+  if (currentSample) currentSample.classList.remove('color__sample--isCurrent');
+
+  target.classList.add('color__sample--isCurrent');
 }
 
 
