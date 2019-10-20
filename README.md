@@ -53,6 +53,7 @@ Ongoing Work (TODOs)
 
 ### Keyboard/Mobile Support
 
+* Do not use a fixed vertical position in small screens.
 * Increase brush size with +/-.
 * Download drawing with Enter key.
 * Shake to clear.
@@ -84,6 +85,7 @@ Ongoing Work (TODOs)
 * Create a class for all the drawing logic.
 * Deploy from `dist` directory. See https://medium.com/linagora-engineering/deploying-your-js-app-to-github-pages-the-easy-way-or-not-1ef8c48424b7.
 * Screenshot mode.
+* Add sounds: https://www.zapsplat.com/music/internal-organ-or-bloody-guts-drop-on-ground-squelch-splat/, https://www.zapsplat.com/music/wet-mop-splat-on-tiled-floor-2/, https://www.zapsplat.com/music/wet-mop-splat-on-tiled-floor-4/, https://www.zapsplat.com/music/wet-mop-splat-on-tiled-floor-1/, https://www.zapsplat.com/music/flesh-splat-squirt-drops-gore-blood-horror/, https://www.zapsplat.com/license-type/standard-license/
 
 
 Author

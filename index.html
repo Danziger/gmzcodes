@@ -127,7 +127,7 @@
 
     #logoLink {
       position: absolute;
-      top: 0;
+      top: 16px;
       left: 0;
       padding: 12px 0px 8px;
       font-size: 12px;
@@ -277,6 +277,7 @@
       z-index: 1000;
       visibility: hidden;
       mix-blend-mode: difference;
+      transform: translateZ(0);
     }
 
     .hover #cursor {
@@ -534,6 +535,51 @@
     }
     */
 
+    #ruler__root {
+      position: fixed;
+      top: 0;
+      left: 0;
+      transform: translateZ(0);
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      mix-blend-mode: difference;
+    }
+
+    #ruler__x {
+      position: absolute;
+      top: 0;
+      left: 16px;
+      width: 100%;
+      height: 16px;
+
+      background-image:
+        linear-gradient(to right, #0FF 0, #0FF 1px, transparent 1px, transparent 2px),
+        linear-gradient(to right, #0FF 0, #0FF 1px, transparent 1px, transparent 8px),        
+        linear-gradient(to right, #0FF 0, #0FF 1px, transparent 1px, transparent 64px);
+
+      background-size: 2px 12.5%, 8px 50%, 64px 100%;
+
+      background-repeat: repeat-x, repeat-x, repeat-x;
+    }
+
+    #ruler__y {
+      position: absolute;
+      top: 16px;
+      left: 0;
+      height: 100%;
+      width: 16px;
+
+      background-image:
+        linear-gradient(to bottom, #0FF 0, #0FF 1px, transparent 1px, transparent 2px),
+        linear-gradient(to bottom, #0FF 0, #0FF 1px, transparent 1px, transparent 8px),        
+        linear-gradient(to bottom, #0FF 0, #0FF 1px, transparent 1px, transparent 64px);
+
+      background-size: 12.5% 2px , 50% 8px , 100% 64px;
+
+      background-repeat: repeat-y, repeat-y, repeat-y;
+    }
+
   </style>
 
 </head>
@@ -585,6 +631,13 @@
           <a href="https://speakerdeck.com/danziger" target="_blank" rel="noopener"><span class="underline">Speaker Deck</span></a>
         </section>
       </main>
+
+      <!--
+      <div id="ruler__root">
+        <div id="ruler__x"></div>
+        <div id="ruler__y"></div>
+      </div>
+      -->
 
       <footer id="footer" hidden aria-hidden="true">
         <ul id="colors">
