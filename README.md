@@ -43,28 +43,29 @@ Ongoing Work (TODOs)
 
 ### Accessibility
 
-- User proper HTML elements (button), and add hover/focus styles to them and to link at the top.
-- Breakpoints for main text size.
-- Better layout (text should be centered but aligned to left).
-- Unsupported browsers warning.
-- Offline warning and confirmation when trying to open a link.
+* User proper HTML elements (button), and add hover/focus styles to them and to link at the top.
+* Breakpoints for main text size.
+* Better layout (text should be centered but aligned to left).
+* Unsupported browsers warning.
+* Offline warning and confirmation when trying to open a link.
 - Dynamically resized bottom menu that can accommodate more actions.
 - Add a better mobile mode that can lock/unlock the scroll if needed.
 
 
 ### Keyboard Support
 
-- Clear canvas with Esc key.
-- Download drawing with Enter key.
-- Select colors with numeric keys.
+* Clear canvas with Esc key.
+* Download drawing with Enter key.
+* Select colors with numeric keys.
+* Increase brush size with +/-.
 - Make this fully accessible with arrows, space and supr keys.
 
 
 ### Easter Eggs
 
-- Custom color selector (console).
-- Random color palette on load: cyberpunk, halloween, christmas
-- Night mode.
+* Custom color selector (console).
+* Random color palette on load: cyberpunk, halloween, christmas
+* Night mode.
 
 
 ### Canvas
@@ -81,10 +82,10 @@ Ongoing Work (TODOs)
 
 ### Tech
 
-- Add a basic Webpack setup to minify the code.
-- Create a GMZPaint class for all the drawing logic.
-- Deploy from `dist` directory. See https://medium.com/linagora-engineering/deploying-your-js-app-to-github-pages-the-easy-way-or-not-1ef8c48424b7.
-- Screenshot mode.
+* Add a basic Webpack setup to minify the code.
+* Create a GMZPaint class for all the drawing logic.
+* Deploy from `dist` directory. See https://medium.com/linagora-engineering/deploying-your-js-app-to-github-pages-the-easy-way-or-not-1ef8c48424b7.
+*s Screenshot mode.
 
 
 Author
