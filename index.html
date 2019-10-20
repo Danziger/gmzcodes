@@ -153,15 +153,24 @@
 
     .h1 {
       margin: 0;
-      font-family: 'Cardo', serif;
-      font-size: 64px;
-      line-height: 1;
     }
 
     .name,
     .title {
       display: block;
       padding-top: 16px;
+    }
+
+    .name {
+      font-family: 'Cardo', serif;
+      font-size: 64px;
+      line-height: 1;
+    }
+
+    @media only screen and (max-width: 480px) {
+      .name {
+        font-size: 40px;
+      }
     }
 
     .title {
@@ -267,7 +276,8 @@
       margin-left: auto;
     }
 
-    .color__sample {
+    .color__sample,
+    .color__button {
       position: relative;
       border: 0;
       outline: none;
@@ -285,7 +295,8 @@
       color: var(--color, #000);
     }
 
-    .color__sample::before {
+    .color__sample::before,
+    .color__button::before {
       content: '';
       position: absolute;
       top: 4px;
@@ -299,7 +310,8 @@
       box-shadow: 0 0 24px 4px var(--shadow, rgba(0, 0, 0, .25));
     }
 
-    .color__sample::after {
+    .color__sample::after,
+    .color__button::after {
       content: '';
       position: absolute;
       bottom: 8px;
@@ -313,7 +325,8 @@
       transition: all ease-in 100ms;
     }
 
-    .hover.focus-visible .color__sample:focus::after {
+    .hover.focus-visible .color__sample:focus::after,
+    .hover.focus-visible .color__button:focus::after {
       width: 6px;
       height: 6px;
     }
@@ -324,7 +337,9 @@
     }
 
     .hover .color__sample:hover::before,
-    .color__sample:active::before {
+    .color__sample:active::before, 
+    .hover .color__button:hover::before,
+    .color__button:active::before {
       transform: scale(1.25);
       box-shadow: 0 0 24px 8px var(--shadow, rgba(0, 0, 0, .25));
     }
@@ -432,7 +447,7 @@
           -->
           
           <li class="color__item color__item--right">
-            <button class="color__sample" id="refresh" style="--bg: #FFF; --shadow: rgba(255, 0, 0, .25); --color: #F00;" aria-label="Clear">
+            <button class="color__button" id="refresh" style="--bg: #FFF; --shadow: rgba(255, 0, 0, .25); --color: #F00;" aria-label="Clear">
               <span class="button__symbol" aria-hidden="true">+</span>
             </button>
           </li>

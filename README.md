@@ -44,7 +44,6 @@ Ongoing Work (TODOs)
 ### Accessibility
 
 * User proper HTML elements (button), and add hover/focus styles to them and to link at the top.
-* Breakpoints for main text size.
 * Better layout (text should be centered but aligned to left).
 * Unsupported browsers warning.
 * Offline warning and confirmation when trying to open a link.
@@ -54,11 +53,11 @@ Ongoing Work (TODOs)
 
 ### Keyboard Support
 
-* Clear canvas with Esc key.
+* Clear canvas with Supr key.
 * Download drawing with Enter key.
 * Select colors with numeric keys.
 * Increase brush size with +/-.
-- Make this fully accessible with arrows, space and supr keys.
+- Make this fully accessible with arrows, Space and Shift keys.
 
 
 ### Easter Eggs
@@ -83,7 +82,7 @@ Ongoing Work (TODOs)
 ### Tech
 
 * Add a basic Webpack setup to minify the code.
-* Create a GMZPaint class for all the drawing logic.
+* Create a class for all the drawing logic.
 * Deploy from `dist` directory. See https://medium.com/linagora-engineering/deploying-your-js-app-to-github-pages-the-easy-way-or-not-1ef8c48424b7.
 *s Screenshot mode.
 

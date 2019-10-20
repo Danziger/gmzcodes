@@ -208,19 +208,15 @@ function handleMouseOut(e) {
 }
 
 function handleColorSelected({ target }) {
-  if (target.tagName !== 'BUTTON')  return;
-
-  // TODO: Check if color sample or other type of button...
-
-  const backgroundColor = window.getComputedStyle(target).getPropertyValue('--bg');
-
-  ctx.fillStyle = color = backgroundColor;
+  if (!target.classList.contains('color__sample'))  return;
 
   const currentSample = document.querySelector('.color__sample--isCurrent');
 
   if (currentSample) currentSample.classList.remove('color__sample--isCurrent');
 
   target.classList.add('color__sample--isCurrent');
+
+  ctx.fillStyle = color = window.getComputedStyle(target).getPropertyValue('--bg');
 }
 
 
