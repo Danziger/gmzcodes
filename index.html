@@ -169,6 +169,11 @@
       z-index: 100;
     }
 
+    #torino-1,
+    #torino-2 {
+      margin-top: 16px;
+    }
+
     .h1 {
       margin: 0;
     }
@@ -528,6 +533,21 @@
           <p>JS, TS, React, NodeJS, MongoDB, Python, Blockchain, AI/ML</p>
         </header>
 
+        <header id="warning" hidden aria-hidden="true">
+          <h1 class="h1">
+            <strong class="name">Oops</strong>
+            <span class="title">It looks like you are using a crappy browser... UNCOOL.</span>
+          </h1>
+
+          <p>So... Get the f**k off my site!</p>
+      
+          <!-- TODO: Wrap in <picture> and add placeholder to preserve aspect ratio -->
+          <img id="torino-1" class="image" src="static/images/gifs/get-off-my-lawn-gran-torino.gif" alt="Get off my lawn scene from Gran Torino" />
+          <img id="torino-2" class="image" src="static/images/gifs/gran-torino-finger-gun.gif" alt="Finger gun scene from Gran Torino" />
+
+          <p>You can get in touch using:</p>
+        </header>
+
         <section class="links"> 
           <a href="https://www.linkedin.com/in/danigamezfranco/" target="_blank" rel="noopener"><span class="underline">LinkedIn</span></a>
           <a href="https://stackoverflow.com/users/3723993/danziger" target="_blank" rel="noopener"><span class="underline">Stack Overflow</span></a>
@@ -537,7 +557,7 @@
         </section>
       </main>
 
-      <footer id="footer">
+      <footer id="footer" hidden aria-hidden="true">
         <ul id="colors">
           <li class="color__item">
             <button class="color__sample" style="--bg: #FFF; --shadow: rgba(0, 0, 0, .125); " aria-label="White (#FFF)"></button>

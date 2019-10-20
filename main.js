@@ -25,6 +25,8 @@ let isDesktop = false;
 
 let body;
 let header;
+let warning;
+let footer;
 let colors;
 let refresh;
 let canvas;
@@ -58,6 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   body = document.body;
   header = document.getElementById('header');
+  warning = document.getElementById('warning');
+  footer = document.getElementById('footer');
   colors = document.getElementById('colors');
   refresh = document.getElementById('refresh');
   canvas = document.getElementById('canvas');
@@ -65,6 +69,35 @@ document.addEventListener('DOMContentLoaded', () => {
   cursorIcon = document.getElementById('cursor-icon');
   cursorPosition = document.getElementById('cursor-position');
   ctx = canvas.getContext('2d');
+
+  // Check if the browser supports all the functionality we need:
+
+  let supported = false;
+
+  try {
+    supported = !/MSIE|Trident/.test(window.navigator.userAgent) && window.CSS.supports('mix-blend-mode','multiply') && location.hash !== '#uncool';
+  } catch (e) { /* NOT SUPPORTED */ }
+
+  if (supported) {
+    // TODO: Add animation to show footer:
+    footer.removeAttribute('hidden');
+    footer.removeAttribute('aria-hidden');
+  } else {
+    warning.removeAttribute('hidden');
+    warning.removeAttribute('aria-hidden');
+
+    header.setAttribute('hidden', true);
+    header.setAttribute('aria-hidden', true);
+
+    const torinoImage = document.getElementById(`torino-${ Math.round(Math.random()) + 1 }`);
+
+    if (torinoImage) {
+      torinoImage.setAttribute('hidden', true);
+      torinoImage.setAttribute('aria-hidden', true);
+    } 
+    
+    return;
+  }
 
   // Enable desktop functionality if not on mobile:
 
