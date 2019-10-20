@@ -200,7 +200,7 @@ function handleKeyDown({ key }) {
     default: 
       const colorNumber = parseInt(key, 10);
 
-      if (colorNumber === NaN || colorNumber <= 0 || colorNumber > colors.children.length - 1) return;
+      if (isNaN(colorNumber) || colorNumber <= 0 || colorNumber > colors.children.length - 1) return;
 
       colors.children[colorNumber - 1].children[0].click(); 
   }
