@@ -88,6 +88,12 @@
       user-select: none;
     }
 
+    .hover,
+    .hover a,
+    .hover button {
+      cursor: none;
+    }
+
     @keyframes shake {
       0% { transform: translate(1px, 1px) rotate(0deg); }
       10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -101,6 +107,17 @@
       90% { transform: translate(1px, 2px) rotate(0deg); }
       100% { transform: translate(1px, -2px) rotate(-1deg); }
     }
+
+    @keyframes breathe {
+      0% { transform: scale(4.5); }
+      30% { transform: scale(4.5); }
+      40% { transform: scale(5); }
+      50% { transform: scale(3); }
+      60% { transform: scale(3.5); }
+      70% { transform: scale(5); }
+      80% { transform: scale(4.5); }
+      100% { transform: scale(4.5); }
+  }
 
     #logoLink {
       position: absolute;
@@ -120,6 +137,7 @@
       width: 32px;
       margin-right: 16px;
       transform: translate(0, -2px);
+      pointer-events: none;
     }
 
     .hover #logoLink:hover > #logoImg {
@@ -231,11 +249,109 @@
       z-index: 1000;
       visibility: hidden;
       mix-blend-mode: difference;
-      background: #0FF;
     }
 
     .hover #cursor {
       visibility: visible;
+    }  
+
+    #ruler-x-primary {
+      position: absolute;
+      top: 100%;
+      right: calc(100% + 8px);
+      width: 100vw;
+      border-bottom: 1px solid rgba(0, 255, 255, .125);
+      transition: right ease-in 250ms;
+    }
+
+    .clickable > #ruler-x-primary {
+      right: calc(100% + 24px);
+    }
+
+    #ruler-y-primary {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 100%;
+      height: 100vh;
+      border-right: 1px solid rgba(0, 255, 255, .125);
+      transition: bottom ease-in 250ms;
+    }
+
+    .clickable > #ruler-y-primary {
+      bottom: calc(100% + 24px);
+    }
+
+    #ruler-x-secondary {
+      position: absolute;
+      top: 100%;
+      left: calc(100% + 40px);
+      width: 100vw;
+      border-bottom: 1px solid rgba(0, 255, 255, .0625);
+      transition: left ease-in 250ms;
+    }
+
+    .clickable > #ruler-x-secondary {
+      left: calc(100% + 24px);
+    }
+
+    #ruler-y-secondary {
+      position: absolute;
+      top: calc(100% + 40px);
+      left: 100%;
+      height: 100vh;
+      border-right: 1px solid rgba(0, 255, 255, .0625);
+      transition: top ease-in 250ms;
+    }
+
+    .clickable > #ruler-y-secondary {
+      top: calc(100% + 24px);
+    }
+
+    #cursor-icon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0FF;
+    }
+
+    .clickable > #cursor-icon {
+      border-radius: 100%;
+      transform: scale(4);      
+      animation: breathe 0.5s;
+      animation-iteration-count: infinite;
+      animation-delay: 250ms;
+    }
+
+    #cursor-position {
+      position: absolute;
+      top: 100%;
+      left: 100%;
+      width: 64px;
+      height: 64px;
+      padding: 8px 0 0 8px;
+      color: #0FF;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 10px;
+      line-height: 1.25;
+      font-variant-numeric: tabular-nums;
+      transition: opacity ease-in 250ms;
+    }  
+
+    .clickable > #cursor-position {
+      opacity: 0;
+    }
+
+    #cursor-position::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 32px;
+      height: 32px;
+      border-top: 2px solid #0FF;
+      border-left: 2px solid #0FF;
     }
 
     /*#cursor::before {
@@ -342,6 +458,10 @@
     .color__button:active::before {
       transform: scale(1.25);
       box-shadow: 0 0 24px 8px var(--shadow, rgba(0, 0, 0, .25));
+    }
+
+    .button__symbol {      
+      pointer-events: none;
     }
 
     #refresh > .button__symbol {
@@ -456,7 +576,14 @@
 
       <canvas id="canvas"></canvas>
 
-      <span id="cursor" style="display: none; "></span>
+      <div id="cursor" style="display: none; ">
+        <div id="ruler-x-primary"></div>
+        <div id="ruler-y-primary"></div>
+        <div id="ruler-x-secondary"></div>
+        <div id="ruler-y-secondary"></div>
+        <div id="cursor-icon"></div>
+        <div id="cursor-position">0, 0</div>
+      </div>
     
     </div>
   </div>

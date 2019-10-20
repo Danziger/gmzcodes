@@ -12,10 +12,14 @@ let lastX = null;
 let lastY = null;
 // let lastWidth = window.innerWidth;
 // let lastHeight = window.innerHeight;
-let offsetLeft = (window.innerWidth % unit) / 2 | 0; // TODO: From the canvas container
-let offsetTop = (window.innerHeigh  % unit) / 2 | 0; // TODO: From the canvas container
-// let timeoutID = null;
+// let offsetLeft = (window.innerWidth % unit) / 2 | 0; // TODO: From the canvas container
+// let offsetTop = (window.innerHeigh  % unit) / 2 | 0; // TODO: From the canvas container
+let offsetLeft = 0;
+let offsetTop = 0;
 let isDesktop = false;
+// let timeoutID = null;
+
+
 
 // DOM Elements:
 
@@ -25,6 +29,8 @@ let colors;
 let refresh;
 let canvas;
 let cursor;
+let cursorIcon;
+let cursorPosition;
 let ctx;
 
 // WELCOME MESSAGE FOR TECHIES:
@@ -56,6 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
   refresh = document.getElementById('refresh');
   canvas = document.getElementById('canvas');
   cursor = document.getElementById('cursor');
+  cursorIcon = document.getElementById('cursor-icon');
+  cursorPosition = document.getElementById('cursor-position');
   ctx = canvas.getContext('2d');
 
   // Enable desktop functionality if not on mobile:
@@ -149,8 +157,18 @@ function handleMove(e) {
   
   if (isDesktop) {
     requestAnimationFrame(() => {
+      cursorPosition.innerText = `${ x } , ${ y }`;
       cursor.style.display = 'block';
       cursor.style.transform = `translate(${ x * unit + offsetLeft }px, ${ y * unit + offsetTop }px)`;
+
+      const { target } = e;
+      const { tagName } = target;
+
+      if (tagName === 'BUTTON' || tagName === 'A' || target.className === 'underline') {
+        cursor.classList.add('clickable');
+      } else {
+        cursor.classList.remove('clickable');
+      }
     });
   }
   
@@ -184,6 +202,8 @@ function handleContextMenu(e) {
 }
 
 function handleKeyDown({ key }) {
+  // console.log(key);
+
   switch (key.toUpperCase()) {
     case 'TAB':
       body.classList.add('focus-visible');
@@ -196,6 +216,43 @@ function handleKeyDown({ key }) {
     case 'DELETE':
       resetCanvas();
       break;
+
+    /*
+
+    case '+':
+      unit = Math.min(unit + 8, 128);
+      scaledUnit = unit * scale;
+
+      const x = Math.floor((lastX - offsetLeft) / unit);
+      const y = Math.floor((lastY - offsetTop) / unit);
+      
+      if (isDesktop) {
+        requestAnimationFrame(() => {
+          cursor.style.width = `${ unit }px`;
+          cursor.style.height = `${ unit }px`;
+          cursor.style.transform = `translate(${ x * unit + offsetLeft }px, ${ y * unit + offsetTop }px)`;
+        });
+      }
+
+      break;
+
+    case '-':
+      unit = Math.max(unit - 8, 1);
+      scaledUnit = unit * scale;
+      lastX = Math.floor((lastX - offsetLeft) / unit);
+      lastY = Math.floor((lastY - offsetTop) / unit);
+      
+      if (isDesktop) {
+        requestAnimationFrame(() => {
+          cursor.style.width = `${ unit }px`;
+          cursor.style.height = `${ unit }px`;
+          cursor.style.transform = `translate(${ lastX * unit + offsetLeft }px, ${ lastY * unit + offsetTop }px)`;
+        });
+      }
+
+      break;
+
+    */
 
     default: 
       const colorNumber = parseInt(key, 10);

@@ -47,17 +47,18 @@ Ongoing Work (TODOs)
 * Better layout (text should be centered but aligned to left).
 * Unsupported browsers warning.
 * Offline warning and confirmation when trying to open a link.
-* Add rulers to the cursor.
+* Add rulers to the sides of the page.
 - Dynamically resized bottom menu that can accommodate more actions.
 - Add a better mobile mode that can lock/unlock the scroll if needed.
 
 
-### Keyboard Support
+### Keyboard/Mobile Support
 
 * Download drawing with Enter key.
 * Increase brush size with +/-.
 - Make this fully accessible with arrows, Space and Shift keys.
-
+- Shake to clear.
+- Multitouch on mobile.
 
 ### Easter Eggs
 
@@ -70,7 +71,6 @@ Ongoing Work (TODOs)
 
 - Download/share your creation.
 - Change cursor/brush size/shape.
-- Multitouch on mobile.
 - Undo (canvas snapshots).
 - Color sorting by usage.
 - Custom colors / more colors.
