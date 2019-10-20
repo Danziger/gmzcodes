@@ -184,16 +184,25 @@ function handleContextMenu(e) {
 }
 
 function handleKeyDown({ key }) {
-  console.log(key);
-
   switch (key.toUpperCase()) {
     case 'TAB':
       body.classList.add('focus-visible');
       break;
 
     case 'ESCAPE':
-        body.classList.remove('focus-visible');
+      body.classList.remove('focus-visible');
       break;
+
+    case 'DELETE':
+      resetCanvas();
+      break;
+
+    default: 
+      const colorNumber = parseInt(key, 10);
+
+      if (colorNumber === NaN || colorNumber <= 0 || colorNumber > colors.children.length - 1) return;
+
+      colors.children[colorNumber - 1].children[0].click(); 
   }
 }
 

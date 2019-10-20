@@ -47,15 +47,14 @@ Ongoing Work (TODOs)
 * Better layout (text should be centered but aligned to left).
 * Unsupported browsers warning.
 * Offline warning and confirmation when trying to open a link.
+* Add rulers to the cursor.
 - Dynamically resized bottom menu that can accommodate more actions.
 - Add a better mobile mode that can lock/unlock the scroll if needed.
 
 
 ### Keyboard Support
 
-* Clear canvas with Supr key.
 * Download drawing with Enter key.
-* Select colors with numeric keys.
 * Increase brush size with +/-.
 - Make this fully accessible with arrows, Space and Shift keys.
 
