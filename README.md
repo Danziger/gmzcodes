@@ -41,6 +41,10 @@ Don't hesitate to report any issue you find in this website/project by opening a
 Ongoing Work (TODOs)
 --------------------
 
+### Bugs:
+
+* Cursor not always hidden when mouse goes out of the window (probably re-shown from requestAnimationFrame).
+
 ### Accessibility
 
 * User proper HTML elements (button), and add hover/focus styles to them and to link at the top.
