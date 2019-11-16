@@ -34,6 +34,10 @@ let cursor;
 let cursorIcon;
 let cursorPosition;
 let ctx;
+let ruler;
+let rulerX;
+let rulerY;
+let rulerButton;
 
 // WELCOME MESSAGE FOR TECHIES:
 
@@ -69,13 +73,20 @@ document.addEventListener('DOMContentLoaded', () => {
   cursorIcon = document.getElementById('cursor-icon');
   cursorPosition = document.getElementById('cursor-position');
   ctx = canvas.getContext('2d');
+  ruler = document.getElementById('ruler__root');
+  rulerX = document.getElementById('ruler__x');
+  rulerY = document.getElementById('ruler__y');
+  rulerButton = document.getElementById('ruler__button');
+
 
   // Enable desktop functionality if not on mobile:
 
   if (!/Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     isDesktop = true;
 
-    body.classList.add('hover');
+    body.classList.add('hover'); // TODO: Rename to hover-visible (and same for focus-visible).
+
+    // TODO: Move focus-related events here (should work in NOT SUPPORTED page too).
   }
 
   // Check if the browser supports all the functionality we need:
@@ -112,6 +123,24 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  if (isDesktop) {
+    // Populate rulers' scales:
+
+    let rulerScaleX = '';
+    let rulerScaleY = '';
+
+    // Will work up  to 5K:
+    for (let i = 0; i < 80; ++i) {
+      rulerScaleX += `<span class="ruler__stepX">${ i * 8 }</span>`;
+      rulerScaleY += `<span class="ruler__stepY">${ i * 8 }</span>`;
+    }
+
+    rulerX.innerHTML = rulerScaleX;
+    rulerY.innerHTML = rulerScaleY;
+
+    ruler.classList.add('visible');
+  }
+
   // Init canvas size:
 
   canvas.setAttribute('width', window.innerWidth * scale);
@@ -139,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     body.addEventListener('mouseenter', handleMouseEnter);
     body.addEventListener('mouseout', handleMouseOut);
+    rulerButton.addEventListener('click', handleRulerToggled);
   }
 
   colors.addEventListener('click', handleColorSelected);
@@ -157,6 +187,8 @@ function handleResize() {
 }
 
 function handleTouchStart(e) {
+  // TODO: Disable focus.
+
   drawing = true;
   lastX = Math.floor((e.pageX - offsetLeft) / unit);
   lastY = Math.floor((e.pageY - offsetTop) / unit);
@@ -165,9 +197,11 @@ function handleTouchStart(e) {
 }
 
 function handleMouseDown(e) {
+  // TODO: Disable focus.
+
   const { which, target } = e;
   
-  if (colors.contains(target)) {
+  if (colors.contains(target) || target === rulerButton) {
     return;
   }
   
@@ -195,7 +229,7 @@ function handleMove(e) {
   
   if (isDesktop) {
     requestAnimationFrame(() => {
-      cursorPosition.innerText = `${ x } , ${ y }`;
+      cursorPosition.innerText = `${ x + 1 } , ${ y + 1 }`;
       cursor.style.display = 'block';
       cursor.style.transform = `translate(${ x * unit + offsetLeft }px, ${ y * unit + offsetTop }px)`;
 
@@ -321,6 +355,10 @@ function handleColorSelected({ target }) {
   target.classList.add('color__sample--isCurrent');
 
   ctx.fillStyle = color = window.getComputedStyle(target).getPropertyValue('--bg');
+}
+
+function handleRulerToggled() {
+  ruler.classList.toggle('expanded');
 }
 
 

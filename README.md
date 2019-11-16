@@ -44,27 +44,31 @@ Ongoing Work (TODOs)
 ### Accessibility
 
 * User proper HTML elements (button), and add hover/focus styles to them and to link at the top.
-* Better layout (text should be centered but aligned to left).
 * Offline warning.
-* Add rulers to the sides of the page.
+
+
+### Design/responsiveness
+
+* Better layout (text should be centered but aligned to left).
+* Do not use a fixed vertical position in small screens.
 - Dynamically resized bottom menu that can accommodate more actions.
 - Add a better mobile mode that can lock/unlock the scroll if needed.
 
 
 ### Keyboard/Mobile Support
 
-* Do not use a fixed vertical position in small screens.
 * Increase brush size with +/-.
 * Download drawing with Enter key.
 * Shake to clear.
 - Multitouch on mobile.
-- Make this fully accessible with arrows, Space and Shift keys.
+- Make this fully accessible with arrows, Space, Shift keys and... Sound?
 
 
 ### Easter Eggs
 
 * Night mode.
 * Random color palette on load: cyberpunk, halloween, christmas.
+* Fade text away as you draw.
 - Custom color selector (console).
 
 
@@ -81,7 +85,7 @@ Ongoing Work (TODOs)
 
 ### Tech
 
-* Add a basic Webpack setup to minify the code.
+* Add a basic Webpack setup to minify the code and add hashes to the bundles so that the Service Worker always returns the latest versions.
 * Create a class for all the drawing logic.
 * Deploy from `dist` directory. See https://medium.com/linagora-engineering/deploying-your-js-app-to-github-pages-the-easy-way-or-not-1ef8c48424b7.
 * Screenshot mode.
