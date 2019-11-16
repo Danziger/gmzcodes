@@ -53,6 +53,7 @@ Ongoing Work (TODOs)
 
 ### Design/responsiveness
 
+* Prevent mouse pointer mode while drawing.
 * Better layout (text should be centered but aligned to left).
 * Do not use a fixed vertical position in small screens.
 - Dynamically resized bottom menu that can accommodate more actions.
