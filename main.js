@@ -233,6 +233,8 @@ function handleMove(e) {
       cursor.style.display = 'block';
       cursor.style.transform = `translate(${ x * unit + offsetLeft }px, ${ y * unit + offsetTop }px)`;
 
+      if (drawing) return; 
+
       const { target } = e;
       const { tagName } = target;
 

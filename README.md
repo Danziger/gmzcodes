@@ -45,6 +45,7 @@ Ongoing Work (TODOs)
 
 * Cursor not always hidden when mouse goes out of the window (probably re-shown from requestAnimationFrame).
 
+
 ### Accessibility
 
 * User proper HTML elements (button), and add hover/focus styles to them and to link at the top.
@@ -53,7 +54,6 @@ Ongoing Work (TODOs)
 
 ### Design/responsiveness
 
-* Prevent mouse pointer mode while drawing.
 * Better layout (text should be centered but aligned to left).
 * Do not use a fixed vertical position in small screens.
 - Dynamically resized bottom menu that can accommodate more actions.
