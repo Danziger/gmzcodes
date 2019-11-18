@@ -197,16 +197,11 @@ function handleTouchStart(e) {
 }
 
 function handleMouseDown(e) {
-  // TODO: Disable focus.
-
   const { which, target } = e;
   
-  if (colors.contains(target) || target === rulerButton) {
+  if (target.tagName === 'BUTTON' || target.parentElement.tagName === 'A') {
+    // Ruler button and colors are BUTTONs and links' are A > SPAN.underline.
     return;
-  }
-  
-  if (!header.contains(target)) {
-    e.preventDefault();
   }
   
   if (which !== 2) {
