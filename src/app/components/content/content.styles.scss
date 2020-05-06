@@ -1,0 +1,67 @@
+@import '../../styles/mixins/media-queries';
+
+.content {
+
+  &__root {
+    position: relative;
+    padding: 48px 0;
+    margin: 0 0 auto;
+
+    .app--showScreenshot & {
+      padding: 32px 0;
+      margin: 0;
+    }
+  }
+
+  &__imageContainer {
+    position: relative;
+    width: 100%;
+    margin: 16px 0;
+  }
+
+  &__picture {
+    position: relative;
+    background: rgba(0, 0, 0, .0625);
+    border-radius: 2px;
+    overflow: hidden;
+    display: block;
+  }
+
+  &__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__name {
+    display: block;
+    font-family: 'Cardo', serif;
+    line-height: 1;
+    font-size: 40px;
+
+    @include above(xs) {
+      font-size: 64px;
+    }
+  }
+
+  &__role {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.25;
+    padding-top: 16px;
+  }
+
+  &__p {
+    margin: 0;
+    padding-top: 16px;
+  }
+
+  &__links {
+    padding-top: 16px;
+  }
+}

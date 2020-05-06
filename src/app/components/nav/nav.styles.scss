@@ -1,0 +1,54 @@
+@import '../../styles/animations/shake.scss';
+
+.nav {
+  $root: &;
+
+  &__root {
+    position: relative;
+    display: flex;
+  }
+
+  &__logoLink {
+    position: relative;
+    padding: 32px 0px 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    outline: none;
+    overflow: visible;
+
+    .app--showScreenshot & {
+      padding-top: 8px;
+    }
+  }
+
+  &__logoImg {
+    height: 32px;
+    width: 32px;
+    margin-right: 16px;
+    transform: translate(0, -2px);
+    pointer-events: none;
+    border: 0;
+
+    .app--hasActiveHover #{$root}__logoLink:hover > & {
+      animation: shake .5s;
+      animation-iteration-count: infinite;
+    }
+  }
+
+  &__linkEffect.link__linkEffect {
+    top: 39px;
+    left: 48px;
+
+    &::before {
+      top: 0;
+    }
+
+    &::after {
+      top: 5px;
+    }
+  }
+}
+
