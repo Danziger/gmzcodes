@@ -1,6 +1,6 @@
 const S_LINK_UNDERLINE = '.link__underline';
 const C_LINK_UNDERLINE = 'link__underline';
-const C_LINK_EFFECT = 'link__underline';
+const C_LINK_EFFECT = 'link__linkEffect';
 const MIN_LINK_EFFECT_WIDTH = 10;
 const MAX_LINK_EFFECT_WIDTH = 60;
 const MIN_RERANDOMIZE_DELAY = 250;
@@ -33,6 +33,10 @@ function reRandomizeLinkEffect(currentTarget) {
   }, MIN_RERANDOMIZE_DELAY + Math.random() * MAX_RERANDOMIZE_DELAY_INCREMENT);
 }
 
+function stopLinkEffect({ currentTarget }) {
+  window.clearTimeout(timeoutIDs[currentTarget]);
+}
+
 export function initializeLinks() {
   Array.from(document.querySelectorAll(S_LINK_UNDERLINE)).forEach((linkUnderline) => {
     const linkRoot = linkUnderline.parentElement;
@@ -40,14 +44,15 @@ export function initializeLinks() {
     randomizeLinkEffect(linkRoot);
 
     linkRoot.onmouseenter = ({ currentTarget }) => reRandomizeLinkEffect(currentTarget);
+    linkRoot.onmouseleave = stopLinkEffect;
 
     // Links that have some custom classes like the one inside nav are not cloned automatically here:
     if (linkUnderline.className !== C_LINK_UNDERLINE) return;
 
     const linkEffect = linkUnderline.cloneNode(true);
 
-    linkEffect.className = 'link__linkEffect';
-    linkEffect.setAttribute(C_LINK_EFFECT, true);
+    linkEffect.className = C_LINK_EFFECT;
+    linkEffect.setAttribute('aria-hidden', true);
 
     linkRoot.appendChild(linkEffect);
   });

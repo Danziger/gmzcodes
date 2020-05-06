@@ -16,19 +16,15 @@ Visual
 Tech
 ----
 
-- **(!)** Add a ServiceWorker with Webpack.
+- Create a separated page for non-supported browsers and load images async.
 
-- **(!)** Deploy from `dist` directory. See https://medium.com/linagora-engineering/deploying-your-js-app-to-github-pages-the-easy-way-or-not-1ef8c48424b7, https://gist.github.com/cobyism/4730490.
-
-- Create a separated page for non-supported browsers.
+- Convert GIFs to https://ezgif.com/gif-to-webp and re-record them with better quality.
 
 ----
 
 - Screenshot mode with multiple sizes.
 
 - Add sourcemaps.
-
-- Convert GIFs to https://ezgif.com/gif-to-webp and re-record them with better quality.
 
 
 Drawing
