@@ -9,6 +9,12 @@ window.enableScreenshotMode = () => app.enableScreenshotMode();
 
 window.disableScreenshotMode = () => app.disableScreenshotMode();
 
+window.v = () => {
+  const buildDate = new Date(process.env.BUILD_DATE);
+
+  return `${ buildDate.toDateString() } at ${ buildDate.toLocaleTimeString() } | ${ process.env.COMMIT_HASH }`;
+};
+
 // SERVICE WORKER:
 
 if ('serviceWorker' in navigator) {
