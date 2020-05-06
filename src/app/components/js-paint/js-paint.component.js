@@ -254,36 +254,39 @@ export class JsPaint {
     const { offsetLeft, offsetTop, unit, scaledUnit, lastX, lastY, cursor, drawing } = this;
     const x = target ? Math.floor((pageX - offsetLeft) / unit) : pageX;
     const y = target ? Math.floor((pageY - offsetTop) / unit) : pageY;
-
-    if (this.lastX === x && this.lastY === y) return;
+    const w = Math.abs(x - lastX);
+    const h = Math.abs(y - lastY);
+    const hasPositionChanged = this.lastX !== x || this.lastY !== y;
 
     this.lastX = x;
     this.lastY = y;
 
-    const w = Math.abs(x - lastX);
-    const h = Math.abs(y - lastY);
-    const currentColor = drawing ? this.color : rgbToHex(
-      ...this.ctx.getImageData(x * scaledUnit + offsetLeft, y * scaledUnit + offsetTop, 1, 1).data,
-    );
+    if (hasPositionChanged) {
+      const currentColor = drawing ? this.color : rgbToHex(
+        ...this.ctx.getImageData(x * scaledUnit + offsetLeft, y * scaledUnit + offsetTop, 1, 1).data,
+      );
 
-    try {
-      AudioService.playFreq(COLOR_TO_FREQ[currentColor]);
-      AudioService.resume();
-    } catch (err) { /* Continue updating the cursor as normal. */ }
+      try {
+        AudioService.playFreq(COLOR_TO_FREQ[currentColor]);
+        AudioService.resume();
+      } catch (err) { /* Continue updating the cursor as normal. */ }
+    }
 
     requestAnimationFrame(() => {
-      if (cursor) cursor.update(x * unit + offsetLeft, y * unit + offsetTop, `${ x + 1 } , ${ y + 1 }`);
+      if (cursor && !drawing) cursor.setModeForElement(target);
 
-      if (drawing) {
-        if (w === 0 && h === 0) {
-          this.paintPixel(x, y);
-        } else if (w > h) {
-          this.lineLandscape(lastX, lastY, x, y);
-        } else {
-          this.linePortrait(lastX, lastY, x, y);
+      if (hasPositionChanged) {
+        if (cursor) cursor.update(x * unit + offsetLeft, y * unit + offsetTop, `${ x + 1 } , ${ y + 1 }`);
+
+        if (drawing) {
+          if (w === 0 && h === 0) {
+            this.paintPixel(x, y);
+          } else if (w > h) {
+            this.lineLandscape(lastX, lastY, x, y);
+          } else {
+            this.linePortrait(lastX, lastY, x, y);
+          }
         }
-      } else if (cursor) {
-        cursor.setModeForElement(target);
       }
     });
   }
