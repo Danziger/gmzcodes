@@ -1,0 +1,183 @@
+@import '../../styles/animations/breathe.scss';
+
+@import '../../styles/variables/variables';
+
+.cursor {
+  $root: &;
+
+  &__root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    pointer-events: none;
+    z-index: 1000;
+    visibility: hidden;
+    mix-blend-mode: difference;
+    transform: translateZ(0);
+
+    .app--hasActiveHover > & {
+      visibility: visible;
+    }
+
+    .app--showScreenshot > & {
+      display: none;
+    }
+  }
+
+  &__ruler {
+
+    &Horizontal {
+
+      &Primary {
+        position: absolute;
+        top: 100%;
+        width: 0;
+        right: calc(100% + 8px);
+        border-bottom: 1px solid $c-base;
+        border-color: var(--c-ruler);
+        transition: right linear 250ms, width linear 250ms;
+        opacity: .25;
+
+        #{$root}--isClickable > & {
+          right: calc(100% + 24px);
+        }
+
+        .app--hasActiveRuler & {
+          width: 100vw;
+        }
+      }
+
+      &Secondary {
+        position: absolute;
+        top: 100%;
+        width: 0;
+        left: calc(100% + 40px);
+        border-bottom: 1px solid $c-base;
+        border-color: var(--c-ruler);
+        transition: right linear 250ms, width linear 250ms;
+        opacity: .0625;
+
+        #{$root}--isClickable > & {
+          left: calc(100% + 24px);
+        }
+
+        .app--hasActiveRuler & {
+          width: 100vw;
+        }
+      }
+    }
+
+    &Vertical {
+
+      &Primary {
+        position: absolute;
+        left: 100%;
+        height: 0;
+        bottom: calc(100% + 8px);
+        border-right: 1px solid $c-base;
+        border-color: var(--c-ruler);
+        transition: bottom linear 250ms, height linear 250ms;
+        opacity: .25;
+
+        #{$root}--isClickable > & {
+          bottom: calc(100% + 24px);
+        }
+
+        .app--hasActiveRuler & {
+          height: 100vh;
+        }
+      }
+
+      &Secondary {
+        position: absolute;
+        left: 100%;
+        height: 0;
+        top: calc(100% + 40px);
+        border-right: 1px solid $c-base;
+        border-color: var(--c-ruler);
+        transition: bottom linear 250ms, height linear 250ms;
+        opacity: .0625;
+
+        #{$root}--isClickable > & {
+          top: calc(100% + 24px);
+        }
+
+        .app--hasActiveRuler & {
+          height: 100vh;
+        }
+      }
+    }
+  }
+
+  &__brush {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--c-current);
+    filter: invert(1);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(255, 0, 0, .25);
+    }
+
+    #{$root}--isClickable > & {
+      border-radius: 100%;
+      transform: scale(4);
+      animation: breathe .5s;
+      animation-iteration-count: infinite;
+      animation-delay: 250ms;
+      background: var(--c-ruler);
+      filter: none;
+
+      &::before {
+        display: none;
+      }
+    }
+  }
+
+  &__position {
+    position: absolute;
+    top: 100%;
+    left: 100%;
+    width: 64px;
+    height: 64px;
+    padding: 8px 0 0 8px;
+    color: var(--c-ruler);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px;
+    line-height: 1.25;
+    font-variant-numeric: tabular-nums;
+    transition: opacity linear 250ms;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 32px;
+      height: 32px;
+      border-top: 2px solid $c-base;
+      border-left: 2px solid $c-base;
+      border-color: var(--c-ruler);
+
+      background: #000;
+      backface-visibility: hidden;
+      mix-blend-mode: difference;
+    }
+
+    #{$root}--isClickable > & {
+      opacity: 0;
+    }
+  }
+}

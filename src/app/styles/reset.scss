@@ -1,0 +1,16 @@
+a {
+  overflow: hidden;
+  outline: none;
+}
+
+a,
+a:link,
+a:visited,
+a:active {
+  color: #000;
+  text-decoration: none;
+}
+
+[hidden] {
+  display: none !important;
+}
