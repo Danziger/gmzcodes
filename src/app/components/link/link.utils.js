@@ -1,5 +1,6 @@
 const S_LINK_UNDERLINE = '.link__underline';
 const C_LINK_UNDERLINE = 'link__underline';
+const C_LINK_UNDERLINE_HIDDEN = 'link__underline link__underline--hidden';
 const C_LINK_EFFECT = 'link__linkEffect';
 const MIN_LINK_EFFECT_WIDTH = 10;
 const MAX_LINK_EFFECT_WIDTH = 60;
@@ -39,7 +40,7 @@ function stopLinkEffect({ currentTarget }) {
 
 export function initializeLinks() {
   Array.from(document.querySelectorAll(S_LINK_UNDERLINE)).forEach((linkUnderline) => {
-    const linkRoot = linkUnderline.parentElement;
+    const { parentElement: linkRoot, className } = linkUnderline;
 
     randomizeLinkEffect(linkRoot);
 
@@ -47,7 +48,7 @@ export function initializeLinks() {
     linkRoot.onmouseleave = stopLinkEffect;
 
     // Links that have some custom classes like the one inside nav are not cloned automatically here:
-    if (linkUnderline.className !== C_LINK_UNDERLINE) return;
+    if (className !== C_LINK_UNDERLINE && className !== C_LINK_UNDERLINE_HIDDEN) return;
 
     const linkEffect = linkUnderline.cloneNode(true);
 

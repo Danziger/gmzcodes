@@ -42,7 +42,7 @@
     display: block;
     font-family: 'Cardo', serif;
     line-height: 1;
-    font-size: 40px;
+    font-size: 32px;
 
     @include above(xs) {
       font-size: 64px;
@@ -63,5 +63,13 @@
 
   &__links {
     padding-top: 16px;
+  }
+
+  &__hiringLink {
+    display: inline-block;
+    margin-top: 16px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.25;
   }
 }

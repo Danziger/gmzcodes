@@ -3,20 +3,25 @@
   "version": "1.0.0",
   "description": "👨‍💻 Dani Gamez's personal website PWA built using JavaScript, SCSS and HTML5.",
   "homepage": "https://gmzcodes.com",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Danziger/gmzcodes.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Danziger/gmzcodes/issues"
-  },
+  "license": "UNLICENSED",
+
   "author": {
     "name": "Daniel Gámez Franco",
     "email": "gmzcodes@outlook.com",
     "url": "https://gmzcodes.com"
   },
-  "license": "UNLICENSED",
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Danziger/gmzcodes.git"
+  },
+
+  "bugs": {
+    "url": "https://github.com/Danziger/gmzcodes/issues"
+  },
+
   "main": "./src/app/main.js",
+
   "scripts": {
     "start": "npm run start:dev",
     "start:dev": "webpack-dev-server --mode development --hot --display-error-details --progress",
@@ -34,9 +39,11 @@
     "nodeclean": "rm -rf node_modules",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+
   "dependencies": {
     "core-js": "^3.6.5"
   },
+
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -59,9 +66,7 @@
     "html-loader": "^1.1.0",
     "html-webpack-inline-source-plugin": "^1.0.0-beta.2",
     "html-webpack-plugin": "^4.3.0",
-    "i": "^0.3.6",
     "mini-css-extract-plugin": "^0.9.0",
-    "npm": "^6.14.4",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
     "sass": "^1.26.5",
@@ -79,11 +84,13 @@
     "webpack-dev-server": "^3.10.3",
     "workbox-webpack-plugin": "^5.1.3"
   },
+
   "postcss": {
     "plugins": {
       "autoprefixer": {}
     }
   },
+
   "browserslist": [
     "> 0.5%",
     "last 2 version",
