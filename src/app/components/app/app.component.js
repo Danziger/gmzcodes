@@ -63,15 +63,15 @@ export class App {
       this.cursor = new Cursor();
 
       initializeLinks();
-
-      this.ruler = new Ruler((isRulerActive) => {
-        if (isRulerActive) {
-          root.classList.add(App.C_HAS_ACTIVE_RULER);
-        } else {
-          root.classList.remove(App.C_HAS_ACTIVE_RULER);
-        }
-      });
     }
+
+    this.ruler = new Ruler((isRulerActive) => {
+      if (isRulerActive) {
+        root.classList.add(App.C_HAS_ACTIVE_RULER);
+      } else {
+        root.classList.remove(App.C_HAS_ACTIVE_RULER);
+      }
+    });
 
     const jsPaint = this.jsPaint = new JsPaint({
       cursor: this.cursor,

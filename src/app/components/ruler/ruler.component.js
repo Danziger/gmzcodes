@@ -23,8 +23,6 @@ export class Ruler {
     const { root } = this;
 
     if (!onRulerToggled) {
-      root.setAttribute('hidden', true);
-
       return;
     }
 
@@ -42,10 +40,24 @@ export class Ruler {
     root.querySelector(Ruler.S_RULER_X).innerHTML = rulerScaleX;
     root.querySelector(Ruler.S_RULER_Y).innerHTML = rulerScaleY;
 
+    root.removeAttribute('hidden');
     root.classList.add(Ruler.C_IS_VISIBLE);
 
     this.button.addEventListener('click', () => {
-      onRulerToggled(this.isRulerActive = !this.isRulerActive);
+      const isRulerActive = this.isRulerActive = !this.isRulerActive;
+
+      onRulerToggled(isRulerActive);
+
+      // TODO: aria-hidden should go in the children, not in the root!
+
+      /*
+      if (isRulerActive) {
+        this.root.removeAttribute('aria-hidden');
+      } else {
+        this.root.setAttribute('aria-hidden', true);
+      }
+      */
+
     });
   }
 

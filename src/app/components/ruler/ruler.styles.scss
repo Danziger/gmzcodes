@@ -15,11 +15,7 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity linear 1s;
-    display: none;
-
-    @include above(xs) {
-      display: block;
-    }
+    display: block;
 
     .app--showScreenshot > & {
       display: none;
