@@ -1,6 +1,12 @@
 TODOs
 =====
 
+Bugs
+----
+
+- Fix pixel ratio problem on Acer laptop with 1.25 DPI: https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas
+
+
 Visual
 ------
 

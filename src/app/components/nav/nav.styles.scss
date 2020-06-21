@@ -6,6 +6,13 @@
   &__root {
     position: relative;
     display: flex;
+    transition: opacity linear 250ms;
+    opacity: 1;
+
+    .app--hasActiveRuler & {
+      opacity: 0;
+      pointer-events: none;
+    }
   }
 
   &__logoLink {

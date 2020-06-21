@@ -6,6 +6,16 @@
     position: relative;
     padding: 48px 0;
     margin: 0 0 auto;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.25;
+    transition: opacity linear 250ms;
+    opacity: 1;
+
+    .app--hasActiveRuler & {
+      opacity: 0;
+      pointer-events: none;
+    }
 
     .app--showScreenshot & {
       padding: 32px 0;
@@ -49,27 +59,11 @@
     }
   }
 
-  &__role {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 18px;
-    line-height: 1.25;
-    padding-top: 16px;
-  }
-
-  &__p {
+  &__role,
+  &__p,
+  &__links,
+  &__hiringLinks {
     margin: 0;
     padding-top: 16px;
-  }
-
-  &__links {
-    padding-top: 16px;
-  }
-
-  &__hiringLink {
-    display: inline-block;
-    margin-top: 16px;
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 18px;
-    line-height: 1.25;
   }
 }

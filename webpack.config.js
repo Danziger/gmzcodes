@@ -110,7 +110,7 @@ module.exports = (env, {
           revision: null, // TODO: Import to make sure it's there!
         }],
 
-        // Define runtime caching rules.
+        // Define runtime caching rules:
         runtimeCaching: [{
           urlPattern: /\.(?:png|jpg|jpeg|gif|svg|woff2)$/,
           handler: 'CacheFirst',
