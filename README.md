@@ -63,6 +63,8 @@ Ideas & TODOs
 
 - Block trajectory in X/Y or diagonal axis.
 
+- Add a placeholder for the page logo in case it doesn't load.
+
 <br />
 
 

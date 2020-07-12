@@ -126,7 +126,6 @@ module.exports = (env, {
           },
         }, {
           urlPattern: /^https:\/\/fonts\.googleapis\.com/,
-
           handler: 'StaleWhileRevalidate',
 
           options: {
