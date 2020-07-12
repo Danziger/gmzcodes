@@ -23,21 +23,30 @@
     }
   }
 
-  &__imageContainer {
+  &__videoFigure {
     position: relative;
     width: 100%;
     margin: 16px 0;
   }
 
-  &__picture {
+  &__videoDescription {
+    margin: 0;
+    padding-top: 16px;
+    color: #000;
+    font-size: 12px;
+  }
+
+  &__videoPlaceholder {
     position: relative;
     background: rgba(0, 0, 0, .0625);
     border-radius: 2px;
     overflow: hidden;
     display: block;
+    margin: 0;
+    padding-bottom: 42.5%;
   }
 
-  &__img {
+  &__video {
     position: absolute;
     top: 0;
     left: 0;

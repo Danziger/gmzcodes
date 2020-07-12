@@ -20,6 +20,10 @@
     display: inline-block;
     line-height: 19px;
 
+    .app--showFallback & {
+      pointer-events: auto;
+    }
+
     &--hidden {
       box-shadow: none;
     }

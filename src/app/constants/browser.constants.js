@@ -5,5 +5,12 @@ export const HAS_TOUCH = navigator.maxTouchPoints > 0
 export const IS_DESKTOP
   = !/Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-export const IS_MIX_BLEND_MODE_SUPPORTED = !/MSIE|Trident/.test(window.navigator.userAgent)
-  && window.CSS && window.CSS.supports && window.CSS.supports('mix-blend-mode', 'multiply');
+const supportsCSS = (window.CSS && window.CSS.supports) || (() => false);
+
+const isUncoolBrowser = /MSIE|Trident/.test(window.navigator.userAgent);
+
+const supportsCSSMixBlendMode = supportsCSS('mix-blend-mode', 'multiply');
+
+const supportsCSSCustomProperties = supportsCSS('color', 'var(--fake-var)');
+
+export const IS_BROWSER_SUPPORTED = (supportsCSSMixBlendMode && supportsCSSCustomProperties) || !isUncoolBrowser;

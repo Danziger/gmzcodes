@@ -1,9 +1,10 @@
 import { Ruler } from '../ruler/ruler.component';
 import { JsPaint } from '../js-paint/js-paint.component';
-import { IS_DESKTOP, IS_MIX_BLEND_MODE_SUPPORTED, HAS_TOUCH } from '../../constants/browser.constants';
+import { IS_DESKTOP, IS_BROWSER_SUPPORTED, HAS_TOUCH } from '../../constants/browser.constants';
 import { Cursor } from '../cursor/cursor.component';
 import { Footer } from '../footer/footer.component';
 import { initializeLinks } from '../link/link.utils';
+import { TORINO_VIDEOS } from '../torino/torino.constants';
 
 export class App {
 
@@ -47,7 +48,11 @@ export class App {
       document.addEventListener('touchstart', disableFocus);
     }
 
-    if (IS_MIX_BLEND_MODE_SUPPORTED && window.location.hash !== '#uncool') {
+    if (IS_BROWSER_SUPPORTED) {
+      initializeLinks();
+    }
+
+    if (IS_BROWSER_SUPPORTED && window.location.hash !== '#uncool') {
       this.init();
     } else {
       this.showFallback();
@@ -61,8 +66,6 @@ export class App {
       this.root.classList.add(App.C_HAS_ACTIVE_HOVER);
 
       this.cursor = new Cursor();
-
-      initializeLinks();
     }
 
     this.ruler = new Ruler((isRulerActive) => {
@@ -97,18 +100,22 @@ export class App {
 
     // Show the right title:
     document.querySelector('.content__regularHeader').setAttribute('hidden', true);
+    document.querySelector('.content__regularHeader').setAttribute('aria-hidden', true);
     document.querySelector('.content__warningHeader').removeAttribute('hidden');
+    document.querySelector('.content__warningHeader').removeAttribute('aria-hidden');
 
-    // Leave only 1 of the two Gran Torino images, randomly:
-    const imageToRemove = document.getElementById(`torino-${ 1 + Math.floor(Math.random() * 2) }`);
+    // Load one video:
+    const torinoVideo = TORINO_VIDEOS[Math.floor(Math.random() * TORINO_VIDEOS.length)];
 
-    if (imageToRemove.remove) {
-      imageToRemove.remove();
-    } else if (imageToRemove.removeNode) {
-      imageToRemove.removeNode();
-    } else {
-      imageToRemove.setAttribute('hidden');
-    }
+    document.querySelector('.content__videoPlaceholder').innerHTML = `
+      <video class="content__video" loop autoplay muted>
+        <source src="${ torinoVideo.src }" type="video/mp4" />
+      </video>
+    `;
+
+    const videoDescriptionElement = document.querySelector('.content__videoDescription');
+
+    videoDescriptionElement.innerHTML = videoDescriptionElement.innerHTML.replace(/^Scene/, torinoVideo.description);
 
     // Hide ruler:
     this.ruler = new Ruler(false);

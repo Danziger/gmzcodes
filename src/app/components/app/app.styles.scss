@@ -42,6 +42,10 @@
 
   &--hasActiveRuler {}
 
+  &--showFallback {
+    justify-content: normal;
+  }
+
   &--showFallback,
   &--showScreenshot {
     position: static;
