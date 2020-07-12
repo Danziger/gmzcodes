@@ -108,7 +108,7 @@ export class App {
     const torinoVideo = TORINO_VIDEOS[Math.floor(Math.random() * TORINO_VIDEOS.length)];
 
     document.querySelector('.content__videoPlaceholder').innerHTML = `
-      <video class="content__video" loop autoplay muted>
+      <video class="content__video" loop autoplay muted playsinline>
         <source src="${ torinoVideo.src }" type="video/mp4" />
       </video>
     `;
