@@ -84,6 +84,7 @@
     border-left: 2px solid transparent;
     pointer-events: auto;
     outline: none;
+    z-index: 1;
 
     &::before {
       content: '';
@@ -95,6 +96,16 @@
       left: 50%;
       transform: translate(-50%, -50%);
       border-radius: 100%;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 32px;
+      height: 32px;
+      border-bottom-right-radius: 32px;
     }
 
     .app--hasActiveRuler & {
