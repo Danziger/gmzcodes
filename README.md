@@ -53,17 +53,13 @@ Ideas & TODOs
 
 - Add sourcemaps in production.
 
-- Create a separated page for non-supported browsers and load images async.
-
-- Convert GIFs to https://ezgif.com/gif-to-webp and re-record them with better quality.
-
 - Screenshot mode with multiple sizes.
 
 - Multitouch on mobile.
 
 - Undo/redo.
 
-- Resize and keep image.
+- Resize and keep canvas.
 
 - Block trajectory in X/Y or diagonal axis.
 
