@@ -51,8 +51,6 @@ Ideas & TODOs
 
 - Add multiple themes/messages for supported causes or special dates: Halloween, Christmas, Easter, May 4th, https://en.wikipedia.org/wiki/Day_of_the_Programmer...
 
-- Add sourcemaps in production.
-
 - Screenshot mode with multiple sizes.
 
 - Multitouch on mobile.

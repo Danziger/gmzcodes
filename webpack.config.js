@@ -22,7 +22,7 @@ module.exports = (env, {
   const BUILD_DATE = new Date();
 
   const config = {
-    devtool: DEV ? 'eval-source-map' : false,
+    devtool: DEV ? 'eval-source-map' : 'source-map',
 
     entry: {
       main: [
@@ -198,7 +198,7 @@ module.exports = (env, {
         new TerserPlugin({
           cache: true,
           parallel: true,
-          sourceMap: false,
+          sourceMap: PROD,
           extractComments: false,
           terserOptions: {
             compress: {
