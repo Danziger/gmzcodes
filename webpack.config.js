@@ -1,6 +1,7 @@
 const path = require('path');
 const childProcess = require('child_process');
 
+const hasha = require('hasha');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -104,10 +105,10 @@ module.exports = (env, {
 
         additionalManifestEntries: [{
           url: 'manifest.json',
-          revision: null, // TODO: Import to make sure it's there!
+          revision: hasha.fromFileSync('./static/manifest.json'),
         }, {
-          url: 'dani-gamez-franco-cv-2020.01.06.pdf',
-          revision: null, // TODO: Import to make sure it's there!
+          url: 'dani-gamez-franco-cv-2020.07.12.pdf',
+          revision: hasha.fromFileSync('./static/dani-gamez-franco-cv-2020.07.12.pdf'),
         }],
 
         // Define runtime caching rules:
