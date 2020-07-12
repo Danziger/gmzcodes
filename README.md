@@ -36,6 +36,40 @@ Don't hesitate to report any issue you find in this website/project by opening a
 <br />
 
 
+Known Issues
+------------
+
+- The canvas looks blurry on screens with decimal DPI values. See https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas.
+
+<br />
+
+
+Ideas & TODOs
+-------------
+
+- Add an expandable circular button where the clear button is that expands and shows some other canvas-related options such as clear, download and toggle audio.
+
+- Add multiple themes/messages for supported causes or special dates: Halloween, Christmas, Easter, May 4th, https://en.wikipedia.org/wiki/Day_of_the_Programmer...
+
+- Add sourcemaps in production.
+
+- Create a separated page for non-supported browsers and load images async.
+
+- Convert GIFs to https://ezgif.com/gif-to-webp and re-record them with better quality.
+
+- Screenshot mode with multiple sizes.
+
+- Multitouch on mobile.
+
+- Undo/redo.
+
+- Resize and keep image.
+
+- Block trajectory in X/Y or diagonal axis.
+
+<br />
+
+
 Author
 ------
 
