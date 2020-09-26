@@ -20,6 +20,18 @@
 <br />
 
 
+Some other sites I've built
+---------------------------
+
+- **[Key.js \ JavaScript keyboard event key codes & key identifiers.](https://keyjs.dev)**
+
+  👇 Press any key to get the JavaScript keyboard event event key, code, which, keyCode and more properties!
+
+- **[Slot.js](https://danziger.github.io/slotjs/)**
+
+  🎰 Circular slot machine mobile-first SPA built with JavaScript, CSS variables and Emojis!
+
+
 Running It (Development)
 ------------------------
 
