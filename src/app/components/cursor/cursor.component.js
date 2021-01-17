@@ -1,3 +1,5 @@
+import { IS_DESKTOP } from '../../constants/browser.constants';
+
 export class Cursor {
 
   // CSS classes:
@@ -10,6 +12,14 @@ export class Cursor {
   // Elements:
   root = document.querySelector(Cursor.S_ROOT);
   position = document.querySelector(Cursor.S_POSITION);
+  body = document.body;
+
+  constructor() {
+    if (IS_DESKTOP) {
+      document.documentElement.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
+      document.documentElement.addEventListener('mouseout', this.handleMouseOut.bind(this));
+    }
+  }
 
   update(x, y, label) {
     this.root.style.transform = `translate(${ x }px, ${ y }px)`;
@@ -38,6 +48,24 @@ export class Cursor {
 
   show() {
     this.root.style.display = 'block';
+  }
+
+  handleMouseEnter() {
+    this.show();
+  }
+
+  handleMouseOut(e) {
+    if (!e.relatedTarget && !e.toElement) {
+      this.hide();
+    }
+  }
+
+  disableNative() {
+    this.body.style.pointerEvents = 'none';
+  }
+
+  enableNative() {
+    this.body.style = '';
   }
 
 }

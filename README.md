@@ -44,26 +44,42 @@ Known Issues
 <br />
 
 
+WIP
+---
+
+- Menu hidden in uncool version.
+- Adjust nav outer spacing on narrow viewports.
+- Menu option states.
+- Menu aria attributes.
+- Cursor mode for menu.
+- Stop drawing and sound when menu shown.
+
+----
+
+- Show/hide ruler zero manually at the right time.
+- Menu can scroll.
+- Persist vibration state.
+- Rename ruler option to something else.
+- Missing focus styles inside menu.
+- Close/navigate menu with keyboard.
+- Review aria tags and code organization.
+- Instructions about keyboard options inside menu.
+- Download image with multiple random names: masterpiece, such-wow, amazing-art, professional-painting-so-great, this-good.
+- Adjust side paddings to be included in the header links and button.
+
+<br />
+
+
 Ideas & TODOs
 -------------
 
-- Add an expandable circular button where the clear button is that expands and shows some other canvas-related options such as clear, download and toggle audio.
-
-- Add multiple themes/messages for supported causes or special dates: Halloween, Christmas, Easter, May 4th, https://en.wikipedia.org/wiki/Day_of_the_Programmer...
-
 - Screenshot mode with multiple sizes.
-
 - Multitouch on mobile.
-
 - Undo/redo.
-
 - Resize and keep canvas.
-
 - Block trajectory in X/Y or diagonal axis.
-
 - Add a placeholder for the page logo in case it doesn't load.
-
-<br />
+- Image upload. See https://medium.com/@agbales/how-to-make-8-bit-art-with-javascript-eea808a70ba2
 
 
 Author

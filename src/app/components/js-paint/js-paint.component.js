@@ -23,6 +23,7 @@ export class JsPaint {
   pressedKeys = {};
   isSpacePressed = false;
   isMousePressed = false;
+  disabled = false;
 
   // Elements:
   canvas = document.querySelector('.jsPaint__root');
@@ -58,6 +59,8 @@ export class JsPaint {
 
     // Disable context menu:
     document.addEventListener('contextmenu', (e) => {
+      if (this.disabled) return;
+
       const { target } = e;
 
       if (!target || (target.tagName !== 'A'
@@ -69,16 +72,13 @@ export class JsPaint {
     if (IS_DESKTOP) {
       document.addEventListener('keydown', this.handleKeyDown.bind(this));
       document.addEventListener('keyup', this.handleKeyUp.bind(this));
-
-      document.documentElement.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
-      document.documentElement.addEventListener('mouseout', this.handleMouseOut.bind(this));
     }
   }
 
   // TOUCH:
 
   handleTouchStart(e) {
-    if (this.keysIntervalID) return;
+    if (this.keysIntervalID || this.disabled) return;
 
     const { target } = e;
 
@@ -91,7 +91,7 @@ export class JsPaint {
   // MOUSE:
 
   handleMouseDown(e) {
-    if (this.keysIntervalID) return;
+    if (this.keysIntervalID || this.disabled) return;
 
     const { which, target } = e;
 
@@ -111,7 +111,7 @@ export class JsPaint {
   }
 
   handleMove(e) {
-    if (this.keysIntervalID) return;
+    if (this.keysIntervalID || this.disabled) return;
 
     const { pageX } = e.touches ? e.touches[0] : e;
     const { pageY } = e.touches ? e.touches[0] : e;
@@ -128,7 +128,7 @@ export class JsPaint {
   // DESKTOP:
 
   handleKeyDown({ key, repeat, shiftKey }) {
-    if (repeat) return;
+    if (repeat || this.disabled) return;
 
     if (key === ' ' || (this.key === 'Shift' && this.isSpacePressed)) {
       this.isSpacePressed = true;
@@ -139,6 +139,8 @@ export class JsPaint {
     }
 
     if (!key.startsWith('Arrow')) return;
+
+    if (this.cursor) this.cursor.disableNative();
 
     this.pressedKeys[key] = true;
 
@@ -152,7 +154,7 @@ export class JsPaint {
   }
 
   handleKeyUp({ key, repeat }) {
-    if (repeat) return;
+    if (repeat || this.disabled) return;
 
     if (key === ' ') {
       this.isSpacePressed = false;
@@ -175,6 +177,8 @@ export class JsPaint {
     delete this.pressedKeys[key];
 
     if (Object.keys(this.pressedKeys).length === 0) {
+      if (this.cursor) this.cursor.enableNative();
+
       window.clearInterval(this.keysIntervalID);
 
       this.keysIntervalID = null;
@@ -196,16 +200,6 @@ export class JsPaint {
       clamp(0, x, (window.innerWidth - 1) / this.unit | 0),
       clamp(0, y, (window.innerHeight - 1) / this.unit | 0),
     );
-  }
-
-  handleMouseEnter() {
-    this.cursor.show();
-  }
-
-  handleMouseOut(e) {
-    if (!e.relatedTarget && !e.toElement) {
-      this.cursor.hide();
-    }
   }
 
   // DRAWING / CANVAS:
@@ -349,6 +343,23 @@ export class JsPaint {
 
       D += 2 * dx;
     }
+  }
+
+  download() {
+    const link = document.createElement('A');
+
+    link.download = 'masterpiece.png';
+    link.href = this.canvas.toDataURL();
+    link.target = '_blank';
+    link.click();
+  }
+
+  enable() {
+    this.disabled = false;
+  }
+
+  disable() {
+    this.disabled = true;
   }
 
 }

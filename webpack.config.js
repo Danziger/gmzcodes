@@ -40,6 +40,8 @@ module.exports = (env, {
     devServer: {
       contentBase: path.resolve(__dirname, 'static'),
       publicPath: '/',
+      // When sharing the site using ssh -R 80:localhost:8080 ssh.localhost.run
+      // disableHostCheck: true,
     },
 
     module: {
@@ -90,10 +92,6 @@ module.exports = (env, {
         template: path.resolve(__dirname, 'src/app/components/app/app.template.ejs'),
         favicon: path.resolve(__dirname, 'static/favicon.ico'),
         inlineSource: '.css$', // Inline JS and CSS.
-        meta: {
-          viewport: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no',
-        },
-        // We can use templateParameters if more options are required, but it will override all the above.
       }),
 
       new WorkboxWebpackPlugin.GenerateSW({
@@ -217,6 +215,7 @@ module.exports = (env, {
   };
 
   if (PROD) {
+    // TODO: Should I replace this with https://stackoverflow.com/questions/61490604/inline-css-with-webpack-without-htmlwebpackinlinesourceplugin?
     config.plugins.push(new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin));
   }
 

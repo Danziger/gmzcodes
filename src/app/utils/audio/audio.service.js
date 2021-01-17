@@ -13,22 +13,21 @@ class _AudioService {
   }
 
   createCurrentOscillator(frequency = 100) {
-    const context = this.context || new window.AudioContext();
+    const context = this.context = this.context || new window.AudioContext();
+
+    // Disconnect existing oscillator if there is one.
+    if (this.currentOscillator) this.currentOscillator.disconnect();
 
     // Create oscillator and gain node:
     const oscillator = context.createOscillator();
     const gainNode = context.createGain();
 
-    // Disconnect existing oscillator if there is one.
-    if (this.currentOscillator) this.currentOscillator.disconnect();
-
-    // Set the type and frequency of the oscillator.
-    oscillator.type = 'square';
-    // oscillator.type = 'sawtooth';
+    // Set the type and frequency of the oscillator (square, sawtooth, sine, triangle).
+    oscillator.type = 'triangle';
     this.currentFrequency = oscillator.frequency.value = frequency;
 
     // Set volume of the oscillator.
-    gainNode.gain.value = 0.025;
+    gainNode.gain.value = 0.025 * 3;
 
     // Route oscillator through gain node to speakers.
     oscillator.connect(gainNode);
@@ -43,12 +42,10 @@ class _AudioService {
   playFreq(frequency) {
     if (!this.enabled) return;
 
-    if (this.resetOscillator) {
+    if (this.resetOscillator || !this.currentOscillator) {
       this.createCurrentOscillator(frequency);
     } else if (this.currentFrequency !== frequency) {
-      const currentOscillator = this.currentOscillator || this.createCurrentOscillator(frequency);
-
-      this.currentFrequency = currentOscillator.frequency.value = frequency;
+      this.currentFrequency = this.currentOscillator.frequency.value = frequency;
     }
   }
 
@@ -70,4 +67,4 @@ class _AudioService {
 
 }
 
-export const AudioService = window.audioService = new _AudioService({ enabled: false, resetOscillator: false });
+export const AudioService = window.audioService = new _AudioService({ enabled: false, resetOscillator: true });
