@@ -1,33 +1,24 @@
 export class Ruler {
 
   // CSS classes:
-  static C_IS_VISIBLE = 'ruler--isVisible';
+  static C_HAS_ACTIVE_RULER = 'app--hasActiveRuler'; // TODO: Rename
 
   // CSS selectors:
   static S_ROOT = '.ruler__root';
   static S_RULER_X = '.ruler__x';
   static S_RULER_Y = '.ruler__y';
-  static S_BUTTON = '.ruler__button';
 
   // Elements:
-  root = document.querySelector(Ruler.S_ROOT);
-  button = document.querySelector(Ruler.S_BUTTON);
+  body = document.body;
+  ruler = document.querySelector(Ruler.S_ROOT);
 
   // State:
   isRulerActive = false;
 
-  // Callbacks:
-  onRulerToggled;
-
-  constructor(onRulerToggled) {
-    const { root } = this;
-
-    if (!onRulerToggled) {
-      return;
-    }
+  constructor() {
+    const { ruler } = this;
 
     // Populate rulers' scales:
-
     let rulerScaleX = '';
     let rulerScaleY = '';
 
@@ -37,28 +28,24 @@ export class Ruler {
       rulerScaleY += `<span class="ruler__stepY">${ i * 8 }</span>`;
     }
 
-    root.querySelector(Ruler.S_RULER_X).innerHTML = rulerScaleX;
-    root.querySelector(Ruler.S_RULER_Y).innerHTML = rulerScaleY;
+    ruler.querySelector(Ruler.S_RULER_X).innerHTML = rulerScaleX;
+    ruler.querySelector(Ruler.S_RULER_Y).innerHTML = rulerScaleY;
+  }
 
-    root.removeAttribute('hidden');
-    root.classList.add(Ruler.C_IS_VISIBLE);
+  open() {
+    if (this.isRulerActive) return;
 
-    this.button.addEventListener('click', () => {
-      const isRulerActive = this.isRulerActive = !this.isRulerActive;
+    this.isRulerActive = true;
+    this.body.classList.add(Ruler.C_HAS_ACTIVE_RULER);
+    this.ruler.setAttribute('aria-hidden', false);
+  }
 
-      onRulerToggled(isRulerActive);
+  close() {
+    if (!this.isRulerActive) return;
 
-      // TODO: aria-hidden should go in the children, not in the root!
-
-      /*
-      if (isRulerActive) {
-        this.root.removeAttribute('aria-hidden');
-      } else {
-        this.root.setAttribute('aria-hidden', true);
-      }
-      */
-
-    });
+    this.isRulerActive = false;
+    this.body.classList.remove(Ruler.C_HAS_ACTIVE_RULER);
+    this.ruler.setAttribute('aria-hidden', true);
   }
 
 }

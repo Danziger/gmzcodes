@@ -32,14 +32,6 @@ export class Footer {
 
       if (!target.classList.contains(Footer.C_SAMPLE)) return;
 
-      const { action } = target.dataset;
-
-      if (action) {
-        this.onActionClicked(action);
-
-        return;
-      }
-
       const currentSample = document.querySelector(Footer.S_CURRENT);
 
       if (currentSample) currentSample.classList.remove(Footer.C_CURRENT);

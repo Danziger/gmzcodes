@@ -4,4 +4,41 @@
     <span class="link__underline link__underline--hidden nav__underline">GMZcodes</span>
     <span class="link__linkEffect nav__linkEffect" aria-hidden="true">GMZcodes</span>
   </a>
+
+  <button
+    id="menuButton"
+    class="nav__button"
+    aria-haspopup="true"
+    aria-expanded="false"
+    aria-controls="menu"
+    aria-label="Actions Menu">
+    <div class="nav__icon"></div>
+  </button>
+
+  <ul
+    id="menu"
+    class="nav__menu"
+    role="menu"
+    aria-labelledby="menuButton">
+
+    <li class="nav__li">
+      <button class="nav__action" id="clear">Clear Canvas</button>
+    </li>
+
+    <li class="nav__li">
+      <button class="nav__action" id="download">Download Canvas</button>
+    </li>
+
+    <li class="nav__li">
+      <button class="nav__action" role="switch" aria-checked="false" id="ruler" >Ruler</button>
+    </li>
+
+    <li class="nav__li">
+      <button class="nav__action" role="switch" aria-checked="true" id="vibration">Vibration</button>
+    </li>
+
+    <li class="nav__li">
+      <button class="nav__action" role="switch" aria-checked="false" id="sound" >Accessibility Sound</button>
+    </li>
+  </ul>
 </nav>

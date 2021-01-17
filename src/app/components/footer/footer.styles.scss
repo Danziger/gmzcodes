@@ -2,6 +2,11 @@
 
   &__root {
     position: relative;
+    z-index: 10;
+
+    @include above(xs) {
+      margin-bottom: 16px;
+    }
   }
 
   &__colors {
@@ -15,21 +20,13 @@
 
   &__item {
     display: block;
-
-    &--right {
-      margin-left: auto;
-
-      .app--showScreenshot & {
-        display: none;
-      }
-    }
   }
 
   &__sample {
     position: relative;
     border: 0;
     outline: none;
-    padding: 24px 4px 8px;
+    padding: 24px 4px 16px;
     width: 32px;
     height: 32px;
     border-radius: 128px;
@@ -51,7 +48,7 @@
       position: absolute;
       top: 24px;
       right: 4px;
-      bottom: 8px;
+      bottom: 16px;
       left: 4px;
       z-index: -1;
       border-radius: 128px;
@@ -96,10 +93,5 @@
       width: 10px;
       height: 10px;
     }
-  }
-
-  &__symbol {
-    pointer-events: none;
-    width: 16px;
   }
 }
