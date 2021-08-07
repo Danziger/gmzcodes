@@ -67,6 +67,8 @@ TODOs & Bugfixes
 - Review aria tags and code organization.
 - Adjust side paddings to be included in the header links and button.
 
+<br />
+
 
 Other Ideas & Features
 ----------------------
