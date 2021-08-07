@@ -117,8 +117,11 @@ export class Nav {
         break;
 
       default:
+        return;
         // Do nothing.
     }
+
+    VibrationService.vibrate(100);
   }
 
   handleKeyDown(e) {
@@ -150,6 +153,8 @@ export class Nav {
   open() {
     if (this.isOpen) return;
 
+    VibrationService.vibrate(100);
+
     this.isOpen = true;
 
     document.addEventListener('click', this.handleClick);
@@ -167,6 +172,8 @@ export class Nav {
 
   close() {
     if (!this.isOpen) return;
+
+    VibrationService.vibrate(100);
 
     this.isOpen = false;
 
