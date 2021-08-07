@@ -31,6 +31,10 @@ Some other sites I've built
 
   🎰 Circular slot machine mobile-first SPA built with JavaScript, CSS variables and Emojis!
 
+- **[Stylophone.js](https://danziger.github.io/stylophonejs/)**
+
+  🎹 The classic Stylophone, now in your phone and computer.
+
 
 Running It (Development)
 ------------------------
@@ -56,26 +60,23 @@ Known Issues
 <br />
 
 
-Ideas & TODOs
--------------
-
-- Add an expandable circular button where the clear button is that expands and shows some other canvas-related options such as clear, download and toggle audio.
-
-- Add multiple themes/messages for supported causes or special dates: Halloween, Christmas, Easter, May 4th, https://en.wikipedia.org/wiki/Day_of_the_Programmer...
-
-- Screenshot mode with multiple sizes.
-
-- Multitouch on mobile.
-
-- Undo/redo.
-
-- Resize and keep canvas.
-
-- Block trajectory in X/Y or diagonal axis.
+TODOs & Bugfixes
+----------------
 
 - Add a placeholder for the page logo in case it doesn't load.
+- Review aria tags and code organization.
+- Adjust side paddings to be included in the header links and button.
 
-<br />
+
+Other Ideas & Features
+----------------------
+
+- Screenshot mode with multiple sizes.
+- Multitouch on mobile.
+- Undo/redo.
+- Resize and keep canvas.
+- Block trajectory in X/Y or diagonal axis.
+- Image upload. See https://medium.com/@agbales/how-to-make-8-bit-art-with-javascript-eea808a70ba2
 
 
 Author

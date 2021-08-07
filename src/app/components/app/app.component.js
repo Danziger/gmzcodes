@@ -5,13 +5,13 @@ import { Cursor } from '../cursor/cursor.component';
 import { Footer } from '../footer/footer.component';
 import { initializeLinks } from '../link/link.utils';
 import { TORINO_VIDEOS } from '../torino/torino.constants';
+import { Nav } from '../nav/nav.component';
 
 export class App {
 
   // CSS classes:
   static C_HAS_ACTIVE_FOCUS = 'app--hasActiveFocus';
   static C_HAS_ACTIVE_HOVER = 'app--hasActiveHover';
-  static C_HAS_ACTIVE_RULER = 'app--hasActiveRuler';
   static C_SHOW_FALLBACK = 'app--showFallback';
   static C_SHOW_SCREENSHOT = 'app--showScreenshot';
 
@@ -19,6 +19,7 @@ export class App {
   root = document.body;
 
   // Components:
+  nav = null;
   footer = null;
   jsPaint = null;
   ruler = null;
@@ -68,26 +69,19 @@ export class App {
       this.cursor = new Cursor();
     }
 
-    this.ruler = new Ruler((isRulerActive) => {
-      if (isRulerActive) {
-        root.classList.add(App.C_HAS_ACTIVE_RULER);
-      } else {
-        root.classList.remove(App.C_HAS_ACTIVE_RULER);
-      }
-    });
+    const ruler = this.ruler = new Ruler(); // TODO: Pass root?
 
     const jsPaint = this.jsPaint = new JsPaint({
       cursor: this.cursor,
     });
 
-    this.footer = new Footer((action) => {
-      if (action[0] === '#') {
-        jsPaint.setColor(action);
+    this.nav = new Nav({ jsPaint, ruler, cursor: this.cursor });
 
-        root.style.setProperty('--c-current', action);
-      } else if (action === 'reset') {
-        jsPaint.reset();
-      }
+    // TODO: Pass down jsPaint and cursor:
+    this.footer = new Footer((color) => {
+      jsPaint.setColor(color);
+
+      root.style.setProperty('--c-current', color);
     });
   }
 
@@ -98,12 +92,15 @@ export class App {
 
     this.root.classList.add(App.C_SHOW_FALLBACK);
 
+    // Hide menu:
+    document.querySelector('.nav__button').setAttribute('hidden', true);
+    document.querySelector('.nav__button').setAttribute('aria-hidden', true);
+
     // Show the right title:
     document.querySelector('.content__regularHeader').setAttribute('hidden', true);
     document.querySelector('.content__regularHeader').setAttribute('aria-hidden', true);
     document.querySelector('.content__warningHeader').removeAttribute('hidden');
     document.querySelector('.content__warningHeader').removeAttribute('aria-hidden');
-
     // Load one video:
     const torinoVideo = TORINO_VIDEOS[Math.floor(Math.random() * TORINO_VIDEOS.length)];
 

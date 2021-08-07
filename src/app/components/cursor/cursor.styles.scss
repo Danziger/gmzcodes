@@ -40,6 +40,7 @@
         transition: right linear 250ms, width linear 250ms;
         opacity: .25;
 
+        #{$root}--isInteractive > &,
         #{$root}--isClickable > & {
           right: calc(100% + 24px);
         }
@@ -59,6 +60,7 @@
         transition: right linear 250ms, width linear 250ms;
         opacity: .0625;
 
+        #{$root}--isInteractive > &,
         #{$root}--isClickable > & {
           left: calc(100% + 24px);
         }
@@ -81,6 +83,7 @@
         transition: bottom linear 250ms, height linear 250ms;
         opacity: .25;
 
+        #{$root}--isInteractive > &,
         #{$root}--isClickable > & {
           bottom: calc(100% + 24px);
         }
@@ -100,6 +103,7 @@
         transition: bottom linear 250ms, height linear 250ms;
         opacity: .0625;
 
+        #{$root}--isInteractive > &,
         #{$root}--isClickable > & {
           top: calc(100% + 24px);
         }
@@ -120,6 +124,7 @@
     overflow: hidden;
     background: var(--c-current);
     filter: invert(1);
+    transition: transform linear 250ms;
 
     &::before {
       content: '';
@@ -131,18 +136,22 @@
       background: rgba(255, 0, 0, .25);
     }
 
+    #{$root}--isInteractive > &,
     #{$root}--isClickable > & {
       border-radius: 100%;
-      transform: scale(4);
-      animation: breathe .5s;
-      animation-iteration-count: infinite;
-      animation-delay: 250ms;
       background: var(--c-ruler);
       filter: none;
 
       &::before {
         display: none;
       }
+    }
+
+    #{$root}--isClickable > & {
+      transform: scale(4);
+      animation: breathe .5s;
+      animation-iteration-count: infinite;
+      animation-delay: 250ms;
     }
   }
 
@@ -176,6 +185,7 @@
       mix-blend-mode: difference;
     }
 
+    #{$root}--isInteractive > &,
     #{$root}--isClickable > & {
       opacity: 0;
     }

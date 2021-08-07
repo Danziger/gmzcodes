@@ -4,7 +4,7 @@ import { AudioService } from '../../utils/audio/audio.service';
 import { VibrationService } from '../../utils/vibration/vibration.service';
 import { clamp } from '../../utils/math/math.utils';
 
-import { COLOR_TO_FREQ } from './js-paint.constants';
+import { COLOR_TO_FREQ, FILENAMES, FILENAME_ADJECTIVES } from './js-paint.constants';
 
 export class JsPaint {
 
@@ -23,6 +23,7 @@ export class JsPaint {
   pressedKeys = {};
   isSpacePressed = false;
   isMousePressed = false;
+  disabled = false;
 
   // Elements:
   canvas = document.querySelector('.jsPaint__root');
@@ -58,6 +59,8 @@ export class JsPaint {
 
     // Disable context menu:
     document.addEventListener('contextmenu', (e) => {
+      if (this.disabled) return;
+
       const { target } = e;
 
       if (!target || (target.tagName !== 'A'
@@ -69,16 +72,13 @@ export class JsPaint {
     if (IS_DESKTOP) {
       document.addEventListener('keydown', this.handleKeyDown.bind(this));
       document.addEventListener('keyup', this.handleKeyUp.bind(this));
-
-      document.documentElement.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
-      document.documentElement.addEventListener('mouseout', this.handleMouseOut.bind(this));
     }
   }
 
   // TOUCH:
 
   handleTouchStart(e) {
-    if (this.keysIntervalID) return;
+    if (this.keysIntervalID || this.disabled) return;
 
     const { target } = e;
 
@@ -91,7 +91,7 @@ export class JsPaint {
   // MOUSE:
 
   handleMouseDown(e) {
-    if (this.keysIntervalID) return;
+    if (this.keysIntervalID || this.disabled) return;
 
     const { which, target } = e;
 
@@ -111,7 +111,7 @@ export class JsPaint {
   }
 
   handleMove(e) {
-    if (this.keysIntervalID) return;
+    if (this.keysIntervalID/* || this.disabled */) return;
 
     const { pageX } = e.touches ? e.touches[0] : e;
     const { pageY } = e.touches ? e.touches[0] : e;
@@ -128,9 +128,9 @@ export class JsPaint {
   // DESKTOP:
 
   handleKeyDown({ key, repeat, shiftKey }) {
-    if (repeat) return;
+    if (repeat || this.disabled) return;
 
-    if (key === ' ' || (this.key === 'Shift' && this.isSpacePressed)) {
+    if (key === ' ' || (key === 'Shift' && this.isSpacePressed)) {
       this.isSpacePressed = true;
 
       this.touch(this.lastX, this.lastY, !shiftKey, true);
@@ -139,6 +139,11 @@ export class JsPaint {
     }
 
     if (!key.startsWith('Arrow')) return;
+
+    if (this.cursor) {
+      this.cursor.disableNative();
+      this.cursor.show();
+    }
 
     this.pressedKeys[key] = true;
 
@@ -152,7 +157,7 @@ export class JsPaint {
   }
 
   handleKeyUp({ key, repeat }) {
-    if (repeat) return;
+    if (repeat || this.disabled) return;
 
     if (key === ' ') {
       this.isSpacePressed = false;
@@ -175,6 +180,8 @@ export class JsPaint {
     delete this.pressedKeys[key];
 
     if (Object.keys(this.pressedKeys).length === 0) {
+      if (this.cursor) this.cursor.enableNative();
+
       window.clearInterval(this.keysIntervalID);
 
       this.keysIntervalID = null;
@@ -196,16 +203,6 @@ export class JsPaint {
       clamp(0, x, (window.innerWidth - 1) / this.unit | 0),
       clamp(0, y, (window.innerHeight - 1) / this.unit | 0),
     );
-  }
-
-  handleMouseEnter() {
-    this.cursor.show();
-  }
-
-  handleMouseOut(e) {
-    if (!e.relatedTarget && !e.toElement) {
-      this.cursor.hide();
-    }
   }
 
   // DRAWING / CANVAS:
@@ -260,6 +257,18 @@ export class JsPaint {
 
     this.lastX = x;
     this.lastY = y;
+
+    if (this.disabled) {
+      requestAnimationFrame(() => {
+        if (!cursor) return;
+
+        if (!drawing) cursor.setModeForElement(target);
+
+        if (hasPositionChanged) cursor.update(x * unit + offsetLeft, y * unit + offsetTop, `${ x + 1 } , ${ y + 1 }`);
+      });
+
+      return;
+    }
 
     if (hasPositionChanged) {
       const currentColor = drawing ? this.color : rgbToHex(
@@ -349,6 +358,25 @@ export class JsPaint {
 
       D += 2 * dx;
     }
+  }
+
+  download() {
+    const link = document.createElement('A');
+
+    link.download = `${ FILENAMES[Math.floor(Math.random() * FILENAMES.length)] }${ FILENAME_ADJECTIVES[Math.floor(Math.random() * FILENAME_ADJECTIVES.length)] }.png`;
+    link.href = this.canvas.toDataURL();
+    link.target = '_blank';
+    link.click();
+  }
+
+  enable() {
+    this.disabled = false;
+  }
+
+  disable() {
+    this.disabled = true;
+
+    AudioService.stop();
   }
 
 }
