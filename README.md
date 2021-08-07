@@ -82,6 +82,8 @@ Other Ideas & Features
 - Block trajectory in X/Y or diagonal axis.
 - Image upload. See https://medium.com/@agbales/how-to-make-8-bit-art-with-javascript-eea808a70ba2
 
+<br />
+
 
 Author
 ------
