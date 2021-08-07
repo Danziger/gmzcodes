@@ -76,9 +76,11 @@
     padding: 0;
     border-top: 2px solid transparent;
     border-left: 2px solid transparent;
-    pointer-events: auto;
+    // pointer-events: auto;
     z-index: 1;
     opacity: 0;
+    transition: opacity linear 150ms, border-color linear 150ms;
+    transition-delay: 300ms, 300ms;
 
     &::before {
       content: '';
@@ -91,7 +93,7 @@
       transform: translate(-50%, -50%);
       border-radius: 100%;
     }
-
+    /*
     &::after {
       content: '';
       position: absolute;
@@ -101,8 +103,10 @@
       height: 32px;
       border-bottom-right-radius: 32px;
     }
+    */
 
     .app--hasActiveRuler & {
+      transition: opacity linear 150ms, border-color linear 150ms;
       border-color: var(--c-ruler);
       opacity: 1;
     }

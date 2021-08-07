@@ -1,5 +1,7 @@
 class _AudioService {
 
+  static LS_AUDIO_SERVICE_ENABLED = 'LS_AUDIO_SERVICE_ENABLED';
+
   context = null;
   currentOscillator = null;
 
@@ -55,11 +57,19 @@ class _AudioService {
     this.context.resume();
   }
 
+  stop() {
+    if (this.currentOscillator) this.currentOscillator.disconnect();
+  }
+
   enable() {
+    localStorage.setItem(_AudioService.LS_AUDIO_SERVICE_ENABLED, true);
+
     this.enabled = true;
   }
 
   disable() {
+    localStorage.setItem(_AudioService.LS_AUDIO_SERVICE_ENABLED, false);
+
     this.enabled = false;
 
     if (this.currentOscillator) this.currentOscillator.disconnect();
@@ -67,4 +77,7 @@ class _AudioService {
 
 }
 
-export const AudioService = window.audioService = new _AudioService({ enabled: false, resetOscillator: true });
+export const AudioService = window.audioService = new _AudioService({
+  enabled: localStorage.getItem(_AudioService.LS_AUDIO_SERVICE_ENABLED) === 'true',
+  resetOscillator: true,
+});

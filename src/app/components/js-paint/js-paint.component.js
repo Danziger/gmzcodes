@@ -4,7 +4,7 @@ import { AudioService } from '../../utils/audio/audio.service';
 import { VibrationService } from '../../utils/vibration/vibration.service';
 import { clamp } from '../../utils/math/math.utils';
 
-import { COLOR_TO_FREQ } from './js-paint.constants';
+import { COLOR_TO_FREQ, FILENAMES, FILENAME_ADJECTIVES } from './js-paint.constants';
 
 export class JsPaint {
 
@@ -111,7 +111,7 @@ export class JsPaint {
   }
 
   handleMove(e) {
-    if (this.keysIntervalID || this.disabled) return;
+    if (this.keysIntervalID/* || this.disabled */) return;
 
     const { pageX } = e.touches ? e.touches[0] : e;
     const { pageY } = e.touches ? e.touches[0] : e;
@@ -130,7 +130,7 @@ export class JsPaint {
   handleKeyDown({ key, repeat, shiftKey }) {
     if (repeat || this.disabled) return;
 
-    if (key === ' ' || (this.key === 'Shift' && this.isSpacePressed)) {
+    if (key === ' ' || (key === 'Shift' && this.isSpacePressed)) {
       this.isSpacePressed = true;
 
       this.touch(this.lastX, this.lastY, !shiftKey, true);
@@ -140,7 +140,10 @@ export class JsPaint {
 
     if (!key.startsWith('Arrow')) return;
 
-    if (this.cursor) this.cursor.disableNative();
+    if (this.cursor) {
+      this.cursor.disableNative();
+      this.cursor.show();
+    }
 
     this.pressedKeys[key] = true;
 
@@ -255,6 +258,18 @@ export class JsPaint {
     this.lastX = x;
     this.lastY = y;
 
+    if (this.disabled) {
+      requestAnimationFrame(() => {
+        if (!cursor) return;
+
+        if (!drawing) cursor.setModeForElement(target);
+
+        if (hasPositionChanged) cursor.update(x * unit + offsetLeft, y * unit + offsetTop, `${ x + 1 } , ${ y + 1 }`);
+      });
+
+      return;
+    }
+
     if (hasPositionChanged) {
       const currentColor = drawing ? this.color : rgbToHex(
         ...this.ctx.getImageData(x * scaledUnit + offsetLeft, y * scaledUnit + offsetTop, 1, 1).data,
@@ -348,7 +363,7 @@ export class JsPaint {
   download() {
     const link = document.createElement('A');
 
-    link.download = 'masterpiece.png';
+    link.download = `${ FILENAMES[Math.floor(Math.random() * FILENAMES.length)] }${ FILENAME_ADJECTIVES[Math.floor(Math.random() * FILENAME_ADJECTIVES.length)] }.png`;
     link.href = this.canvas.toDataURL();
     link.target = '_blank';
     link.click();
@@ -360,6 +375,8 @@ export class JsPaint {
 
   disable() {
     this.disabled = true;
+
+    AudioService.stop();
   }
 
 }

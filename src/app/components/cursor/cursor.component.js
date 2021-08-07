@@ -4,6 +4,7 @@ export class Cursor {
 
   // CSS classes:
   static C_IS_CLICKABLE = 'cursor--isClickable';
+  static C_IS_INTERACTIVE = 'cursor--isInteractive';
 
   // CSS selectors:
   static S_ROOT = '.cursor__root';
@@ -66,6 +67,14 @@ export class Cursor {
 
   enableNative() {
     this.body.style = '';
+  }
+
+  setMode(mode) {
+    if (mode === 'interact') {
+      this.root.classList.add(Cursor.C_IS_INTERACTIVE);
+    } else if (mode === 'paint') {
+      this.root.classList.remove(Cursor.C_IS_INTERACTIVE);
+    }
   }
 
 }

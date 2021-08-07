@@ -20,6 +20,22 @@
 <br />
 
 
+Some other sites I've built
+---------------------------
+
+- **[Key.js \ JavaScript keyboard event key codes & key identifiers.](https://keyjs.dev)**
+
+  👇 Press any key to get the JavaScript keyboard event event key, code, which, keyCode and more properties!
+
+- **[Slot.js](https://danziger.github.io/slotjs/)**
+
+  🎰 Circular slot machine mobile-first SPA built with JavaScript, CSS variables and Emojis!
+
+- **[Stylophone.js](https://danziger.github.io/stylophonejs/)**
+
+  🎹 The classic Stylophone, now in your phone and computer.
+
+
 Running It (Development)
 ------------------------
 
@@ -44,41 +60,22 @@ Known Issues
 <br />
 
 
-WIP
----
+TODOs & Bugfixes
+----------------
 
-- Menu hidden in uncool version.
-- Adjust nav outer spacing on narrow viewports.
-- Menu option states.
-- Menu aria attributes.
-- Cursor mode for menu.
-- Stop drawing and sound when menu shown.
-
-----
-
-- Show/hide ruler zero manually at the right time.
-- Menu can scroll.
-- Persist vibration state.
-- Rename ruler option to something else.
-- Missing focus styles inside menu.
-- Close/navigate menu with keyboard.
+- Add a placeholder for the page logo in case it doesn't load.
 - Review aria tags and code organization.
-- Instructions about keyboard options inside menu.
-- Download image with multiple random names: masterpiece, such-wow, amazing-art, professional-painting-so-great, this-good.
 - Adjust side paddings to be included in the header links and button.
 
-<br />
 
-
-Ideas & TODOs
--------------
+Other Ideas & Features
+----------------------
 
 - Screenshot mode with multiple sizes.
 - Multitouch on mobile.
 - Undo/redo.
 - Resize and keep canvas.
 - Block trajectory in X/Y or diagonal axis.
-- Add a placeholder for the page logo in case it doesn't load.
 - Image upload. See https://medium.com/@agbales/how-to-make-8-bit-art-with-javascript-eea808a70ba2
 
 

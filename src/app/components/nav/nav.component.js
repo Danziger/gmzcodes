@@ -4,9 +4,13 @@ import { VibrationService } from '../../utils/vibration/vibration.service';
 export class Nav {
 
   // CSS selectors:
-  static S_MENU = '.nav__menu';
+  static S_MENU = '#menu';
   static S_BUTTON = '.nav__button';
   static S_ICON = '.nav__icon';
+  static S_ACTIONS = '.nav__action';
+  static S_LOGO_LINK = '.nav__logoLink';
+  static S_VIBRATION_BUTTON = '#vibration';
+  static S_SOUND_BUTTON = '#sound';
 
   // CSS classes:
   static C_MENU_OPEN = 'isOpen';
@@ -17,6 +21,8 @@ export class Nav {
   button = document.querySelector(Nav.S_BUTTON);
   icon = document.querySelector(Nav.S_ICON);
   menu = document.querySelector(Nav.S_MENU);
+  actions = document.querySelectorAll(Nav.S_ACTIONS);
+  logoLink = document.querySelector(Nav.S_LOGO_LINK);
 
   // Components:
   jsPaint;
@@ -31,7 +37,11 @@ export class Nav {
     this.ruler = ruler;
     this.cursor = cursor;
 
+    document.querySelector(Nav.S_VIBRATION_BUTTON).setAttribute('aria-checked', VibrationService.enabled);
+    document.querySelector(Nav.S_SOUND_BUTTON).setAttribute('aria-checked', AudioService.enabled);
+
     this.handleClick = this.handleClick.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
 
     this.addEventListeners();
   }
@@ -58,8 +68,6 @@ export class Nav {
 
     const id = target.classList.contains(Nav.C_ACTION) ? target.id : null;
     const isChecked = target.hasAttribute('aria-checked') ? target.getAttribute('aria-checked') === 'true' : null;
-
-    console.log(id, isChecked);
 
     if (isChecked === true) {
       target.setAttribute('aria-checked', false);
@@ -113,41 +121,63 @@ export class Nav {
     }
   }
 
+  handleKeyDown(e) {
+    const { code, shiftKey } = e;
+
+    if (code === 'Escape') {
+      this.close();
+    } else if (code === 'Tab') {
+      const { activeElement } = document;
+      const { logoLink } = this;
+      const lastAction = this.actions[this.actions.length - 1];
+
+      let handled = false;
+
+      if (shiftKey && activeElement === logoLink && lastAction) {
+        handled = true;
+
+        lastAction.focus();
+      } else if (!shiftKey && activeElement === lastAction && logoLink) {
+        handled = true;
+
+        logoLink.focus();
+      }
+
+      if (handled) e.preventDefault();
+    }
+  }
+
   open() {
-    console.log('open');
-
     if (this.isOpen) return;
-
-    // this.onActionClicked('open'); // TODO: Adjust cursor here...
 
     this.isOpen = true;
 
     document.addEventListener('click', this.handleClick);
+    document.addEventListener('keydown', this.handleKeyDown);
 
     this.icon.classList.add(Nav.C_ICON_CLOSE);
     this.menu.classList.add(Nav.C_MENU_OPEN);
-    // this.menu.setAttribute('tabindex', 0);
     this.button.setAttribute('aria-expanded', true);
+    this.actions.forEach((action) => action.removeAttribute('tabindex'));
 
+    this.cursor.setMode('interact');
     this.jsPaint.disable();
   }
 
   close() {
-    console.log('close');
-
     if (!this.isOpen) return;
-
-    // this.onActionClicked(action || 'close'); // TODO: Adjust cursor here...
 
     this.isOpen = false;
 
     document.removeEventListener('click', this.handleClick);
+    document.removeEventListener('keydown', this.handleKeyDown);
 
     this.icon.classList.remove(Nav.C_ICON_CLOSE);
     this.menu.classList.remove(Nav.C_MENU_OPEN);
-    // this.menu.setAttribute('tabindex', -1);
     this.button.setAttribute('aria-expanded', false);
+    this.actions.forEach((action) => action.setAttribute('tabindex', -1));
 
+    this.cursor.setMode('paint');
     this.jsPaint.enable();
   }
 
