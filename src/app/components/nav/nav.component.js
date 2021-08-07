@@ -160,8 +160,9 @@ export class Nav {
     this.button.setAttribute('aria-expanded', true);
     this.actions.forEach((action) => action.removeAttribute('tabindex'));
 
-    this.cursor.setMode('interact');
     this.jsPaint.disable();
+
+    if (this.cursor) this.cursor.setMode('interact');
   }
 
   close() {
@@ -177,8 +178,9 @@ export class Nav {
     this.button.setAttribute('aria-expanded', false);
     this.actions.forEach((action) => action.setAttribute('tabindex', -1));
 
-    this.cursor.setMode('paint');
     this.jsPaint.enable();
+
+    if (this.cursor) this.cursor.setMode('paint');
   }
 
 }
