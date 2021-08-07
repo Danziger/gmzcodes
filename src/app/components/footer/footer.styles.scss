@@ -2,7 +2,6 @@
 
   &__root {
     position: relative;
-    // z-index: 10;
 
     @include above(xs) {
       margin-bottom: 16px;
