@@ -225,6 +225,7 @@ export class JsPaint {
     this.drawing = false;
   }
 
+  // Color needs to be in hex format (e.g. #ff0000, not #f00):
   setColor(color) {
     this.ctx.fillStyle = this.color = color;
 
@@ -239,6 +240,13 @@ export class JsPaint {
     const lastY = this.lastY = skipConversion ? pageY : Math.floor((pageY - offsetTop) / unit);
 
     this.ctx.fillStyle = isPrimary ? this.color : JsPaint.BACKGROUND_COLOR;
+
+    const currentColor = this.ctx.fillStyle.toUpperCase();
+
+    try {
+      AudioService.playFreq(COLOR_TO_FREQ[currentColor]);
+      AudioService.resume();
+    } catch (err) { /* Continue updating the cursor as normal. */ }
 
     requestAnimationFrame(() => {
       if (cursor) cursor.update(lastX * unit + offsetLeft, lastY * unit + offsetTop, `${ lastX + 1 } , ${ lastY + 1 }`);
@@ -271,7 +279,7 @@ export class JsPaint {
     }
 
     if (hasPositionChanged) {
-      const currentColor = drawing ? this.color : rgbToHex(
+      const currentColor = drawing ? this.ctx.fillStyle.toUpperCase() : rgbToHex(
         ...this.ctx.getImageData(x * scaledUnit + offsetLeft, y * scaledUnit + offsetTop, 1, 1).data,
       );
 
