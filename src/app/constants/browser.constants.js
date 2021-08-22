@@ -3,11 +3,12 @@ export const HAS_TOUCH = navigator.maxTouchPoints > 0
   || (window.DocumentTouch && document instanceof window.DocumentTouch);
 
 export const IS_DESKTOP
-  = !/Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  = !navigator.userAgentData?.mobile;
+  // = !/Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 const supportsCSS = (window.CSS && window.CSS.supports) || (() => false);
 
-const isUncoolBrowser = /MSIE|Trident/.test(window.navigator.userAgent);
+const isUncoolBrowser = /MSIE|Trident/.test(navigator.userAgent);
 
 const supportsCSSMixBlendMode = supportsCSS('mix-blend-mode', 'multiply');
 
