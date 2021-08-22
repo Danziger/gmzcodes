@@ -330,6 +330,10 @@
     padding: 32px 32px 16px 16px;
     margin-top: 16px;
 
+    @include above(xs) {
+      padding: 32px 32px 16px 32px;
+    }
+
     &::before {
       position: absolute;
       content: '';
@@ -337,6 +341,10 @@
       left: 16px;
       right: 0;
       border-top: 2px solid black;
+
+      @include above(xs) {
+        left: 32px;
+      }
     }
 
     &Icon {
@@ -351,6 +359,10 @@
     &Effect.link__linkEffect {
       top: 32px;
       left: 40px;
+
+      @include above(xs) {
+        left: 56px;
+      }
     }
   }
 }
