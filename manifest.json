@@ -77,6 +77,11 @@
     "src": "logo/gmzcodes-t-e-512.png",
     "sizes": "512x512",
     "type": "image/png"
+  }, {
+    "src": "logo/gmzcodes-t-e-512-mask.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "maskable"
   }],
 
   "lang": "en-US",
