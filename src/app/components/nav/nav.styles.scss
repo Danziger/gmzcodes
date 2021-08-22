@@ -91,7 +91,7 @@
     }
 
     &::before {
-      background: linear-gradient(180deg, rgba(255,255,255,1), transparent);
+      background: linear-gradient(180deg, rgba(255,255,255,.9) 50%, transparent);
       top: 0;
     }
 
@@ -320,6 +320,37 @@
       &::after {
         transform: rotate3d(0, 0, 1, -45deg);
       }
+    }
+  }
+
+  &__githubLink {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 32px 32px 16px 16px;
+    margin-top: 16px;
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 16px;
+      right: 0;
+      border-top: 2px solid black;
+    }
+
+    &Icon {
+      margin: -4px 8px 0 0;
+    }
+
+    .app--hasActiveHover &:hover > &Icon {
+      animation: shake .5s;
+      animation-iteration-count: infinite;
+    }
+
+    &Effect.link__linkEffect {
+      top: 32px;
+      left: 40px;
     }
   }
 }
