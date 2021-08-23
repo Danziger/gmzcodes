@@ -7,7 +7,7 @@ export class Nav {
   static S_MENU = '#menu';
   static S_BUTTON = '.nav__button';
   static S_ICON = '.nav__icon';
-  static S_ACTIONS = '.nav__action';
+  static S_ACTIONS = '.nav__action, .nav__githubLink';
   static S_LOGO_LINK = '.nav__logoLink';
   static S_VIBRATION_BUTTON = '#vibration';
   static S_SOUND_BUTTON = '#sound';
