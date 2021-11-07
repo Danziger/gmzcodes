@@ -1,0 +1,53 @@
+@import '../../styles/animations/shake.scss';
+
+.ribbon {
+  $root: &;
+
+  &__base {
+    position: fixed;
+    bottom: 18px;
+    right: 16px;
+    width: 32px;
+    display: flex;
+
+    @include above(xs) {
+      bottom: 34px;
+      right: 32px;
+    }
+
+    @include above(lg) {
+      top: 32px;
+      bottom: auto;
+    }
+
+    .app--hasActiveHover &:hover > #{$root}__svg {
+      animation: shake .5s;
+      animation-iteration-count: infinite;
+    }
+
+    & .cls-1 {
+      fill: #eb3656;
+      fill: #F0F;
+    }
+
+    & .cls-2 {
+      -webkit-clip-path: url(#clip-path);
+      clip-path: url(#clip-path)
+    }
+
+    & .cls-3 {
+      fill: #8e243f;
+      fill: #707;
+    }
+
+    & .cls-4 {
+      fill: #f49d9a;
+      fill: #FFF;
+    }
+  }
+
+  &__svg {
+    pointer-events: none;
+  }
+}
+
