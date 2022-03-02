@@ -91,12 +91,12 @@
     }
 
     &::before {
-      background: linear-gradient(180deg, rgba(255,255,255,.9) 50%, transparent);
+      background: linear-gradient(180deg, rgba(255,255,255,.9) 50%, rgba(255,255,255,0));
       top: 0;
     }
 
     &::after {
-      background: linear-gradient(0deg, rgba(255,255,255,1), transparent);
+      background: linear-gradient(0deg, rgba(255,255,255,1), rgba(255,255,255,0));
       bottom: 0;
 
       @include above(xs) {
