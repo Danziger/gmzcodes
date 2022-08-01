@@ -20,24 +20,6 @@
 <br />
 
 
-Some other sites I've built
----------------------------
-
-- **[Key.js \ JavaScript keyboard event key codes & key identifiers.](https://keyjs.dev)**
-
-  👇 Press any key to get the JavaScript keyboard event event key, code, which, keyCode and more properties!
-
-- **[Slot.js](https://danziger.github.io/slotjs/)**
-
-  🎰 Circular slot machine mobile-first SPA built with JavaScript, CSS variables and Emojis!
-
-- **[Stylophone.js](https://danziger.github.io/stylophonejs/)**
-
-  🎹 The classic Stylophone, now in your phone and computer.
-
-<br />
-
-
 Running It (Development)
 ------------------------
 
@@ -81,6 +63,28 @@ Other Ideas & Features
 - Resize and keep canvas.
 - Block trajectory in X/Y or diagonal axis.
 - Image upload. See https://medium.com/@agbales/how-to-make-8-bit-art-with-javascript-eea808a70ba2
+
+<br />
+
+
+Some other sites I've built
+---------------------------
+
+- **[Stylophone.js](https://danziger.github.io/stylophonejs/)**
+
+  🎹 The classic Stylophone, now in your phone and computer.
+
+- **[Key.js](https://keyjs.dev)**
+
+  ⌨ Press any key to get the JavaScript keyboard event event key, code, which, keyCode and more properties!
+
+- **[Slot.js](https://danziger.github.io/slotjs/)**
+
+  🎰 Circular slot machine mobile-first SPA built with JavaScript, CSS variables and Emojis!
+
+- **[Jobs.js](https://danziger.github.io/jobsjs/)**
+
+  💼 Sharable image summaries for your open positions: Share your jobs as an image on LinkedIn and Instagram to get a visibility boost and more applicants!
 
 <br />
 
