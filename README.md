@@ -25,6 +25,8 @@ Running It (Development)
 
 Take a look at `package.json`, the scripts are self-explanatory, but otherwise `npm install` and `npm start` work in `90%` of teh cases :D
 
+The project will be accessible at http://localhost:8080/.
+
 <br />
 
 
