@@ -82,7 +82,7 @@ Some other sites I've built
 
   🎰 Circular slot machine mobile-first SPA built with JavaScript, CSS variables and Emojis!
 
-- **[Jobs.js](https://danziger.github.io/jobsjs/)**
+- **[Job.js](https://danziger.github.io/jobjs/)**
 
   💼 Sharable image summaries for your open positions: Share your jobs as an image on LinkedIn and Instagram to get a visibility boost and more applicants!
 
