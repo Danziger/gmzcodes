@@ -43,19 +43,29 @@ export class JsPaint {
   }
 
   addEventListeners() {
-    window.addEventListener('resize', this.handleResize.bind(this));
+    window.addEventListener('resize', this.handleResize);
 
     if (HAS_TOUCH) {
-      document.addEventListener('touchstart', this.handleTouchStart.bind(this));
-      document.addEventListener('touchmove', this.handleMove.bind(this));
-      document.addEventListener('touchend', this.handleStop.bind(this));
-      document.addEventListener('touchcancel', this.handleStop.bind(this));
+      this.handleTouchStart = this.handleTouchStart.bind(this);
+      this.handleMove = this.handleMove.bind(this);
+      this.handleStop = this.handleStop.bind(this);
+      this.handleStop = this.handleStop.bind(this);
+
+      document.addEventListener('touchstart', this.handleTouchStart);
+      // document.addEventListener('touchmove', this.handleMove);
+      document.addEventListener('touchend', this.handleStop);
+      document.addEventListener('touchcancel', this.handleStop);
     }
 
-    document.addEventListener('mousedown', this.handleMouseDown.bind(this));
-    document.addEventListener('mousemove', this.handleMove.bind(this));
-    document.addEventListener('mouseup', this.handleStop.bind(this));
-    document.addEventListener('mouseleave', this.handleStop.bind(this));
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMove = this.handleMove.bind(this);
+    this.handleStop = this.handleStop.bind(this);
+    this.handleStop = this.handleStop.bind(this);
+
+    document.addEventListener('mousedown', this.handleMouseDown);
+    document.addEventListener('mousemove', this.handleMove);
+    document.addEventListener('mouseup', this.handleStop);
+    document.addEventListener('mouseleave', this.handleStop);
 
     // Disable context menu:
     document.addEventListener('contextmenu', (e) => {
@@ -75,10 +85,21 @@ export class JsPaint {
     }
   }
 
+  bindOnlyTouchMove() {
+    document.removeEventListener('mousemove', this.handleMove);
+    document.addEventListener('touchmove', this.handleMove);
+  }
+
+  unbindTouchMove() {
+    document.removeEventListener('touchmove', this.handleMove);
+  }
+
   // TOUCH:
 
   handleTouchStart(e) {
     if (this.keysIntervalID || this.disabled) return;
+
+    this.bindOnlyTouchMove();
 
     const { target } = e;
 
@@ -111,6 +132,10 @@ export class JsPaint {
   }
 
   handleMove(e) {
+    // Just trying to make it fast. See https://stackoverflow.com/questions/63848298/touch-move-is-really-slow
+    e.preventDefault();
+    e.stopPropagation();
+
     if (this.keysIntervalID/* || this.disabled */) return;
 
     const { pageX } = e.touches ? e.touches[0] : e;
@@ -123,6 +148,8 @@ export class JsPaint {
     this.isMousePressed = false;
 
     this.stopDrawing();
+
+    this.unbindTouchMove();
   }
 
   // DESKTOP:

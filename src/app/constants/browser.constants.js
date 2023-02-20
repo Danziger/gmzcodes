@@ -2,6 +2,16 @@ export const HAS_TOUCH = navigator.maxTouchPoints > 0
   || 'ontouchstart' in window
   || (window.DocumentTouch && document instanceof window.DocumentTouch);
 
+let hasHoverFlag = false;
+
+try {
+  hasHoverFlag = window.matchMedia('(any-hover: hover)').matches;
+} catch (err) {
+  hasHoverFlag = !HAS_TOUCH;
+}
+
+export const HAS_HOVER = hasHoverFlag;
+
 export const IS_DESKTOP
   = !navigator.userAgentData?.mobile;
   // = !/Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
