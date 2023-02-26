@@ -15,14 +15,6 @@ window.v = () => {
   return `${ buildDate.toDateString() } at ${ buildDate.toLocaleTimeString() } | ${ process.env.COMMIT_HASH }`;
 };
 
-function getViewportHeight() {
-  document.documentElement.style.setProperty('--viewport-height', `${ window.innerHeight }px`);
-}
-
-window.addEventListener('resize', getViewportHeight);
-
-getViewportHeight();
-
 // SERVICE WORKER:
 
 if ('serviceWorker' in navigator) {
