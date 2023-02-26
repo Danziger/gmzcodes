@@ -2,7 +2,7 @@ html {
   // See https://stackoverflow.com/questions/52848856/100vh-height-when-address-bar-is-shown-chrome-mobile.
   height: 100%;
   // See https://developer.chrome.com/blog/300ms-tap-delay-gone-away/
-  touch-action: manipulation;
+  touch-action: none;
 }
 
 a {
