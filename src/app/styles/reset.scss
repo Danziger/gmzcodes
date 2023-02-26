@@ -1,6 +1,18 @@
+:root {
+  --viewport-height: 100%;
+}
+
+html,
+body {
+  // See https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-browser
+  height: 100vh;
+
+  @media not all and (hover:hover) {
+    height: var(--viewport-height);
+  }
+}
+
 html {
-  // See https://stackoverflow.com/questions/52848856/100vh-height-when-address-bar-is-shown-chrome-mobile.
-  height: 100%;
   // See https://developer.chrome.com/blog/300ms-tap-delay-gone-away/
   touch-action: none;
 }
