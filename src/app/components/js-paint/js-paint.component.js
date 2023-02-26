@@ -1,4 +1,4 @@
-import { IS_DESKTOP, HAS_TOUCH } from '../../constants/browser.constants';
+import { IS_DESKTOP, HAS_TOUCH, HAS_CURSOR } from '../../constants/browser.constants';
 import { rgbToHex } from '../../utils/color/color.utils';
 import { AudioService } from '../../utils/audio/audio.service';
 import { VibrationService } from '../../utils/vibration/vibration.service';
@@ -34,9 +34,20 @@ export class JsPaint {
 
   // State:
   keysIntervalID = null;
+  resetHybridModeImplementation = () => undefined;
 
   constructor(options) {
     this.cursor = options.cursor;
+
+    this.handleTouchStart = this.handleTouchStart.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleContextMenu = this.handleContextMenu.bind(this);
+    this.handleResize = this.handleResize.bind(this);
+    this.handleMove = this.handleMove.bind(this);
+    this.handleStop = this.handleStop.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.keysUpdate = this.keysUpdate.bind(this);
 
     this.reset(true);
     this.addEventListeners();
@@ -45,61 +56,83 @@ export class JsPaint {
   addEventListeners() {
     window.addEventListener('resize', this.handleResize);
 
-    if (HAS_TOUCH) {
-      this.handleTouchStart = this.handleTouchStart.bind(this);
-      this.handleMove = this.handleMove.bind(this);
-      this.handleStop = this.handleStop.bind(this);
-      this.handleStop = this.handleStop.bind(this);
-
+    if (HAS_CURSOR) {
+      document.addEventListener('mousedown', this.handleMouseDown);
+      document.addEventListener('mousemove', this.handleMove);
+      document.addEventListener('mouseup', this.handleStop);
+      document.addEventListener('mouseleave', this.handleStop);
+    } else if (HAS_TOUCH) {
       document.addEventListener('touchstart', this.handleTouchStart);
-      // document.addEventListener('touchmove', this.handleMove);
+      document.addEventListener('touchmove', this.handleMove);
       document.addEventListener('touchend', this.handleStop);
       document.addEventListener('touchcancel', this.handleStop);
     }
 
-    this.handleMouseDown = this.handleMouseDown.bind(this);
-    this.handleMove = this.handleMove.bind(this);
-    this.handleStop = this.handleStop.bind(this);
-    this.handleStop = this.handleStop.bind(this);
-
-    document.addEventListener('mousedown', this.handleMouseDown);
-    document.addEventListener('mousemove', this.handleMove);
-    document.addEventListener('mouseup', this.handleStop);
-    document.addEventListener('mouseleave', this.handleStop);
+    if (HAS_CURSOR && HAS_TOUCH) {
+      document.addEventListener('touchstart', this.handleTouchStart);
+    }
 
     // Disable context menu:
-    document.addEventListener('contextmenu', (e) => {
-      if (this.disabled) return;
-
-      const { target } = e;
-
-      if (!target || (target.tagName !== 'A'
-        && target.parentElement.tagName !== 'A' && window.getSelection().toString() === '')) {
-        e.preventDefault();
-      }
-    });
+    document.addEventListener('contextmenu', this.handleContextMenu);
 
     if (IS_DESKTOP) {
-      document.addEventListener('keydown', this.handleKeyDown.bind(this));
-      document.addEventListener('keyup', this.handleKeyUp.bind(this));
+      document.addEventListener('keydown', this.handleKeyDown);
+      document.addEventListener('keyup', this.handleKeyUp);
     }
   }
 
-  bindOnlyTouchMove() {
-    document.removeEventListener('mousemove', this.handleMove);
+  // EVENT BINDING / UNBINDING:
+
+  setMouseMode() {
+    if (!HAS_CURSOR || !HAS_TOUCH) return;
+
+    document.removeEventListener('touchstart', this.handleTouchStart);
+
+    this.resetHybridModeImplementation = () => {
+      document.addEventListener('touchstart', this.handleTouchStart);
+    };
+  }
+
+  setTouchMode() {
+    if (!HAS_CURSOR || !HAS_TOUCH) return;
+
+    if (this.cursor) this.cursor.hide();
+
     document.addEventListener('touchmove', this.handleMove);
+    document.addEventListener('touchend', this.handleStop);
+    document.addEventListener('touchcancel', this.handleStop);
+
+    document.removeEventListener('mousedown', this.handleMouseDown);
+    document.removeEventListener('mousemove', this.handleMove);
+    document.removeEventListener('mouseup', this.handleStop);
+    document.removeEventListener('mouseleave', this.handleStop);
+
+    this.resetHybridModeImplementation = () => {
+      document.removeEventListener('touchmove', this.handleMove);
+      document.removeEventListener('touchend', this.handleStop);
+      document.removeEventListener('touchcancel', this.handleStop);
+
+      document.addEventListener('mousedown', this.handleMouseDown);
+      document.addEventListener('mousemove', this.handleMove);
+      document.addEventListener('mouseup', this.handleStop);
+      document.addEventListener('mouseleave', this.handleStop);
+    };
   }
 
-  unbindTouchMove() {
-    document.removeEventListener('touchmove', this.handleMove);
+  resetHybridMode() {
+    if (!HAS_CURSOR || !HAS_TOUCH) return;
+
+    this.resetHybridModeImplementation();
+
+    if (this.cursor) this.cursor.show();
   }
 
-  // TOUCH:
+  // TOUCH EVENT HANDLING:
 
   handleTouchStart(e) {
-    if (this.keysIntervalID || this.disabled) return;
+    this.setTouchMode();
 
-    this.bindOnlyTouchMove();
+    if (this.keysIntervalID || this.disabled) return;
 
     const { target } = e;
 
@@ -109,9 +142,11 @@ export class JsPaint {
     this.touch(e.pageX, e.pageY, true);
   }
 
-  // MOUSE:
+  // MOUSE EVENT HANDLING:
 
   handleMouseDown(e) {
+    this.setMouseMode();
+
     if (this.keysIntervalID || this.disabled) return;
 
     const { which, target } = e;
@@ -125,7 +160,18 @@ export class JsPaint {
     }
   }
 
-  // SHARED:
+  handleContextMenu(e) {
+    if (this.disabled) return;
+
+    const { target } = e;
+
+    if (!target || (target.tagName !== 'A'
+      && target.parentElement.tagName !== 'A' && window.getSelection().toString() === '')) {
+      e.preventDefault();
+    }
+  }
+
+  // SHARED EVENT HANDLING:
 
   handleResize() {
     this.reset();
@@ -149,10 +195,10 @@ export class JsPaint {
 
     this.stopDrawing();
 
-    this.unbindTouchMove();
+    this.resetHybridMode();
   }
 
-  // DESKTOP:
+  // KEYBOARD EVENT HANDLING:
 
   handleKeyDown({ key, repeat, shiftKey }) {
     if (repeat || this.disabled) return;
@@ -179,7 +225,7 @@ export class JsPaint {
     this.keysUpdate();
 
     this.keysIntervalID = window.setTimeout(() => {
-      this.keysIntervalID = window.setInterval(this.keysUpdate.bind(this), JsPaint.KEY_RATE);
+      this.keysIntervalID = window.setInterval(this.keysUpdate, JsPaint.KEY_RATE);
     }, JsPaint.KEY_RATE * 2);
   }
 

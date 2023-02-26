@@ -1,6 +1,6 @@
 import { Ruler } from '../ruler/ruler.component';
 import { JsPaint } from '../js-paint/js-paint.component';
-import { IS_DESKTOP, IS_BROWSER_SUPPORTED, HAS_TOUCH, HAS_HOVER } from '../../constants/browser.constants';
+import { IS_DESKTOP, IS_BROWSER_SUPPORTED, HAS_TOUCH, HAS_CURSOR } from '../../constants/browser.constants';
 import { Cursor } from '../cursor/cursor.component';
 import { Footer } from '../footer/footer.component';
 import { initializeLinks } from '../link/link.utils';
@@ -63,7 +63,7 @@ export class App {
   init() {
     const { root } = this;
 
-    if (HAS_HOVER) {
+    if (HAS_CURSOR) {
       this.root.classList.add(App.C_HAS_ACTIVE_HOVER);
 
       this.cursor = new Cursor();

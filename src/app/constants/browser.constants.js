@@ -2,15 +2,15 @@ export const HAS_TOUCH = navigator.maxTouchPoints > 0
   || 'ontouchstart' in window
   || (window.DocumentTouch && document instanceof window.DocumentTouch);
 
-let hasHoverFlag = false;
+let hasCursor = false;
 
 try {
-  hasHoverFlag = window.matchMedia('(any-hover: hover)').matches;
+  hasCursor = !window.matchMedia('(hover: none)').matches;
 } catch (err) {
-  hasHoverFlag = !HAS_TOUCH;
+  hasCursor = !HAS_TOUCH;
 }
 
-export const HAS_HOVER = hasHoverFlag;
+export const HAS_CURSOR = hasCursor;
 
 export const IS_DESKTOP
   = !navigator.userAgentData?.mobile;
