@@ -15,6 +15,18 @@ window.v = () => {
   return `${ buildDate.toDateString() } at ${ buildDate.toLocaleTimeString() } | ${ process.env.COMMIT_HASH }`;
 };
 
+// Init viewport dimensions:
+
+if (visualViewport) {
+  const updateViewportDimensions = () => {
+    if (visualViewport) document.documentElement.style.setProperty('--viewportHeight', `${ visualViewport.height }px`);
+  };
+
+  updateViewportDimensions();
+
+  visualViewport.addEventListener('resize', updateViewportDimensions);
+}
+
 // SERVICE WORKER:
 
 if ('serviceWorker' in navigator) {

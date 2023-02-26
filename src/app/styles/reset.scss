@@ -1,8 +1,17 @@
+:root {
+  --viewportHeight: 100vh;
+}
+
 html {
-  // See https://stackoverflow.com/questions/52848856/100vh-height-when-address-bar-is-shown-chrome-mobile.
-  height: 100%;
   // See https://developer.chrome.com/blog/300ms-tap-delay-gone-away/
   touch-action: none;
+}
+
+html,
+body {
+  height: var(--viewportHeight, 100vh);
+  overscroll-behavior-x: none;
+  // min-height: 100%;
 }
 
 a {
