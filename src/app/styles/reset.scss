@@ -10,7 +10,7 @@ html {
 html,
 body {
   height: var(--viewportHeight, 100vh);
-  overscroll-behavior-x: none;
+  overscroll-behavior: none;
   // min-height: 100%;
 }
 
