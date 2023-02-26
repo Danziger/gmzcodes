@@ -5,7 +5,7 @@ export const HAS_TOUCH = navigator.maxTouchPoints > 0
 let hasCursor = false;
 
 try {
-  hasCursor = !window.matchMedia('(hover: none)').matches;
+  hasCursor = window.matchMedia('(hover: fine)').matches;
 } catch (err) {
   hasCursor = !HAS_TOUCH;
 }
