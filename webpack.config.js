@@ -105,8 +105,8 @@ module.exports = (env, {
           url: 'manifest.json',
           revision: hasha.fromFileSync('./static/manifest.json'),
         }, {
-          url: 'dani-gamez-franco-cv-2023.07.10.pdf',
-          revision: hasha.fromFileSync('./static/dani-gamez-franco-cv-2023.07.10.pdf'),
+          url: 'dani-gamez-franco-cv-2023.07.11.pdf',
+          revision: hasha.fromFileSync('./static/dani-gamez-franco-cv-2023.07.11.pdf'),
         }],
 
         // Define runtime caching rules:
