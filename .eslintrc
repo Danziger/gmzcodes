@@ -1,5 +1,5 @@
 {
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
     "extends": "airbnb-base",
     "plugins": [
         "babel"
@@ -8,11 +8,8 @@
         "es6": true,
         "browser": true
     },
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module"
-    },
     "rules":{
+        "no-use-before-define": ["warn"],
         "import/prefer-default-export": [0],
         "import/order": [2, {
             "groups": ["builtin", "external", "parent", "sibling", "index"],

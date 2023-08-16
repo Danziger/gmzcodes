@@ -2,98 +2,96 @@
 @import '../../styles/variables/variables';
 
 .ruler {
+    &__root {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translateZ(0);
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        mix-blend-mode: difference;
+        pointer-events: none;
+        display: block;
 
-  &__root {
-    position: fixed;
-    top: 0;
-    left: 0;
-    transform: translateZ(0);
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    mix-blend-mode: difference;
-    pointer-events: none;
-    display: block;
-
-    .app--showScreenshot > & {
-      display: none;
+        .app--showScreenshot > & {
+            display: none;
+        }
     }
-  }
 
-  &__x {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 16px;
-    display: flex;
-    flex-direction: row;
-    transition: width linear 300ms;
-    overflow: hidden;
+    &__x {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 16px;
+        display: flex;
+        flex-direction: row;
+        transition: width linear 300ms;
+        overflow: hidden;
+        background-size: 2px 12.5%, 8px 50%, 64px 100%;
+        background-repeat: repeat-x, repeat-x, repeat-x;
+        background-image: linear-gradient(to right, var(--c-ruler) 0, var(--c-ruler) 1px, transparent 1px, transparent 2px),
+            linear-gradient(to right, var(--c-ruler) 0, var(--c-ruler) 1px, transparent 1px, transparent 8px),
+            linear-gradient(to right, var(--c-ruler) 0, var(--c-ruler) 1px, transparent 1px, transparent 64px);
 
-    background-size: 2px 12.5%, 8px 50%, 64px 100%;
-    background-repeat: repeat-x, repeat-x, repeat-x;
-    background-image: linear-gradient(to right, var(--c-ruler) 0, var(--c-ruler) 1px, transparent 1px, transparent 2px),
-      linear-gradient(to right, var(--c-ruler) 0, var(--c-ruler) 1px, transparent 1px, transparent 8px),
-      linear-gradient(to right, var(--c-ruler) 0, var(--c-ruler) 1px, transparent 1px, transparent 64px);
-
-    .app--hasActiveRuler & {
-      width: 100%;
+        .app--hasActiveRuler & {
+            width: 100%;
+        }
     }
-  }
 
-  &__y {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 0;
-    width: 16px;
-    display: flex;
-    flex-direction: column;
-    transition: height linear 300ms;
-    overflow: hidden;
+    &__y {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 0;
+        width: 16px;
+        display: flex;
+        flex-direction: column;
+        transition: height linear 300ms;
+        overflow: hidden;
+        background-size: 12.5% 2px , 50% 8px , 100% 64px;
+        background-repeat: repeat-y, repeat-y, repeat-y;
+        background-image: linear-gradient(to bottom, var(--c-ruler) 0, var(--c-ruler) 1px, transparent 1px, transparent 2px),
+            linear-gradient(to bottom, var(--c-ruler) 0, var(--c-ruler) 1px, transparent 1px, transparent 8px),
+            linear-gradient(to bottom, var(--c-ruler) 0, var(--c-ruler) 1px, transparent 1px, transparent 64px);
 
-    background-size: 12.5% 2px , 50% 8px , 100% 64px;
-    background-repeat: repeat-y, repeat-y, repeat-y;
-    background-image: linear-gradient(to bottom, var(--c-ruler) 0, var(--c-ruler) 1px, transparent 1px, transparent 2px),
-      linear-gradient(to bottom, var(--c-ruler) 0, var(--c-ruler) 1px, transparent 1px, transparent 8px),
-      linear-gradient(to bottom, var(--c-ruler) 0, var(--c-ruler) 1px, transparent 1px, transparent 64px);
-
-    .app--hasActiveRuler & {
-      height: 100%;
+        .app--hasActiveRuler & {
+            height: 100%;
+        }
     }
-  }
 
-  &__zero {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 16px;
-    width: 16px;
-    box-sizing: border-box;
-    background: #000;
-    background-clip: padding-box;
-    padding: 0;
-    border-top: 2px solid transparent;
-    border-left: 2px solid transparent;
-    // pointer-events: auto;
-    z-index: 1;
-    opacity: 0;
-    transition: opacity linear 150ms, border-color linear 150ms;
-    transition-delay: 300ms, 300ms;
+    &__zero {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 16px;
+        width: 16px;
+        box-sizing: border-box;
+        background: #000;
+        background-clip: padding-box;
+        padding: 0;
+        border-top: 2px solid transparent;
+        border-left: 2px solid transparent;
 
-    &::before {
-      content: '';
-      position: absolute;
-      border: 1px solid var(--c-ruler);
-      width: 4px;
-      height: 4px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 100%;
-    }
-    /*
+        // pointer-events: auto;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity linear 150ms, border-color linear 150ms;
+        transition-delay: 300ms, 300ms;
+
+        &::before {
+            content: '';
+            position: absolute;
+            border: 1px solid var(--c-ruler);
+            width: 4px;
+            height: 4px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 100%;
+        }
+        /*
     &::after {
       content: '';
       position: absolute;
@@ -105,38 +103,38 @@
     }
     */
 
-    .app--hasActiveRuler & {
-      transition: opacity linear 150ms, border-color linear 150ms;
-      border-color: var(--c-ruler);
-      opacity: 1;
+        .app--hasActiveRuler & {
+            transition: opacity linear 150ms, border-color linear 150ms;
+            border-color: var(--c-ruler);
+            opacity: 1;
+        }
     }
-  }
 
-  &__stepX,
-  &__stepY {
-    color: var(--c-ruler);
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 8px;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-    flex: 0 0 auto;
-    box-sizing: border-box;
-    text-align: left;
-  }
+    &__stepX,
+    &__stepY {
+        color: var(--c-ruler);
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 8px;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+        flex: 0 0 auto;
+        box-sizing: border-box;
+        text-align: left;
+    }
 
-  &__stepX {
-    width: 64px;
-    height: 18px;
-    padding-left: 4px;
-    display: flex;
-    align-items: flex-end;
-  }
+    &__stepX {
+        width: 64px;
+        height: 18px;
+        padding-left: 4px;
+        display: flex;
+        align-items: flex-end;
+    }
 
-  &__stepY {
-    height: 64px;
-    width: 16px;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    padding-top: 4px;
-  }
+    &__stepY {
+        height: 64px;
+        width: 16px;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        padding-top: 4px;
+    }
 }

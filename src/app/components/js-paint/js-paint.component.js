@@ -34,6 +34,8 @@ export class JsPaint {
 
   // State:
   keysIntervalID = null;
+
+  // eslint-disable-next-line class-methods-use-this
   resetHybridModeImplementation = () => undefined;
 
   constructor(options) {

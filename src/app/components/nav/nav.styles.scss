@@ -1,372 +1,365 @@
-@import '../../styles/animations/shake.scss';
+@import '../../styles/animations/shake';
 
 .nav {
-  $root: &;
+    $root: &;
 
-  &__root {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &__logoLink {
-    position: relative;
-    padding: 32px 0px 8px;
-    font-size: 12px;
-    text-transform: uppercase;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    outline: none;
-    overflow: visible;
-    z-index: 2;
-
-    .app--showScreenshot & {
-      padding-top: 8px;
-    }
-  }
-
-  &__logoImg {
-    height: 32px;
-    width: 32px;
-    margin-right: 16px;
-    transform: translate(0, -2px);
-    pointer-events: none;
-    border: 0;
-
-    .app--hasActiveHover #{$root}__logoLink:hover > & {
-      animation: shake .5s;
-      animation-iteration-count: infinite;
-    }
-  }
-
-  &__underline.link__underline {
-    line-height: 16px;
-  }
-
-  &__linkEffect.link__linkEffect {
-    top: 39px;
-    left: 48px;
-
-    &::before {
-      top: 0;
+    &__root {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
     }
 
-    &::after {
-      top: 5px;
-    }
-  }
+    &__logoLink {
+        position: relative;
+        padding: 32px 0 8px;
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        outline: none;
+        overflow: visible;
+        z-index: 2;
 
-  &__menuWrapper {
-    position: fixed;
-    top: 0;
-    right: 0;
-    max-height: var(--viewportHeight, 100vh);
-    height: 100%;
-    width: 100%;
-    transform: translateZ(0);
-    background: white;
-    transition: opacity linear 250ms;
-    pointer-events: none;
-    opacity: 0;
-    z-index: 1;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &.isOpen {
-      pointer-events: auto;
-      opacity: 1;
+        .app--showScreenshot & {
+            padding-top: 8px;
+        }
     }
 
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 16px;
-      height: 72px;
-      z-index: 1;
-      pointer-events: none;
+    &__logoImg {
+        height: 32px;
+        width: 32px;
+        margin-right: 16px;
+        transform: translate(0, -2px);
+        pointer-events: none;
+        border: 0;
+
+        .app--hasActiveHover #{$root}__logoLink:hover > & {
+            animation: shake .5s;
+            animation-iteration-count: infinite;
+        }
     }
 
-    &::before {
-      background: linear-gradient(180deg, rgba(255,255,255,.9) 50%, rgba(255,255,255,0));
-      top: 0;
+    &__underline.link__underline {
+        line-height: 16px;
     }
 
-    &::after {
-      background: linear-gradient(0deg, rgba(255,255,255,1), rgba(255,255,255,0));
-      bottom: 0;
+    &__linkEffect.link__linkEffect {
+        top: 39px;
+        left: 48px;
 
-      @include above(xs) {
-        height: 88px;
-      }
+        &::before {
+            top: 0;
+        }
+
+        &::after {
+            top: 5px;
+        }
     }
-  }
 
-  &__menuScroll {
-    overflow-x: hidden;
-    overflow-y: auto;
-    margin: auto;
-    max-height: var(--viewportHeight, 100vh);
-    width: 100%;
-    overscroll-behavior: none;
-  }
+    &__menuWrapper {
+        position: fixed;
+        top: 0;
+        right: 0;
+        max-height: var(--viewportHeight, 100vh);
+        height: 100%;
+        width: 100%;
+        transform: translateZ(0);
+        background: white;
+        transition: opacity linear 250ms;
+        pointer-events: none;
+        opacity: 0;
+        z-index: 1;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-  &__menu {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    max-width: 480px;
-    margin: 0 auto;
-    /*
+        &.isOpen {
+            pointer-events: auto;
+            opacity: 1;
+        }
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 16px;
+            height: 72px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        &::before {
+            background: linear-gradient(180deg, rgba(255,255,255,.9) 50%, rgba(255,255,255,0));
+            top: 0;
+        }
+
+        &::after {
+            background: linear-gradient(0deg, rgba(255,255,255,1), rgba(255,255,255,0));
+            bottom: 0;
+
+            @include above(xs) {
+                height: 88px;
+            }
+        }
+    }
+
+    &__menuScroll {
+        overflow-x: hidden;
+        overflow-y: auto;
+        margin: auto;
+        max-height: var(--viewportHeight, 100vh);
+        width: 100%;
+        overscroll-behavior: none;
+    }
+
+    &__menu {
+        list-style: none;
+        padding: 0;
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+        /*
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     */
 
-    padding-top: 96px;
-    padding-bottom: 96px;
-  }
-
-  &__li {
-    width: 100%;
-    flex: 1 0 auto;
-  }
-
-  &__action {
-    position: relative;
-    border: 0;
-    background: transparent;
-    line-height: 1;
-    max-width: 480px;
-    width: 100vw;
-    text-align: left;
-    outline: none;
-    padding: 12px 74px 12px 16px;
-    font-size: 24px;
-    width: 100%;
-
-    font-family: 'Josefin Sans', sans-serif;
-    line-height: 1.25;
-
-    @include above(xs) {
-      padding: 16px 90px 16px 32px;
+        padding-top: 96px;
+        padding-bottom: 96px;
     }
 
-    &Title,
-    &Description {
-      display: block;
-      font-size: 18px;
-      pointer-events: none;
+    &__li {
+        width: 100%;
+        flex: 1 0 auto;
     }
 
-    &Title {
-      color: #000;
-      font-weight: bold;
+    &__action {
+        position: relative;
+        border: 0;
+        background: transparent;
+        max-width: 480px;
+        text-align: left;
+        outline: none;
+        padding: 12px 74px 12px 16px;
+        font-size: 24px;
+        width: 100%;
+        font-family: 'Josefin Sans', sans-serif;
+        line-height: 1.25;
+
+        @include above(xs) {
+            padding: 16px 90px 16px 32px;
+        }
+
+        &Title,
+        &Description {
+            display: block;
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        &Title {
+            color: #000;
+            font-weight: bold;
+        }
+
+        &Description {
+            color: #00F;
+            margin-top: 8px;
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0 4px;
+            border-radius: 4px;
+            z-index: -1;
+            border: 1px dotted transparent;
+
+            @include above(xs) {
+                left: 16px;
+                right: 16px;
+            }
+        }
+
+        .app--hasActiveHover &:hover::before {
+            background: rgba(0, 0, 0, .03125);
+        }
+
+        .app--hasActiveFocus &:focus::before {
+            border: 1px dotted black;
+        }
+
+        &::after {
+            position: absolute;
+            top: 50%;
+            right: 16px;
+            display: block;
+            padding: 8px 8px 4px;
+            text-transform: uppercase;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 12px;
+            line-height: 1.25;
+            font-weight: bold;
+            margin-left: auto;
+            border-radius: 128px;
+            color: #000;
+            pointer-events: none;
+            width: 42px;
+            text-align: center;
+            box-sizing: border-box;
+            transform: translate(0, -50%);
+            background: #FFF;
+
+            @include above(xs) {
+                right: 32px;
+            }
+        }
+
+        &[aria-checked='true']::after {
+            content: 'On';
+            box-shadow: 0 0 24px 4px rgba(255, 0, 255, .25);
+        }
+
+        &[aria-checked='false']::after {
+            content: 'Off';
+            box-shadow: 0 0 24px 4px rgba(0, 0, 0, .25);
+        }
     }
 
-    &Description {
-      color: #00F;
-      margin-top: 8px;
+    &__button {
+        position: relative;
+        width: 72px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        outline: none;
+        margin: 0 -24px 0 auto;
+        z-index: 2;
+        border-radius: 4px;
+
+        .app--showScreenshot & {
+            display: none;
+        }
+
+        .app--hasActiveFocus &:focus::before {
+            content: '';
+            position: absolute;
+            top: 46px;
+            left: 50%;
+            transform: translate(-50%, 0);
+            height: 8px;
+            width: 24px;
+            background: #F0F;
+        }
     }
 
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 4px;
-      right: 4px;
-      bottom: 0;
-      border-radius: 4px;
-      z-index: -1;
-      border: 1px dotted transparent;
-
-      @include above(xs) {
-        left: 16px;
-        right: 16px;
-      }
+    &__icon,
+    &__icon::before,
+    &__icon::after {
+        position: absolute;
+        display: block;
+        left: 0;
+        transition: all linear 150ms;
+        border-radius: 4px;
+        background: black;
     }
 
-    .app--hasActiveHover &:hover::before {
-      background: rgba(0, 0, 0, .03125);
+    &__icon {
+        height: 2px;
+        width: 24px;
+        top: 46px;
+        left: 50%;
+        transform: translate(-50%, 0) var(--shakeTransform, translate(0, 0));
+        pointer-events: none;
+
+        .app--hasActiveHover #{$root}__button:hover > & {
+            animation: shake-variables .5s;
+            animation-iteration-count: infinite;
+        }
+
+        &::before,
+        &::after {
+            content: '';
+            height: 100%;
+            width: 100%;
+            transform-origin: 200% center;
+        }
+
+        &::before {
+            top: 5px;
+        }
+
+        &::after {
+            top: -5px;
+        }
+
+        &.showCloseIcon {
+            transform: translate(-50%, -2px) scale3d(.8, .8, .8) var(--shakeTransform, translate(0, 0));
+            background: transparent;
+
+            &::before,
+            &::after {
+                top: 0;
+                transform-origin: 50% 50%;
+            }
+
+            &::before {
+                transform: rotate3d(0, 0, 1, 45deg);
+            }
+
+            &::after {
+                transform: rotate3d(0, 0, 1, -45deg);
+            }
+        }
     }
 
-    .app--hasActiveFocus &:focus::before {
-      border: 1px dotted black;
+    &__githubLink {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        padding: 32px 32px 16px 16px;
+        margin-top: 16px;
+
+        @include above(xs) {
+            padding: 32px 32px 16px;
+        }
+
+        &::before {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 16px;
+            right: 0;
+            border-top: 2px solid black;
+
+            @include above(xs) {
+                left: 32px;
+            }
+        }
+
+        &Icon {
+            pointer-events: none;
+            margin: -4px 8px 0 0;
+            width: 16px;
+            height: 16px;
+        }
+
+        .app--hasActiveHover &:hover > &Icon {
+            animation: shake .5s;
+            animation-iteration-count: infinite;
+        }
+
+        &Effect.link__linkEffect {
+            top: 32px;
+            left: 40px;
+
+            @include above(xs) {
+                left: 56px;
+            }
+        }
     }
-
-    &::after {
-      position: absolute;
-      top: 50%;
-      right: 16px;
-      display: block;
-      padding: 8px 8px 4px;
-      text-transform: uppercase;
-      font-family: 'Josefin Sans', sans-serif;
-      font-size: 12px;
-      line-height: 1.25;
-      font-weight: bold;
-      margin-left: auto;
-      border-radius: 128px;
-      color: #000;
-      pointer-events: none;
-      width: 42px;
-      text-align: center;
-      box-sizing: border-box;
-      transform: translate(0, -50%);
-      background: #FFF;
-
-      @include above(xs) {
-        right: 32px;
-      }
-    }
-
-    &[aria-checked='true']::after {
-      content: 'On';
-      box-shadow: 0 0 24px 4px rgba(255, 0, 255, .25);
-    }
-
-    &[aria-checked='false']::after {
-      content: 'Off';
-      box-shadow: 0 0 24px 4px rgba(0, 0, 0, .25);
-    }
-  }
-
-  &__button {
-    position: relative;
-    width: 72px;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    outline: none;
-    margin: 0 -24px 0 auto;
-    z-index: 2;
-    border-radius: 4px;
-
-    .app--showScreenshot & {
-      display: none;
-    }
-
-    .app--hasActiveFocus &:focus::before {
-      content: '';
-      position: absolute;
-      top: 46px;
-      left: 50%;
-      transform: translate(-50%, 0);
-      height: 8px;
-      width: 24px;
-      background: #F0F;
-    }
-  }
-
-  &__icon,
-  &__icon::before,
-  &__icon::after {
-    position: absolute;
-    display: block;
-    left: 0;
-    transition: all linear 150ms;
-    border-radius: 4px;
-    background: black;
-  }
-
-  &__icon {
-    height: 2px;
-    width: 24px;
-    top: 46px;
-    left: 50%;
-    transform: translate(-50%, 0) var(--shakeTransform, translate(0, 0));
-    pointer-events: none;
-
-    .app--hasActiveHover #{$root}__button:hover > & {
-      animation: shake-variables .5s;
-      animation-iteration-count: infinite;
-    }
-
-    &:before,
-    &:after {
-      content: '';
-      height: 100%;
-      width: 100%;
-      transform-origin: 200% center;
-    }
-
-    &:before {
-      top: 5px;
-    }
-
-    &:after {
-      top: -5px;
-    }
-
-    &.showCloseIcon {
-      transform: translate(-50%, -2px) scale3d(.8, .8, .8) var(--shakeTransform, translate(0, 0));
-      background: transparent;
-
-      &::before,
-      &::after {
-        top: 0;
-        transform-origin: 50% 50%;
-      }
-
-      &::before {
-        transform: rotate3d(0, 0, 1, 45deg);
-      }
-
-      &::after {
-        transform: rotate3d(0, 0, 1, -45deg);
-      }
-    }
-  }
-
-  &__githubLink {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    padding: 32px 32px 16px 16px;
-    margin-top: 16px;
-
-    @include above(xs) {
-      padding: 32px 32px 16px 32px;
-    }
-
-    &::before {
-      position: absolute;
-      content: '';
-      top: 0;
-      left: 16px;
-      right: 0;
-      border-top: 2px solid black;
-
-      @include above(xs) {
-        left: 32px;
-      }
-    }
-
-    &Icon {
-      pointer-events: none;
-      margin: -4px 8px 0 0;
-      width: 16px;
-      height: 16px;
-    }
-
-    .app--hasActiveHover &:hover > &Icon {
-      animation: shake .5s;
-      animation-iteration-count: infinite;
-    }
-
-    &Effect.link__linkEffect {
-      top: 32px;
-      left: 40px;
-
-      @include above(xs) {
-        left: 56px;
-      }
-    }
-  }
 }

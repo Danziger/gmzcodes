@@ -1,96 +1,92 @@
 .footer {
+    &__root {
+        position: relative;
 
-  &__root {
-    position: relative;
-
-    @include above(xs) {
-      margin-bottom: 16px;
-    }
-  }
-
-  &__colors {
-    display: flex;
-    align-items: flex-start;
-    list-style: none;
-    margin: 0 -4px;
-    box-sizing: border-box;
-    padding: 0;
-  }
-
-  &__item {
-    display: block;
-  }
-
-  &__sample {
-    position: relative;
-    border: 0;
-    outline: none;
-    padding: 24px 4px 16px;
-    width: 32px;
-    height: 32px;
-    border-radius: 128px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    box-sizing: content-box;
-    background: transparent;
-    color: var(--color, #000);
-
-    .app--showScreenshot & {
-      padding-top: 16px;
+        @include above(xs) {
+            margin-bottom: 16px;
+        }
     }
 
-    &::before {
-      content: '';
-      position: absolute;
-      top: 24px;
-      right: 4px;
-      bottom: 16px;
-      left: 4px;
-      z-index: -1;
-      border-radius: 128px;
-      background: var(--bg, #FFF);
-      transition: transform linear 100ms;
-      box-shadow: 0 0 24px 4px var(--shadow, rgba(0, 0, 0, .25));
-
-      .app--showScreenshot & {
-        top: 16px;
-      }
+    &__colors {
+        display: flex;
+        align-items: flex-start;
+        list-style: none;
+        margin: 0 -4px;
+        box-sizing: border-box;
+        padding: 0;
     }
 
-    .app--hasActiveHover &:hover::before {
-      transform: scale(1.25);
-      box-shadow: 0 0 24px 8px var(--shadow, rgba(0, 0, 0, .25));
+    &__item {
+        display: block;
     }
 
-    &::after {
-      content: '';
-      position: absolute;
-      top: 12px;
-      left: 50%;
-      width: 0;
-      height: 0;
-      z-index: -1;
-      background: #000;
-      border-radius: 100%;
-      transform: translate(-50%, -50%);
-      transition: all linear 100ms;
+    &__sample {
+        position: relative;
+        border: 0;
+        outline: none;
+        padding: 24px 4px 16px;
+        width: 32px;
+        height: 32px;
+        border-radius: 128px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-sizing: content-box;
+        background: transparent;
+        color: var(--color, #000);
 
-      .app--showScreenshot & {
-        display: none;
-      }
-    }
+        .app--showScreenshot & {
+            padding-top: 16px;
+        }
 
-    .app--hasActiveFocus &:focus::after {
-      width: 6px;
-      height: 6px;
-    }
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 24px 4px 16px;
+            z-index: -1;
+            border-radius: 128px;
+            background: var(--bg, #FFF);
+            transition: transform linear 100ms;
+            box-shadow: 0 0 24px 4px var(--shadow, rgba(0, 0, 0, .25));
 
-    &--isCurrent::after {
-      width: 10px;
-      height: 10px;
+            .app--showScreenshot & {
+                top: 16px;
+            }
+        }
+
+        .app--hasActiveHover &:hover::before {
+            transform: scale(1.25);
+            box-shadow: 0 0 24px 8px var(--shadow, rgba(0, 0, 0, .25));
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            width: 0;
+            height: 0;
+            z-index: -1;
+            background: #000;
+            border-radius: 100%;
+            transform: translate(-50%, -50%);
+            transition: all linear 100ms;
+
+            .app--showScreenshot & {
+                display: none;
+            }
+        }
+
+        .app--hasActiveFocus &:focus::after {
+            width: 6px;
+            height: 6px;
+        }
+
+        &--isCurrent::after {
+            width: 10px;
+            height: 10px;
+        }
     }
-  }
 }

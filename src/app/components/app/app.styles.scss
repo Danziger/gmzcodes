@@ -1,87 +1,85 @@
 @import '../../styles/variables/variables';
-
 @import '../../styles/mixins/media-queries';
 
 .app {
-  $root: &;
+    $root: &;
 
-  &__root {
-    --c-ruler: #{$c-base};
-    --c-current: #000;
+    &__root {
+        --c-ruler: #{$c-base};
+        --c-current: #000;
 
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
-    margin: 0 auto;
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 18px;
-    line-height: 1.25;
-    color: #00F;
-    -webkit-overflow-scrolling: touch;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    cursor: none;
-    user-select: none;
-    overflow: hidden;
-  }
-
-  &--hasActiveHover {
-
-    a,
-    button {
-      cursor: none;
-    }
-  }
-
-  &--hasActiveFocus {}
-
-  &--hasActiveRuler {}
-
-  &--showFallback {
-    justify-content: normal;
-  }
-
-  &--showFallback,
-  &--showScreenshot {
-    position: static;
-    cursor: auto;
-    user-select: auto;
-    overflow: auto;
-    overscroll-behavior: initial;
-
-    a,
-    button {
-      cursor: pointer;
-    }
-  }
-
-  &__container {
-    position: relative;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    box-sizing: border-box;
-    z-index: 10;
-    width: 100%;
-    height: 100%;
-
-    @include above(xs) {
-      padding: 0 32px;
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        margin: 0 auto;
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 18px;
+        line-height: 1.25;
+        color: #00F;
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        cursor: none;
+        user-select: none;
+        overflow: hidden;
     }
 
-    #{$root}--showScreenshot > & {
-      max-width: 1200px;
-      height: 628px;
-      padding: 0 216px;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, .125);
-      justify-content: center;
+    &--hasActiveHover {
+        a,
+        button {
+            cursor: none;
+        }
     }
-  }
+
+    &--hasActiveFocus {}
+
+    &--hasActiveRuler {}
+
+    &--showFallback {
+        justify-content: normal;
+    }
+
+    &--showFallback,
+    &--showScreenshot {
+        position: static;
+        cursor: auto;
+        user-select: auto;
+        overflow: auto;
+        overscroll-behavior: initial;
+
+        a,
+        button {
+            cursor: pointer;
+        }
+    }
+
+    &__container {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        box-sizing: border-box;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+
+        @include above(xs) {
+            padding: 0 32px;
+        }
+
+        #{$root}--showScreenshot > & {
+            max-width: 1200px;
+            height: 628px;
+            padding: 0 216px;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, .125);
+            justify-content: center;
+        }
+    }
 
 }

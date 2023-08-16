@@ -1,21 +1,12 @@
-@import './styles/reset.scss';
-
-@import './components/app/app.styles.scss';
-
-@import './components/nav/nav.styles.scss';
-
-@import './components/content/content.styles.scss';
-
-@import './components/footer/footer.styles.scss';
-
-@import './components/ribbon/ribbon.styles.scss';
-
-@import './components/js-paint/js-paint.styles.scss';
-
-@import './components/link/link.styles.scss';
-
-@import './components/ruler/ruler.styles.scss';
-
-@import './components/cursor/cursor.styles.scss';
+@import './styles/reset';
+@import './components/app/app.styles';
+@import './components/nav/nav.styles';
+@import './components/content/content.styles';
+@import './components/footer/footer.styles';
+@import './components/ribbon/ribbon.styles';
+@import './components/js-paint/js-paint.styles';
+@import './components/link/link.styles';
+@import './components/ruler/ruler.styles';
+@import './components/cursor/cursor.styles';
 
 

@@ -1,36 +1,37 @@
 :root {
-  --viewportHeight: 100vh;
+    --viewportHeight: 100vh;
 }
 
 html {
-  // See https://developer.chrome.com/blog/300ms-tap-delay-gone-away/
-  touch-action: none;
+    // See https://developer.chrome.com/blog/300ms-tap-delay-gone-away/
+    touch-action: none;
 }
 
 html,
 body {
-  height: var(--viewportHeight, 100vh);
-  overscroll-behavior: none;
-  // min-height: 100%;
+    height: var(--viewportHeight, 100vh);
+    overscroll-behavior: none;
+
+    // min-height: 100%;
 }
 
 a {
-  outline: none;
+    outline: none;
 }
 
 a,
 a:link,
 a:visited,
 a:active {
-  color: #000;
-  text-decoration: none;
+    color: #000;
+    text-decoration: none;
 }
 
 [hidden] {
-  display: none !important;
+    display: none !important;
 }
 
 h1,
 h2 {
-  font-size: inherit;
+    font-size: inherit;
 }
