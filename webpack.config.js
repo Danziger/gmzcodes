@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 const path = require('path');
 const childProcess = require('child_process');
 
@@ -41,18 +43,18 @@ module.exports = (env, {
 
     devServer: {
       static: {
-          directory: path.resolve(__dirname, 'static'),
+        directory: path.resolve(__dirname, 'static'),
       },
       devMiddleware: {
-          publicPath: '/',
-          // When sharing the site using ssh -R 80:localhost:8080 ssh.localhost.run
-          // disableHostCheck: true,
+        publicPath: '/',
+        // When sharing the site using ssh -R 80:localhost:8080 ssh.localhost.run
+        // disableHostCheck: true,
       },
       client: {
-          overlay: {
-              warnings: false,
-              errors: false,
-          },
+        overlay: {
+          warnings: false,
+          errors: false,
+        },
       },
     },
 
@@ -86,8 +88,16 @@ module.exports = (env, {
       new HtmlWebpackPlugin({
         filename: path.resolve(__dirname, 'dist/index.html'),
         template: path.resolve(__dirname, 'src/app/components/app/app.template.ejs'),
+        title: 'GMZcodes \\ Dani Gámez Franco',
+        description: 'Dani Gámez Franco, CTO, Lead Frontend Architect, Computer Science Engineer, Entrepreneur, Remote Work Advocate.',
         favicon: path.resolve(__dirname, 'static/favicon.ico'),
-        inlineSource: '.css$', // Inline JS and CSS.
+        inlineSource: '.(js|css)$', // Inline JS and CSS.
+        minify: PROD,
+        meta: {
+          author: pkg.author.name,
+          description: pkg.description,
+        },
+        // inlineSource: '.css$', // Inline JS and CSS.
       }),
 
       new MiniCssExtractPlugin({
@@ -100,7 +110,7 @@ module.exports = (env, {
 
       new CopyWebpackPlugin({
         patterns: [{
-            from: 'static',
+          from: 'static',
         }],
       }),
 
@@ -134,8 +144,8 @@ module.exports = (env, {
       },
 
       minimizer: PROD ? [
-          '...',
-          new CssMinimizerPlugin(),
+        '...',
+        new CssMinimizerPlugin(),
       ] : [],
     },
   };
@@ -198,7 +208,7 @@ module.exports = (env, {
           },
         }],
       }),
-    )
+    );
   }
 
   return config;
