@@ -6,7 +6,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const hasha = require('hasha');
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
@@ -63,18 +62,10 @@ module.exports = (env, {
         exclude: /node_modules/,
         use: [{
           loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-            babelrc: false,
-            rootMode: 'upward',
-          },
         }],
       }, {
         test: /\.scss/,
         use: [
-          // process.env.NODE_ENV !== 'production'
-          // ? 'style-loader'
-          // : MiniCssExtractPlugin.loader,
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
