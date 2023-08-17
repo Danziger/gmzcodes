@@ -27,7 +27,7 @@ export class JsPaint {
 
   // Elements:
   canvas = document.querySelector('.jsPaint__root');
-  ctx = this.canvas.getContext('2d');
+  ctx = this.canvas.getContext('2d', { willReadFrequently: true });
 
   // Components:
   cursor = null;
