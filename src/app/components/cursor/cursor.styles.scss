@@ -177,6 +177,10 @@
             mix-blend-mode: difference;
         }
 
+        &::after {
+            content: attr(data-position-label);
+        }
+
         #{$root}--isInteractive > &,
         #{$root}--isClickable > & {
             opacity: 0;

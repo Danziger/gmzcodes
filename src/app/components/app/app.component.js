@@ -93,8 +93,8 @@ export class App {
     this.root.classList.add(App.C_SHOW_FALLBACK);
 
     // Hide menu:
-    document.querySelector('.nav__button').setAttribute('hidden', true);
-    document.querySelector('.nav__button').setAttribute('aria-hidden', true);
+    document.querySelector('#menuButton').setAttribute('hidden', true);
+    document.querySelector('#menuButton').setAttribute('aria-hidden', true);
 
     // Show the right title:
     document.querySelector('.content__regularHeader').setAttribute('hidden', true);

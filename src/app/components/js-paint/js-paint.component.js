@@ -3,6 +3,8 @@ import { rgbToHex } from '../../utils/color/color.utils';
 import { AudioService } from '../../utils/audio/audio.service';
 import { VibrationService } from '../../utils/vibration/vibration.service';
 import { clamp } from '../../utils/math/math.utils';
+import { waitOneFrame } from '../../utils/promises/promises.utils';
+import { loadImage } from '../../utils/image-loader/image-loader.utils';
 
 import { COLOR_TO_FREQ, FILENAMES, FILENAME_ADJECTIVES } from './js-paint.constants';
 
@@ -28,6 +30,8 @@ export class JsPaint {
   // Elements:
   canvas = document.querySelector('.jsPaint__root');
   ctx = this.canvas.getContext('2d', { willReadFrequently: true });
+  contentRoot = document.querySelector('.content__root');
+  footerRoot = document.querySelector('.footer__root');
 
   // Components:
   cursor = null;
@@ -331,54 +335,40 @@ export class JsPaint {
   }
 
   drag(pageX, pageY, target) {
-    const { offsetLeft, offsetTop, unit, scaledUnit, lastX, lastY, cursor, drawing } = this;
-    const x = target ? Math.floor((pageX - offsetLeft) / unit) : pageX;
-    const y = target ? Math.floor((pageY - offsetTop) / unit) : pageY;
-    const w = Math.abs(x - lastX);
-    const h = Math.abs(y - lastY);
-    const hasPositionChanged = this.lastX !== x || this.lastY !== y;
-
-    this.lastX = x;
-    this.lastY = y;
-
-    if (this.disabled) {
-      requestAnimationFrame(() => {
-        if (!cursor) return;
-
-        if (!drawing) cursor.setModeForElement(target);
-
-        if (hasPositionChanged) cursor.update(x * unit + offsetLeft, y * unit + offsetTop, `${ x + 1 } , ${ y + 1 }`);
-      });
-
-      return;
-    }
-
-    if (hasPositionChanged) {
-      const currentColor = drawing ? this.ctx.fillStyle.toUpperCase() : rgbToHex(
-        ...this.ctx.getImageData(x * scaledUnit + offsetLeft, y * scaledUnit + offsetTop, 1, 1).data,
-      );
-
-      try {
-        AudioService.playFreq(COLOR_TO_FREQ[currentColor]);
-        AudioService.resume();
-      } catch (err) { /* Continue updating the cursor as normal. */ }
-    }
-
     requestAnimationFrame(() => {
-      if (cursor && !drawing) cursor.setModeForElement(target);
+      const { offsetLeft, offsetTop, unit, scaledUnit, lastX, lastY, cursor, drawing } = this;
+      const x = target ? Math.floor((pageX - offsetLeft) / unit) : pageX;
+      const y = target ? Math.floor((pageY - offsetTop) / unit) : pageY;
+      const w = Math.abs(x - lastX);
+      const h = Math.abs(y - lastY);
+      const hasPositionChanged = this.lastX !== x || this.lastY !== y;
 
-      if (hasPositionChanged) {
-        if (cursor) cursor.update(x * unit + offsetLeft, y * unit + offsetTop, `${ x + 1 } , ${ y + 1 }`);
+      this.lastX = x;
+      this.lastY = y;
 
-        if (drawing) {
-          if (w === 0 && h === 0) {
-            this.paintPixel(x, y);
-          } else if (w > h) {
-            this.lineLandscape(lastX, lastY, x, y);
-          } else {
-            this.linePortrait(lastX, lastY, x, y);
-          }
-        }
+      cursor.update(x * unit + offsetLeft, y * unit + offsetTop, `${ x + 1 } , ${ y + 1 }`);
+
+      if (!cursor || !hasPositionChanged || this.disabled) return;
+
+      if (!drawing) {
+        cursor.setModeForElement(target);
+      } else if (w === 0 && h === 0) {
+        this.paintPixel(x, y);
+      } else if (w > h) {
+        this.lineLandscape(lastX, lastY, x, y);
+      } else {
+        this.linePortrait(lastX, lastY, x, y);
+      }
+
+      if (AudioService.enabled) {
+        const currentColor = drawing ? this.ctx.fillStyle.toUpperCase() : rgbToHex(
+          ...this.ctx.getImageData(x * scaledUnit + offsetLeft, y * scaledUnit + offsetTop, 1, 1).data,
+        );
+
+        try {
+          AudioService.playFreq(COLOR_TO_FREQ[currentColor]);
+          AudioService.resume();
+        } catch (err) { /* Continue updating the cursor as normal. */ }
       }
     });
   }
@@ -460,6 +450,80 @@ export class JsPaint {
     this.disabled = true;
 
     AudioService.stop();
+  }
+
+  // LOAD IMAGE:
+
+  async magicImage() {
+    // TODO: It should not be possible to call this function multiple times before it finishes:
+
+    // TODO: Add a confirm if this will overwrite the user's previous drawing.
+
+    const previousColor = this.color;
+
+    this.disable();
+
+    const {
+      imageWidth,
+      imageHeight,
+      getPixelColor,
+      // TODO: Add attribution:
+      // TODO: Add an option to send drawings to me (Supabase?)
+    } = await loadImage('drawings/compressed/monkey-by-dan-sheldon.png');
+
+    const availableWidth = document.body.offsetWidth / this.unit;
+    const startY = this.contentRoot.getBoundingClientRect().bottom;
+    const endY = this.footerRoot.getBoundingClientRect().top;
+    const availableHeight = (endY - startY) / this.unit;
+    const initialX = Math.round(availableWidth / 2 - imageWidth / 2);
+    const initialY = Math.round(startY / this.unit + availableHeight / 2 - imageHeight / 2);
+
+    let prevColor = null;
+    let prevX = null;
+    let prevY = null;
+    let paintedPixels = 0;
+
+    // TODO: Add modem-like sound while this runs?
+
+    for (let y = 0; y < imageHeight; ++y) {
+      const translatedY = initialY + y;
+
+      for (let x = 0; x < imageWidth; ++x) {
+        const translatedX = initialX + x;
+
+        if (prevColor) {
+          this.setColor(prevColor);
+          this.paintPixel(prevX, prevY);
+        }
+
+        this.setColor('#FF00FF');
+        this.paintPixel(translatedX, translatedY);
+
+        prevX = translatedX;
+        prevY = translatedY;
+        prevColor = getPixelColor(x, y);
+
+        if (prevColor !== '#FFFFFF') {
+          ++paintedPixels;
+
+          if (paintedPixels % 8 === 0) {
+            // TODO: This should be abortable (e.g. if we resize the page)
+            // eslint-disable-next-line no-await-in-loop
+            await waitOneFrame(1);
+          }
+        }
+      }
+    }
+
+    // Paint last pixel in the right color:
+
+    this.setColor(prevColor);
+    this.paintPixel(prevX, prevY);
+
+    // Leave everything as it was:
+
+    this.enable();
+    this.setColor(previousColor);
   }
 
 }

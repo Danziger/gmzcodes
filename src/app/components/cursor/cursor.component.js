@@ -24,7 +24,7 @@ export class Cursor {
 
   update(x, y, label) {
     this.root.style.transform = `translate(${ x }px, ${ y }px)`;
-    this.position.textContent = label;
+    this.position.setAttribute('data-position-label', label);
   }
 
   setModeForElement(target) {
