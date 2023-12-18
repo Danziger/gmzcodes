@@ -88,8 +88,8 @@ module.exports = (env, {
       new HtmlWebpackPlugin({
         filename: path.resolve(__dirname, 'dist/index.html'),
         template: path.resolve(__dirname, 'src/app/components/app/app.template.ejs'),
-        title: 'GMZcodes \\ Dani Gámez Franco',
-        description: 'Dani Gámez Franco, CTO, Lead Frontend Architect, Computer Science Engineer, Entrepreneur, Remote Work Advocate.',
+        title: 'GMZcodes - Dani Gámez Franco',
+        description: 'Dani Gámez Franco - Lead Full-Stack Software Engineer / Architect - Summa Cum Laude Computer Science Engineer - Top 1.5% at StackOverflow - JS, TS, React, Next.js, Node.js, Python, PostgreSQL, AI',
         favicon: path.resolve(__dirname, 'static/favicon.ico'),
         inlineSource: '.(js|css)$', // Inline JS and CSS.
         minify: PROD,
