@@ -9,6 +9,8 @@
         justify-content: space-between;
     }
 
+    // LOGO:
+
     &__logoLink {
         position: relative;
         padding: 32px 0 8px;
@@ -20,6 +22,7 @@
         outline: none;
         overflow: visible;
         z-index: 2;
+        margin-right: auto;
 
         .app--showScreenshot & {
             padding-top: 8px;
@@ -56,6 +59,146 @@
             top: 5px;
         }
     }
+
+    // TOP-RIGHT BUTTONS:
+
+    &__button {
+        position: relative;
+        box-sizing: border-box;
+        padding: 32px 16px 8px;
+        width: 56px;
+
+        @include above(xs) {
+            padding: 32px 24px 8px;
+            width: 72px;
+        }
+
+        &Icon {
+            pointer-events: none;
+            width: 24px;
+        }
+
+        .app--hasActiveHover &:hover > &Icon {
+            animation: shake .5s;
+            animation-iteration-count: infinite;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 0;
+            height: 0;
+            z-index: -1;
+            background: #000;
+            border-radius: 100%;
+            transform: translate(-50%, -50%);
+            transition: all linear 100ms;
+        }
+
+        .app--hasActiveFocus &:focus::after {
+            width: 6px;
+            height: 6px;
+        }
+
+        .app--showScreenshot & {
+            display: none;
+        }
+    }
+
+    &__onePageLoveSvg {
+        transform: translate(0, 4px);
+
+        & .cls-1 {
+            fill: #F0F;
+        }
+
+        & .cls-2 {
+            clip-path: url('#clip-path')
+        }
+
+        & .cls-3 {
+            fill: #707;
+        }
+
+        & .cls-4 {
+            fill: #FFF;
+        }
+    }
+
+    &__menuButton {
+        z-index: 2;
+        margin-right: -16px;
+
+        @include above(xs) {
+            margin-right: -24px;
+        }
+    }
+
+    // HAMBURGER ICON:
+
+    &__icon,
+    &__icon::before,
+    &__icon::after {
+        position: absolute;
+        display: block;
+        left: 0;
+        transition: all linear 150ms;
+        border-radius: 4px;
+        background: black;
+    }
+
+    &__icon {
+        height: 2px;
+        width: 24px;
+        top: 46px;
+        left: 50%;
+        transform: translate(-50%, 0) var(--shakeTransform, translate(0, 0));
+        pointer-events: none;
+
+        .app--hasActiveHover #{$root}__button:hover > & {
+            animation: shake-variables .5s;
+            animation-iteration-count: infinite;
+        }
+
+        &::before,
+        &::after {
+            content: '';
+            height: 100%;
+            width: 100%;
+            transform-origin: 200% center;
+        }
+
+        &::before {
+            top: 5px;
+        }
+
+        &::after {
+            top: -5px;
+        }
+
+        &.showCloseIcon {
+            transform: translate(-50%, -2px) scale3d(.8, .8, .8) var(--shakeTransform, translate(0, 0));
+            background: transparent;
+
+            &::before,
+            &::after {
+                top: 0;
+                transform-origin: 50% 50%;
+            }
+
+            &::before {
+                transform: rotate3d(0, 0, 1, 45deg);
+            }
+
+            &::after {
+                transform: rotate3d(0, 0, 1, -45deg);
+            }
+        }
+    }
+
+    // MENU:
 
     &__menuWrapper {
         position: fixed;
@@ -121,13 +264,6 @@
         width: 100%;
         max-width: 480px;
         margin: 0 auto;
-        /*
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    */
-
         padding-top: 96px;
         padding-bottom: 96px;
     }
@@ -227,93 +363,6 @@
         &[aria-checked='false']::after {
             content: 'Off';
             box-shadow: 0 0 24px 4px rgba(0, 0, 0, .25);
-        }
-    }
-
-    &__button {
-        position: relative;
-        width: 72px;
-        padding: 0;
-        border: 0;
-        background: transparent;
-        outline: none;
-        margin: 0 -24px 0 auto;
-        z-index: 2;
-        border-radius: 4px;
-
-        .app--showScreenshot & {
-            display: none;
-        }
-
-        .app--hasActiveFocus &:focus::before {
-            content: '';
-            position: absolute;
-            top: 46px;
-            left: 50%;
-            transform: translate(-50%, 0);
-            height: 8px;
-            width: 24px;
-            background: #F0F;
-        }
-    }
-
-    &__icon,
-    &__icon::before,
-    &__icon::after {
-        position: absolute;
-        display: block;
-        left: 0;
-        transition: all linear 150ms;
-        border-radius: 4px;
-        background: black;
-    }
-
-    &__icon {
-        height: 2px;
-        width: 24px;
-        top: 46px;
-        left: 50%;
-        transform: translate(-50%, 0) var(--shakeTransform, translate(0, 0));
-        pointer-events: none;
-
-        .app--hasActiveHover #{$root}__button:hover > & {
-            animation: shake-variables .5s;
-            animation-iteration-count: infinite;
-        }
-
-        &::before,
-        &::after {
-            content: '';
-            height: 100%;
-            width: 100%;
-            transform-origin: 200% center;
-        }
-
-        &::before {
-            top: 5px;
-        }
-
-        &::after {
-            top: -5px;
-        }
-
-        &.showCloseIcon {
-            transform: translate(-50%, -2px) scale3d(.8, .8, .8) var(--shakeTransform, translate(0, 0));
-            background: transparent;
-
-            &::before,
-            &::after {
-                top: 0;
-                transform-origin: 50% 50%;
-            }
-
-            &::before {
-                transform: rotate3d(0, 0, 1, 45deg);
-            }
-
-            &::after {
-                transform: rotate3d(0, 0, 1, -45deg);
-            }
         }
     }
 

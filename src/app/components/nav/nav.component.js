@@ -4,9 +4,10 @@ import { VibrationService } from '../../utils/vibration/vibration.service';
 export class Nav {
 
   // CSS selectors:
+  static S_WAND_BUTTON = '#magicWandButton';
+  static S_MENU_BUTTON = '#menuButton';
+  static S_MENU_BUTTON_ICON = '.nav__icon';
   static S_MENU = '#menu';
-  static S_BUTTON = '.nav__button';
-  static S_ICON = '.nav__icon';
   static S_ACTIONS = '.nav__action, .nav__githubLink';
   static S_LOGO_LINK = '.nav__logoLink';
   static S_VIBRATION_BUTTON = '#vibration';
@@ -18,8 +19,9 @@ export class Nav {
   static C_ACTION = 'nav__action';
 
   // Elements:
-  button = document.querySelector(Nav.S_BUTTON);
-  icon = document.querySelector(Nav.S_ICON);
+  magicWandButton = document.querySelector(Nav.S_WAND_BUTTON);
+  menuButton = document.querySelector(Nav.S_MENU_BUTTON);
+  menuButtonIcon = document.querySelector(Nav.S_MENU_BUTTON_ICON);
   menu = document.querySelector(Nav.S_MENU);
   actions = document.querySelectorAll(Nav.S_ACTIONS);
   logoLink = document.querySelector(Nav.S_LOGO_LINK);
@@ -40,32 +42,34 @@ export class Nav {
     document.querySelector(Nav.S_VIBRATION_BUTTON).setAttribute('aria-checked', VibrationService.enabled);
     document.querySelector(Nav.S_SOUND_BUTTON).setAttribute('aria-checked', AudioService.enabled);
 
-    this.handleClick = this.handleClick.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleMagicButtonClick = this.handleMagicButtonClick.bind(this);
+    this.handleMenuButtonClick = this.handleMenuButtonClick.bind(this);
+    this.handleMenuClick = this.handleMenuClick.bind(this);
 
     this.addEventListeners();
   }
 
   addEventListeners() {
-    this.button.addEventListener('click', this.handleClick);
+    this.magicWandButton.addEventListener('click', this.handleMagicButtonClick);
+    this.menuButton.addEventListener('click', this.handleMenuButtonClick);
   }
 
-  handleClick(e) {
-    const { target } = e;
+  handleMagicButtonClick(e) {
+    this.jsPaint.magicImage();
+  }
 
-    // If we click the menu button:
-    if (target === this.button) {
-      e.stopPropagation();
+  handleMenuButtonClick(e) {
+    e.stopPropagation();
 
-      if (this.isOpen) {
-        this.close();
-      } else {
-        this.open();
-      }
-
-      return;
+    if (this.isOpen) {
+      this.close();
+    } else {
+      this.open();
     }
+  }
 
+  handleMenuClick(e) {
+    const { target } = e;
     const id = target.classList.contains(Nav.C_ACTION) ? target.id : null;
     const isChecked = target.hasAttribute('aria-checked') ? target.getAttribute('aria-checked') === 'true' : null;
 
@@ -157,12 +161,12 @@ export class Nav {
 
     this.isOpen = true;
 
-    document.addEventListener('click', this.handleClick);
+    document.addEventListener('click', this.handleMenuClick);
     document.addEventListener('keydown', this.handleKeyDown);
 
-    this.icon.classList.add(Nav.C_ICON_CLOSE);
+    this.menuButton.setAttribute('aria-expanded', true);
+    this.menuButtonIcon.classList.add(Nav.C_ICON_CLOSE);
     this.menu.classList.add(Nav.C_MENU_OPEN);
-    this.button.setAttribute('aria-expanded', true);
     this.actions.forEach((action) => action.removeAttribute('tabindex'));
 
     this.jsPaint.disable();
@@ -177,12 +181,12 @@ export class Nav {
 
     this.isOpen = false;
 
-    document.removeEventListener('click', this.handleClick);
+    document.removeEventListener('click', this.handleMenuClick);
     document.removeEventListener('keydown', this.handleKeyDown);
 
-    this.icon.classList.remove(Nav.C_ICON_CLOSE);
+    this.menuButton.setAttribute('aria-expanded', false);
+    this.menuButtonIcon.classList.remove(Nav.C_ICON_CLOSE);
     this.menu.classList.remove(Nav.C_MENU_OPEN);
-    this.button.setAttribute('aria-expanded', false);
     this.actions.forEach((action) => action.setAttribute('tabindex', -1));
 
     this.jsPaint.enable();
