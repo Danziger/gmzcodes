@@ -2,7 +2,7 @@ import { IS_DESKTOP, HAS_TOUCH, HAS_CURSOR } from '../../constants/browser.const
 import { rgbToHex } from '../../utils/color/color.utils';
 import { AudioService } from '../../utils/audio/audio.service';
 import { VibrationService } from '../../utils/vibration/vibration.service';
-import { clamp } from '../../utils/math/math.utils';
+import { clamp, randomInt } from '../../utils/math/math.utils';
 import { waitOneFrame } from '../../utils/promises/promises.utils';
 import { loadImage } from '../../utils/image-loader/image-loader.utils';
 
@@ -29,12 +29,22 @@ export class JsPaint {
 
   // Elements:
   canvas = document.querySelector('.jsPaint__root');
-  ctx = this.canvas.getContext('2d', { willReadFrequently: true });
+  ctx = this.canvas.getContext('2d');
+
+  // TODO: willReadFrequently forces the canvas to use only the CPU. That might be useful when calling getImageData a
+  // lot, so this option should be used only when the accessibility sound is enabled.
+  // ctx = this.canvas.getContext('2d', { willReadFrequently: true });
+
+  // TODO: Check if the performance improves with https://github.com/jagenjo/Canvas2DtoWebGL/tree/master.
+  // ctx = window.enableWebGLCanvas(this.canvas);
+
   contentRoot = document.querySelector('.content__root');
   footerRoot = document.querySelector('.footer__root');
 
   // Components:
   cursor = null;
+  ruler = null;
+  footer = null;
 
   // State:
   keysIntervalID = null;
@@ -44,6 +54,8 @@ export class JsPaint {
 
   constructor(options) {
     this.cursor = options.cursor;
+    this.ruler = options.ruler;
+    this.footer = options.footer;
 
     this.handleTouchStart = this.handleTouchStart.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -295,6 +307,8 @@ export class JsPaint {
     ctx.fillStyle = JsPaint.BACKGROUND_COLOR;
     ctx.fillRect(0, 0, window.innerWidth * scale, window.innerHeight * scale);
 
+    if (this.footer) this.footer.hideAttribution();
+
     if (!isInitialReset) VibrationService.vibrate(200);
   }
 
@@ -463,17 +477,41 @@ export class JsPaint {
 
     this.disable();
 
-    const {
+    const preMadeImages = [
+      'drawings/monkey-by-daniel-sheldon-compressed.png',
+      'drawings/superhero-by-daniel-sheldon-compressed.png',
+    ];
+
+    const randomIndex = randomInt(0, preMadeImages.length - 1);
+    const imageURL = preMadeImages[randomIndex];
+    const artistSlug = imageURL.split('-by-').pop().replace('-compressed.png', '');
+    const artistMetadataURL = `drawings/artists/${ artistSlug }/${ artistSlug }.json`;
+    const artistProfilePictureURL = `drawings/artists/${ artistSlug }/${ artistSlug }-profile-picture.jpeg`;
+
+    const imagePromise = loadImage(imageURL);
+
+    const authorMetadataPromise = fetch(artistMetadataURL).then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error = ${ response.status }`);
+      }
+
+      return response.json();
+    });
+
+    // TODO: Add an option to send drawings to me (Supabase?)
+
+    const [{
       imageWidth,
       imageHeight,
       getPixelColor,
-      // TODO: Add attribution:
-      // TODO: Add an option to send drawings to me (Supabase?)
-    } = await loadImage('drawings/compressed/monkey-by-dan-sheldon.png');
+    }, artistInfo] = await Promise.all([
+      imagePromise,
+      authorMetadataPromise,
+    ]);
 
     const availableWidth = document.body.offsetWidth / this.unit;
-    const startY = this.contentRoot.getBoundingClientRect().bottom;
-    const endY = this.footerRoot.getBoundingClientRect().top;
+    const startY = this.ruler.isRulerActive ? 0 : this.contentRoot.getBoundingClientRect().bottom;
+    const endY = this.ruler.isRulerActive ? document.body.offsetHeight : this.footerRoot.getBoundingClientRect().top;
     const availableHeight = (endY - startY) / this.unit;
     const initialX = Math.round(availableWidth / 2 - imageWidth / 2);
     const initialY = Math.round(startY / this.unit + availableHeight / 2 - imageHeight / 2);
@@ -524,6 +562,11 @@ export class JsPaint {
 
     this.enable();
     this.setColor(previousColor);
+
+    // Show attribution:
+
+    // this.nav.showAttribution(artistInfo);
+    this.footer.showAttribution(artistInfo);
   }
 
 }

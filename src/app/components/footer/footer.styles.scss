@@ -1,6 +1,8 @@
 .footer {
     &__root {
         position: relative;
+        display: flex;
+        align-items: center;
 
         @include above(xs) {
             margin-bottom: 16px;
@@ -13,7 +15,7 @@
         list-style: none;
         margin: 0 -4px;
         box-sizing: border-box;
-        padding: 0;
+        padding: 0 16px 0 0;
     }
 
     &__item {
@@ -87,6 +89,41 @@
         &--isCurrent::after {
             width: 10px;
             height: 10px;
+        }
+    }
+
+    &__note {
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: bold;
+        line-height: 1;
+        color: white !important;
+        margin: 0 0 0 auto;
+        transform: translate(0, 3px);
+        white-space: nowrap;
+    }
+
+    &__hiring {
+        padding: 8px 6px 4px;
+        background: red;
+        box-shadow: 0 0 24px 4px rgba(255, 0, 0, .25);
+    }
+
+    &__attribution {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
+        &ByName,
+        &Surname {
+            padding: 8px 8px 4px;
+            background: black;
+            box-shadow: 0 0 24px 4px rgba(255, 0, 255, .25);
+            pointer-events: none;
+        }
+
+        &Surname {
+            transform: translate(0, -4px);
         }
     }
 }

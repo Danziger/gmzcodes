@@ -49,9 +49,21 @@ Known Issues
 TODOs & Bugfixes
 ----------------
 
+- Add "Hiring?" and attribution inside the menu too.
+
+- Use a `<template>` for `.content__warningHeader`
+
 - Add a placeholder for the page logo in case it doesn't load.
+
 - Review aria tags and code organization.
+
 - Adjust side paddings to be included in the header links and button.
+
+- Improve performance on large high-res screens. See:
+  - https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas
+  - https://github.com/karellodewijk/canvas-webgl
+  - https://github.com/jagenjo/Canvas2DtoWebGL
+  - https://www.reddit.com/r/webgl/comments/sc4024/is_webgl_fast_than_canvas_api_for_drawing_a_bunch/
 
 <br />
 

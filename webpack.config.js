@@ -92,7 +92,9 @@ module.exports = (env, {
         description: 'Dani Gámez Franco - Lead Full-Stack Software Engineer / Architect - Summa Cum Laude Computer Science Engineer - Top 1.5% at StackOverflow - JS, TS, React, Next.js, Node.js, Python, PostgreSQL, AI',
         favicon: path.resolve(__dirname, 'static/favicon.ico'),
         inlineSource: '.(js|css)$', // Inline JS and CSS.
-        minify: PROD,
+        minify: PROD ? {
+          removeComments: false,
+        } : false,
         meta: {
           author: pkg.author.name,
           description: pkg.description,

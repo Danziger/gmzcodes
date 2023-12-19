@@ -63,6 +63,8 @@ export class App {
   init() {
     const { root } = this;
 
+    // TODO: Need something to manage dependecy injection...
+
     if (HAS_CURSOR) {
       this.root.classList.add(App.C_HAS_ACTIVE_HOVER);
 
@@ -73,6 +75,7 @@ export class App {
 
     const jsPaint = this.jsPaint = new JsPaint({
       cursor: this.cursor,
+      ruler,
     });
 
     this.nav = new Nav({ jsPaint, ruler, cursor: this.cursor });
@@ -83,6 +86,9 @@ export class App {
 
       root.style.setProperty('--c-current', color);
     });
+
+    // TODO: Get rid of this unworthy code...
+    jsPaint.footer = this.footer;
   }
 
   showFallback() {
