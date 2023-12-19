@@ -49,6 +49,14 @@ Known Issues
 TODOs & Bugfixes
 ----------------
 
+- Configure GitHub actions.
+
+- Update dependencies.
+
+- Add an option to send drawings to me (to Supabase, maybe).
+
+- Show artist picture?
+
 - Add "Hiring?" and attribution inside the menu too.
 
 - Use a `<template>` for `.content__warningHeader`
@@ -77,6 +85,8 @@ Other Ideas & Features
 - Resize and keep canvas.
 - Block trajectory in X/Y or diagonal axis.
 - Image upload. See https://medium.com/@agbales/how-to-make-8-bit-art-with-javascript-eea808a70ba2
+- Fill tool.
+- Multiple sizes (or shapes) of brushes.
 
 <br />
 

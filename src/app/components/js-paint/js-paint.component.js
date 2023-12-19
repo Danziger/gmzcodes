@@ -498,8 +498,6 @@ export class JsPaint {
       return response.json();
     });
 
-    // TODO: Add an option to send drawings to me (Supabase?)
-
     const [{
       imageWidth,
       imageHeight,
