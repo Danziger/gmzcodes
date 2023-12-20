@@ -87,6 +87,9 @@ Other Ideas & Features
 - Image upload. See https://medium.com/@agbales/how-to-make-8-bit-art-with-javascript-eea808a70ba2
 - Fill tool.
 - Multiple sizes (or shapes) of brushes.
+- Close menu when enabling focus mode.
+- Toggle cursor type.
+- Animate attribution tag.
 
 <br />
 
