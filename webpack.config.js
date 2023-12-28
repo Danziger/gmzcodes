@@ -42,6 +42,10 @@ module.exports = (env, {
     },
 
     devServer: {
+      watchFiles: [
+        'src/**/*.scss',
+        'src/**/*.ejs',
+      ],
       static: {
         directory: path.resolve(__dirname, 'static'),
       },
