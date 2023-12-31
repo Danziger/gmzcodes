@@ -36,14 +36,6 @@ Don't hesitate to report any issue you find in this website/project by opening a
 <br />
 
 
-Known Issues
-------------
-
-- The canvas looks blurry on screens with decimal DPI values. See https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas.
-
-<br />
-
-
 TODOs & Bugfixes
 ----------------
 
@@ -64,6 +56,8 @@ TODOs & Bugfixes
   - https://www.reddit.com/r/webgl/comments/sc4024/is_webgl_fast_than_canvas_api_for_drawing_a_bunch/
   - Consider breaking down the canvas into smaller ones (tiles).
   - Consider adding other brush shapes, like any other standard drawing app (e.g https://www.youtube.com/watch?v=3GqUM4mEYKA)
+
+- The canvas looks blurry on screens with decimal DPI values. See https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas.
 
 <br />
 
