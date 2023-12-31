@@ -4,8 +4,6 @@
     👨‍💻 Dani Gamez's personal website PWA built using vanilla JavaScript, SCSS and HTML5.
 </p><p align="center">
     🚀 Check it out at <a href="https://gmzcodes.com">https://gmzcodes.com</a>!
-</p><p align="center">
-    💩 No IE or (old) Edge. Get the f**k off my property!
 </p>
 
 <br />
