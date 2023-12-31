@@ -36,8 +36,8 @@ Don't hesitate to report any issue you find in this website/project by opening a
 <br />
 
 
-TODOs & Bugfixes
-----------------
+TODOs & Bug
+-----------
 
 ### Bugs
 
