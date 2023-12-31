@@ -1,5 +1,6 @@
 import { AudioService } from '../../utils/audio/audio.service';
 import { VibrationService } from '../../utils/vibration/vibration.service';
+import { AppActions } from '../app/app.constants';
 
 export class Nav {
 
@@ -26,18 +27,16 @@ export class Nav {
   actions = document.querySelectorAll(Nav.S_ACTIONS);
   logoLink = document.querySelector(Nav.S_LOGO_LINK);
 
-  // Components:
-  jsPaint;
-  ruler;
-  cursor;
+  // Callback:
+  onAction;
 
   // State:
   isOpen = false;
 
-  constructor({ jsPaint, ruler, cursor }) {
-    this.jsPaint = jsPaint;
-    this.ruler = ruler;
-    this.cursor = cursor;
+  constructor({
+    onAction,
+  }) {
+    this.onAction = onAction;
 
     document.querySelector(Nav.S_VIBRATION_BUTTON).setAttribute('aria-checked', VibrationService.enabled);
     document.querySelector(Nav.S_SOUND_BUTTON).setAttribute('aria-checked', AudioService.enabled);
@@ -54,8 +53,8 @@ export class Nav {
     this.menuButton.addEventListener('click', this.handleMenuButtonClick);
   }
 
-  handleMagicButtonClick(e) {
-    this.jsPaint.magicImage();
+  handleMagicButtonClick() {
+    this.onAction(AppActions.MAGIC_DRAWING);
   }
 
   handleMenuButtonClick(e) {
@@ -86,19 +85,15 @@ export class Nav {
 
     switch (id) {
       case 'clear':
-        this.jsPaint.reset();
+        this.onAction(AppActions.CLEAR);
         break;
 
       case 'download':
-        this.jsPaint.download();
+        this.onAction(AppActions.DOWNLOAD);
         break;
 
       case 'ruler':
-        if (isChecked) {
-          this.ruler.close();
-        } else {
-          this.ruler.open();
-        }
+        this.onAction(AppActions.CHANGE_RULER_MODE, !isChecked);
 
         break;
 
@@ -169,9 +164,8 @@ export class Nav {
     this.menu.classList.add(Nav.C_MENU_OPEN);
     this.actions.forEach((action) => action.removeAttribute('tabindex'));
 
-    this.jsPaint.disable();
-
-    if (this.cursor) this.cursor.setMode('interact');
+    this.onAction(AppActions.DISABLE);
+    this.onAction(AppActions.CHANGE_CURSOR_MODE, 'interact'); // TODO: It should be jsPaint doing this change...
   }
 
   close() {
@@ -189,9 +183,34 @@ export class Nav {
     this.menu.classList.remove(Nav.C_MENU_OPEN);
     this.actions.forEach((action) => action.setAttribute('tabindex', -1));
 
-    this.jsPaint.enable();
+    this.onAction(AppActions.ENABLE);
+    this.onAction(AppActions.CHANGE_CURSOR_MODE, 'paint'); // TODO: It should be jsPaint doing this change...
+  }
 
-    if (this.cursor) this.cursor.setMode('paint');
+  showAttribution({
+    name,
+    surname,
+    websiteURL,
+  }) {
+    if (!this.attributionByName) return;
+
+    // TODO: To be implemented...
+
+    this.attributionByName.textContent = `By ${ name }`;
+    this.attributionSurname.textContent = surname;
+    this.attribution.href = websiteURL;
+
+    this.hiring.setAttribute('hidden', true);
+    this.attribution.removeAttribute('hidden');
+  }
+
+  hideAttribution() {
+    if (!this.attributionByName) return;
+
+    // TODO: To be implemented...
+
+    this.hiring.removeAttribute('hidden');
+    this.attribution.setAttribute('hidden', true);
   }
 
 }

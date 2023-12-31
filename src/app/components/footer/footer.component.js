@@ -1,3 +1,5 @@
+import { AppActions } from '../app/app.constants';
+
 export class Footer {
 
   // CSS selectors:
@@ -21,13 +23,13 @@ export class Footer {
   attributionByName = document.querySelector(Footer.S_ATTRIBUTION_BY_NAME);
   attributionSurname = document.querySelector(Footer.S_ATTRIBUTION_SURNAME);
 
-  // Callbacks:
-  onActionClicked;
+  // Callback:
+  onAction;
 
-  constructor(onActionClicked) {
-    this.onActionClicked = onActionClicked;
+  constructor({ onAction }) {
+    this.onAction = onAction;
 
-    if (onActionClicked) {
+    if (onAction) {
       this.addEventListeners();
       this.show();
     } else {
@@ -46,7 +48,7 @@ export class Footer {
 
       target.classList.add(Footer.C_CURRENT);
 
-      this.onActionClicked(window.getComputedStyle(target).getPropertyValue('--bg').trim());
+      this.onAction(AppActions.CHANGE_COLOR, window.getComputedStyle(target).getPropertyValue('--bg').trim());
     });
 
   }

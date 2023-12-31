@@ -103,6 +103,11 @@
         margin: 0 0 0 auto;
         transform: translate(0, 3px);
         white-space: nowrap;
+
+        .app--hasActiveHover &:hover {
+            animation: shake .5s;
+            animation-iteration-count: infinite;
+        }
     }
 
     &__hiring {

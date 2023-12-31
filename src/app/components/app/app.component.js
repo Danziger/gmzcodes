@@ -7,6 +7,8 @@ import { initializeLinks } from '../link/link.utils';
 import { TORINO_VIDEOS } from '../torino/torino.constants';
 import { Nav } from '../nav/nav.component';
 
+import { AppActions } from './app.constants';
+
 export class App {
 
   // CSS classes:
@@ -15,15 +17,22 @@ export class App {
   static C_SHOW_FALLBACK = 'app--showFallback';
   static C_SHOW_SCREENSHOT = 'app--showScreenshot';
 
+  // Paint Actions:
+  actionHandlers = {};
+
   // Elements:
   root = document.body;
 
-  // Components:
-  nav = null;
-  footer = null;
+  // Paint Controller:
   jsPaint = null;
-  ruler = null;
-  cursor = null;
+
+  // UI Components:
+  uiControls = {
+    nav: null,
+    footer: null,
+    ruler: null,
+    cursor: null,
+  };
 
   constructor() {
     const { root } = this;
@@ -49,6 +58,8 @@ export class App {
       document.addEventListener('touchstart', disableFocus);
     }
 
+    this.handleAction = this.handleAction.bind(this);
+
     if (IS_BROWSER_SUPPORTED) {
       initializeLinks();
     }
@@ -61,34 +72,50 @@ export class App {
   }
 
   init() {
-    const { root } = this;
+    const {
+      uiControls,
+      handleAction: onAction,
+    } = this;
 
-    // TODO: Need something to manage dependecy injection...
+    const nav = new Nav({ onAction });
+
+    const footer = new Footer({ onAction });
+
+    const ruler = new Ruler({ onAction });
+
+    const cursor = new Cursor({
+      onAction,
+      enabled: HAS_CURSOR,
+    });
 
     if (HAS_CURSOR) {
+      // TODO: Should the addition or removal of this be triggered from within Cursor?
       this.root.classList.add(App.C_HAS_ACTIVE_HOVER);
-
-      this.cursor = new Cursor();
     }
 
-    const ruler = this.ruler = new Ruler(); // TODO: Pass root?
+    // TODO: Also pass handlers instead?
+    this.jsPaint = new JsPaint({ uiControls });
 
-    const jsPaint = this.jsPaint = new JsPaint({
-      cursor: this.cursor,
-      ruler,
-    });
+    this.actionHandlers = {
+      [AppActions.ADD_GLOBAL_CLASS]: this.handleAddGlobalClass.bind(this),
+      [AppActions.REMOVE_GLOBAL_CLASS]: this.handleRemoveGlobalClass.bind(this),
 
-    this.nav = new Nav({ jsPaint, ruler, cursor: this.cursor });
+      // TODO: Just pass a ref to jsPaint instead to all UI components:
+      [AppActions.MAGIC_DRAWING]: this.jsPaint.magicDrawing.bind(this.jsPaint),
+      [AppActions.DISABLE]: this.jsPaint.disable.bind(this.jsPaint),
+      [AppActions.ENABLE]: this.jsPaint.enable.bind(this.jsPaint),
+      [AppActions.CLEAR]: this.jsPaint.reset.bind(this.jsPaint),
+      [AppActions.DOWNLOAD]: this.jsPaint.download.bind(this.jsPaint),
+      [AppActions.CHANGE_COLOR]: this.handleColorChange.bind(this),
 
-    // TODO: Pass down jsPaint and cursor:
-    this.footer = new Footer((color) => {
-      jsPaint.setColor(color);
+      [AppActions.CHANGE_RULER_MODE]: this.handleRulerModeChange.bind(this),
+      [AppActions.CHANGE_CURSOR_MODE]: this.handleCursorModeChange.bind(this),
+    };
 
-      root.style.setProperty('--c-current', color);
-    });
-
-    // TODO: Get rid of this unworthy code...
-    jsPaint.footer = this.footer;
+    uiControls.nav = nav;
+    uiControls.footer = footer;
+    uiControls.ruler = ruler;
+    uiControls.cursor = cursor;
   }
 
   showFallback() {
@@ -107,6 +134,7 @@ export class App {
     document.querySelector('.content__regularHeader').setAttribute('aria-hidden', true);
     document.querySelector('.content__warningHeader').removeAttribute('hidden');
     document.querySelector('.content__warningHeader').removeAttribute('aria-hidden');
+
     // Load one video:
     const torinoVideo = TORINO_VIDEOS[Math.floor(Math.random() * TORINO_VIDEOS.length)];
 
@@ -136,6 +164,41 @@ export class App {
 
   disableScreenshotMode() {
     this.root.classList.remove(App.C_SHOW_SCREENSHOT);
+  }
+
+  handleAction(type, payload) {
+    const actionHandler = this.actionHandlers[type];
+
+    if (actionHandler) actionHandler(payload);
+  }
+
+  handleAddGlobalClass() {
+    // TODO: TO avoid changing this.body.classList from each component...
+    console.log(!!this);
+  }
+
+  handleRemoveGlobalClass() {
+    // TODO: TO avoid changing this.body.classList from each component...
+    console.log(!!this);
+  }
+
+  // handleToggleGlobalClass
+
+  handleColorChange(hexColor) {
+    this.jsPaint.setColor(hexColor);
+    this.root.style.setProperty('--c-current', hexColor); // TODO: This should be updated by calling setColor
+  }
+
+  handleRulerModeChange(openRuler) {
+    if (openRuler) {
+      this.uiControls.ruler.open();
+    } else {
+      this.uiControls.ruler.close();
+    }
+  }
+
+  handleCursorModeChange(cursorMode) {
+    this.uiControls.cursor.setMode(cursorMode);
   }
 
 }

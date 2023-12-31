@@ -26,6 +26,8 @@ export class JsPaint {
   isSpacePressed = false;
   isMousePressed = false;
   disabled = false;
+  pristine = true;
+  lastDrawingIndex = null;
 
   // Elements:
   canvas = document.querySelector('.jsPaint__root');
@@ -38,13 +40,18 @@ export class JsPaint {
   // TODO: Check if the performance improves with https://github.com/jagenjo/Canvas2DtoWebGL/tree/master.
   // ctx = window.enableWebGLCanvas(this.canvas);
 
+  // TODO: Should these come from the components in `uiControls`?
   contentRoot = document.querySelector('.content__root');
   footerRoot = document.querySelector('.footer__root');
 
-  // Components:
-  cursor = null;
-  ruler = null;
-  footer = null;
+  // UI Components:
+
+  uiControls = {
+    nav: null,
+    footer: null,
+    ruler: null,
+    cursor: null,
+  };
 
   // State:
   keysIntervalID = null;
@@ -53,9 +60,7 @@ export class JsPaint {
   resetHybridModeImplementation = () => undefined;
 
   constructor(options) {
-    this.cursor = options.cursor;
-    this.ruler = options.ruler;
-    this.footer = options.footer;
+    this.uiControls = options.uiControls;
 
     this.handleTouchStart = this.handleTouchStart.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -67,7 +72,7 @@ export class JsPaint {
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.keysUpdate = this.keysUpdate.bind(this);
 
-    this.reset(true);
+    this.reset({ vibrate: false });
     this.addEventListeners();
   }
 
@@ -114,7 +119,9 @@ export class JsPaint {
   setTouchMode() {
     if (!HAS_CURSOR || !HAS_TOUCH) return;
 
-    if (this.cursor) this.cursor.hide();
+    const { cursor } = this.uiControls;
+
+    if (cursor) cursor.hide();
 
     document.addEventListener('touchmove', this.handleMove);
     document.addEventListener('touchend', this.handleStop);
@@ -142,7 +149,9 @@ export class JsPaint {
 
     this.resetHybridModeImplementation();
 
-    if (this.cursor) this.cursor.show();
+    const { cursor } = this.uiControls;
+
+    if (cursor) cursor.show();
   }
 
   // TOUCH EVENT HANDLING:
@@ -192,12 +201,12 @@ export class JsPaint {
   // SHARED EVENT HANDLING:
 
   handleResize() {
-    this.reset();
+    this.reset({ vibrate: false });
   }
 
   handleMove(e) {
     // Just trying to make it fast. See https://stackoverflow.com/questions/63848298/touch-move-is-really-slow
-    e.preventDefault();
+    // e.preventDefault();
     e.stopPropagation();
 
     if (this.keysIntervalID/* || this.disabled */) return;
@@ -231,9 +240,11 @@ export class JsPaint {
 
     if (!key.startsWith('Arrow')) return;
 
-    if (this.cursor) {
-      this.cursor.disableNative();
-      this.cursor.show();
+    const { cursor } = this.uiControls;
+
+    if (cursor) {
+      cursor.disableNative();
+      cursor.show();
     }
 
     this.pressedKeys[key] = true;
@@ -271,7 +282,9 @@ export class JsPaint {
     delete this.pressedKeys[key];
 
     if (Object.keys(this.pressedKeys).length === 0) {
-      if (this.cursor) this.cursor.enableNative();
+      const { cursor } = this.uiControls;
+
+      if (cursor) cursor.enableNative();
 
       window.clearInterval(this.keysIntervalID);
 
@@ -298,7 +311,9 @@ export class JsPaint {
 
   // DRAWING / CANVAS:
 
-  reset(isInitialReset) {
+  reset({
+    vibrate = true,
+  } = {}) {
     const { canvas, ctx, scale } = this;
 
     canvas.setAttribute('width', window.innerWidth * scale);
@@ -307,9 +322,15 @@ export class JsPaint {
     ctx.fillStyle = JsPaint.BACKGROUND_COLOR;
     ctx.fillRect(0, 0, window.innerWidth * scale, window.innerHeight * scale);
 
-    if (this.footer) this.footer.hideAttribution();
+    this.pristine = true;
+    this.lastDrawingIndex = null;
 
-    if (!isInitialReset) VibrationService.vibrate(200);
+    const { nav, footer } = this.uiControls;
+
+    if (nav) nav.hideAttribution();
+    if (footer) footer.hideAttribution();
+
+    if (vibrate) VibrationService.vibrate(200);
   }
 
   stopDrawing() {
@@ -328,7 +349,8 @@ export class JsPaint {
   touch(pageX, pageY, isPrimary, skipConversion) {
     this.drawing = true;
 
-    const { offsetLeft, offsetTop, unit, cursor } = this;
+    const { offsetLeft, offsetTop, unit } = this;
+    const { cursor } = this.uiControls;
     const lastX = this.lastX = skipConversion ? pageX : Math.floor((pageX - offsetLeft) / unit);
     const lastY = this.lastY = skipConversion ? pageY : Math.floor((pageY - offsetTop) / unit);
 
@@ -350,7 +372,7 @@ export class JsPaint {
 
   drag(pageX, pageY, target) {
     requestAnimationFrame(() => {
-      const { offsetLeft, offsetTop, unit, scaledUnit, lastX, lastY, cursor, drawing } = this;
+      const { offsetLeft, offsetTop, unit, scaledUnit, lastX, lastY, drawing } = this;
       const x = target ? Math.floor((pageX - offsetLeft) / unit) : pageX;
       const y = target ? Math.floor((pageY - offsetTop) / unit) : pageY;
       const w = Math.abs(x - lastX);
@@ -360,9 +382,13 @@ export class JsPaint {
       this.lastX = x;
       this.lastY = y;
 
+      const { cursor } = this.uiControls;
+
+      if (!cursor) return;
+
       cursor.update(x * unit + offsetLeft, y * unit + offsetTop, `${ x + 1 } , ${ y + 1 }`);
 
-      if (!cursor || !hasPositionChanged || this.disabled) return;
+      if (!hasPositionChanged || this.disabled) return;
 
       if (!drawing) {
         cursor.setModeForElement(target);
@@ -389,6 +415,8 @@ export class JsPaint {
 
   paintPixel(x, y) {
     const { ctx, scaledUnit, offsetLeft, offsetTop } = this;
+
+    this.pristine = false;
 
     ctx.fillRect(x * scaledUnit + offsetLeft, y * scaledUnit + offsetTop, scaledUnit, scaledUnit);
   }
@@ -468,10 +496,22 @@ export class JsPaint {
 
   // LOAD IMAGE:
 
-  async magicImage() {
-    // TODO: It should not be possible to call this function multiple times before it finishes:
+  async magicDrawing() {
+    if (!this.pristine) {
+      // TODO: Replace with a custom HTML modal:
 
-    // TODO: Add a confirm if this will overwrite the user's previous drawing.
+      // eslint-disable-next-line no-alert, no-restricted-globals
+      const continueAndReplace = confirm(
+        // eslint-disable-next-line max-len
+        'This will clear the current canvas and replace it with a random predefined drawing. Are you sure you want to proceed?',
+      );
+
+      if (!continueAndReplace) {
+        return;
+      }
+
+      this.reset({ vibrate: true });
+    }
 
     const previousColor = this.color;
 
@@ -482,7 +522,14 @@ export class JsPaint {
       'drawings/superhero-by-daniel-sheldon-compressed.png',
     ];
 
-    const randomIndex = randomInt(0, preMadeImages.length - 1);
+    let randomIndex = 0;
+
+    do {
+      randomIndex = randomInt(0, preMadeImages.length - 1);
+    } while (randomIndex === this.lastDrawingIndex);
+
+    this.lastDrawingIndex = randomIndex;
+
     const imageURL = preMadeImages[randomIndex];
     const artistSlug = imageURL.split('-by-').pop().replace('-compressed.png', '');
     const artistMetadataURL = `drawings/artists/${ artistSlug }/${ artistSlug }.json`;
@@ -507,9 +554,11 @@ export class JsPaint {
       authorMetadataPromise,
     ]);
 
+    const { ruler } = this.uiControls;
+
     const availableWidth = document.body.offsetWidth / this.unit;
-    const startY = this.ruler.isRulerActive ? 0 : this.contentRoot.getBoundingClientRect().bottom;
-    const endY = this.ruler.isRulerActive ? document.body.offsetHeight : this.footerRoot.getBoundingClientRect().top;
+    const startY = ruler.isRulerActive ? 0 : this.contentRoot.getBoundingClientRect().bottom;
+    const endY = ruler.isRulerActive ? document.body.offsetHeight : this.footerRoot.getBoundingClientRect().top;
     const availableHeight = (endY - startY) / this.unit;
     const initialX = Math.round(availableWidth / 2 - imageWidth / 2);
     const initialY = Math.round(startY / this.unit + availableHeight / 2 - imageHeight / 2);
@@ -521,50 +570,68 @@ export class JsPaint {
 
     // TODO: Add modem-like sound while this runs?
 
-    for (let y = 0; y < imageHeight; ++y) {
-      const translatedY = initialY + y;
+    try {
 
-      for (let x = 0; x < imageWidth; ++x) {
-        const translatedX = initialX + x;
+      for (let y = 0; y < imageHeight; ++y) {
+        const translatedY = initialY + y;
 
-        if (prevColor) {
-          this.setColor(prevColor);
-          this.paintPixel(prevX, prevY);
-        }
+        for (let x = 0; x < imageWidth; ++x) {
+          const translatedX = initialX + x;
 
-        this.setColor('#FF00FF');
-        this.paintPixel(translatedX, translatedY);
+          if (prevColor) {
+            this.setColor(prevColor);
+            this.paintPixel(prevX, prevY);
+          }
 
-        prevX = translatedX;
-        prevY = translatedY;
-        prevColor = getPixelColor(x, y);
+          this.setColor('#FF00FF');
+          this.paintPixel(translatedX, translatedY);
 
-        if (prevColor !== '#FFFFFF') {
-          ++paintedPixels;
+          prevX = translatedX;
+          prevY = translatedY;
+          prevColor = getPixelColor(x, y);
 
-          if (paintedPixels % 8 === 0) {
-            // TODO: This should be abortable (e.g. if we resize the page)
-            // eslint-disable-next-line no-await-in-loop
-            await waitOneFrame(1);
+          if (prevColor !== '#FFFFFF') {
+            ++paintedPixels;
+
+            if (paintedPixels % 8 === 0) {
+              // TODO: Replace the `this.lastDrawingIndex !== randomIndex` with AbortController and signals:
+
+              // eslint-disable-next-line no-await-in-loop
+              await waitOneFrame(1);
+            }
+          }
+
+          if (this.lastDrawingIndex !== randomIndex) {
+            throw new Error('Aborted');
           }
         }
       }
+
+      // Paint last pixel in the right color:
+
+      this.setColor(prevColor);
+      this.paintPixel(prevX, prevY);
+
+      // Show attribution:
+
+      const { nav, footer } = this.uiControls;
+
+      nav.showAttribution(artistInfo);
+      footer.showAttribution(artistInfo);
+
+    } catch (err) {
+      if (err.name !== 'Aborted') console.error(err);
+
+      // Drawing aborted, either because the the magic drawing button has been clicked again,
+      // or because the magic drawing was aborted for any other reason (e.g. resize):
+    } finally {
+      // Leave everything as it was:
+
+      if (this.lastDrawingIndex === null) {
+        this.enable();
+        this.setColor(previousColor);
+      }
     }
-
-    // Paint last pixel in the right color:
-
-    this.setColor(prevColor);
-    this.paintPixel(prevX, prevY);
-
-    // Leave everything as it was:
-
-    this.enable();
-    this.setColor(previousColor);
-
-    // Show attribution:
-
-    // this.nav.showAttribution(artistInfo);
-    this.footer.showAttribution(artistInfo);
   }
 
 }
