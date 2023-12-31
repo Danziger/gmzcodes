@@ -11,7 +11,7 @@
 
 <p align="center">
     <a href="https://gmzcodes.com" target="_blank">
-        <img src="./static/og-images/dani-gamez-franco-personal-website.png" width="512" />
+        <img src="./static/og-images/dani-gamez-franco-personal-website.png" />
     </a>
 </p>
 
