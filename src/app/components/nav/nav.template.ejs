@@ -71,6 +71,14 @@
         </li>
 
         <li class="nav__li" role="menuitem">
+          <label class="nav__action" id="upload" tabindex="-1">
+            <span class="nav__actionTitle">Upload Image</span>
+            <span class="nav__actionDescription">Get a copy of your masterpiece so that it can live forever.</span>
+            <input type="file" class="nav__uploaderInput" id="menuFileInput" />
+          </label>
+        </li>
+
+        <li class="nav__li" role="menuitem">
           <button class="nav__action" role="switch" aria-checked="false" id="ruler" tabindex="-1">
             <span class="nav__actionTitle">Focus Mode</span>
             <span class="nav__actionDescription">Hide all my personal information and focus on your creation.</span>
@@ -105,3 +113,5 @@
 
   </div>
 </nav>
+
+<div class="nav__uploader" id="dropZone" hidden></div>

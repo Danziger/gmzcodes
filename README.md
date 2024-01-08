@@ -64,8 +64,6 @@ TODOs & Bug
 
 ### JS Paint Features
 
-- Image upload. See https://medium.com/@agbales/how-to-make-8-bit-art-with-javascript-eea808a70ba2
-
 - Move cursor position to a corner.
 
 - Multiple types and sizes of brushes (square, circle).

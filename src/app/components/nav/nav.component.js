@@ -13,6 +13,8 @@ export class Nav {
   static S_LOGO_LINK = '.nav__logoLink';
   static S_VIBRATION_BUTTON = '#vibration';
   static S_SOUND_BUTTON = '#sound';
+  static S_DROP_ZONE = '#dropZone';
+  static S_MENU_FILE_INPUT = '#menuFileInput';
 
   // CSS classes:
   static C_MENU_OPEN = 'isOpen';
@@ -26,6 +28,8 @@ export class Nav {
   menu = document.querySelector(Nav.S_MENU);
   actions = document.querySelectorAll(Nav.S_ACTIONS);
   logoLink = document.querySelector(Nav.S_LOGO_LINK);
+  dropZone = document.querySelector(Nav.S_DROP_ZONE);
+  menuFileInput = document.querySelector(Nav.S_MENU_FILE_INPUT);
 
   // Callback:
   onAction;
@@ -44,13 +48,27 @@ export class Nav {
     this.handleMagicButtonClick = this.handleMagicButtonClick.bind(this);
     this.handleMenuButtonClick = this.handleMenuButtonClick.bind(this);
     this.handleMenuClick = this.handleMenuClick.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
+    this.handleDragOver = this.handleDragOver.bind(this);
+    this.handleDragLeave = this.handleDragLeave.bind(this);
+    this.handleDragEnter = this.handleDragEnter.bind(this);
+    this.handleFileUpload = this.handleFileUpload.bind(this);
 
     this.addEventListeners();
   }
 
   addEventListeners() {
-    this.magicWandButton.addEventListener('click', this.handleMagicButtonClick);
+    // Hamburger button:
     this.menuButton.addEventListener('click', this.handleMenuButtonClick);
+
+    // Magic wand:
+    this.magicWandButton.addEventListener('click', this.handleMagicButtonClick);
+
+    // File upload:
+
+    window.addEventListener('dragenter', this.handleDragEnter);
+
+    this.menuFileInput.addEventListener('change', this.handleFileUpload);
   }
 
   handleMagicButtonClick() {
@@ -147,6 +165,77 @@ export class Nav {
 
       if (handled) e.preventDefault();
     }
+  }
+
+  handleDrop(e) {
+    e.preventDefault();
+
+    const file = e.dataTransfer.files[0] || e.dataTransfer.items.filter((item) => item.kind === 'file')[0]?.getAsFile();
+
+    this.uploadImage(file);
+
+    this.handleDragLeave();
+
+  }
+
+  handleDragOver(e) {
+    if (this) console.log('OVER');
+
+    e.preventDefault();
+  }
+
+  handleDragLeave() {
+    this.dropZone.removeEventListener('dragleave', this.handleDragLeave);
+    this.dropZone.setAttribute('hidden', true);
+  }
+
+  handleDragEnter() {
+    this.dropZone.addEventListener('drop', this.handleDrop);
+    this.dropZone.addEventListener('dragover', this.handleDragOver);
+    this.dropZone.addEventListener('dragleave', this.handleDragLeave);
+    this.dropZone.removeAttribute('hidden');
+  }
+
+  handleFileUpload(e) {
+    const { currentTarget } = e;
+
+    this.uploadImage(currentTarget.files[0]);
+  }
+
+  uploadImage(imageFile) {
+    console.log('uploadImage =', imageFile);
+
+    if (this) console.log(URL.createObjectURL(imageFile));
+
+    function eightBit(canvas, image, pixelSize) {
+      canvas.width = image.width;
+      canvas.height = image.height;
+
+      const scaledW = canvas.width / pixelSize;
+      const scaledH = canvas.height / pixelSize;
+
+      const ctx = canvas.getContext('2d');
+
+      ctx.mozImageSmoothingEnabled = false;
+      ctx.webkitImageSmoothingEnabled = false;
+      ctx.imageSmoothingEnabled = false;
+
+      ctx.drawImage(image, 0, 0, scaledW, scaledH);
+      ctx.drawImage(canvas, 0, 0, scaledW, scaledH, 0, 0, image.width, image.height);
+    }
+
+    const pixelSize = 8;
+
+    const img = new Image();
+
+    img.onload = () => {
+      // Free memory:
+      URL.revokeObjectURL(img.src);
+
+      eightBit(document.querySelector('canvas'), img, pixelSize);
+    };
+
+    img.src = URL.createObjectURL(imageFile);
   }
 
   open() {

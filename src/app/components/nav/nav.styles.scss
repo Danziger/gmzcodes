@@ -413,4 +413,15 @@
             }
         }
     }
+
+    &__uploader {
+        position: fixed;
+        inset: 0;
+        background: red;
+        z-index: 999;
+
+        &Input {
+            opacity: 0;
+        }
+    }
 }
