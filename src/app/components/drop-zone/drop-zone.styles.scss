@@ -1,0 +1,57 @@
+@import '../../styles/animations/shake';
+@import '../../styles/mixins/media-queries';
+
+.dropZone {
+    $root: &;
+
+    &__root {
+        --dropZoneAccent: blue;
+
+        position: fixed;
+        inset: 0;
+        background: white;
+        z-index: 999;
+        padding: 24px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: black;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 2px solid var(--dropZoneAccent, black);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        & > p  {
+            pointer-events: none;
+            margin: 0;
+
+            & + p {
+                margin-top: 16px;
+
+            }
+        }
+    }
+
+    &--hasError {
+        --dropZoneAccent: red;
+    }
+
+    &__closeErrorButton {
+        padding: 16px 12px 12px;
+        background: red;
+        box-shadow: 0 0 24px 4px rgba(255, 0, 0, .25);
+        margin-top: 16px;
+        color: white;
+        font-size: 16px;
+        text-transform: uppercase;
+        font-weight: bold;
+        line-height: 1;
+    }
+}

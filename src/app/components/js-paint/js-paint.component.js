@@ -320,6 +320,11 @@ export class JsPaint {
     canvas.setAttribute('height', window.innerHeight * scale);
 
     ctx.fillStyle = JsPaint.BACKGROUND_COLOR;
+
+    ctx.mozImageSmoothingEnabled = false;
+    ctx.webkitImageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
+
     ctx.fillRect(0, 0, window.innerWidth * scale, window.innerHeight * scale);
 
     this.pristine = true;
@@ -386,13 +391,14 @@ export class JsPaint {
 
       if (!cursor) return;
 
-      cursor.update(x * unit + offsetLeft, y * unit + offsetTop, `${ x + 1 } , ${ y + 1 }`);
+      // TODO: Consider updating the cursor position continuously if in interactive mode:
+      if (hasPositionChanged) cursor.update(x * unit + offsetLeft, y * unit + offsetTop, `${ x + 1 } , ${ y + 1 }`);
 
-      if (!hasPositionChanged || this.disabled) return;
+      if (!drawing) cursor.setModeForElement(target);
 
-      if (!drawing) {
-        cursor.setModeForElement(target);
-      } else if (w === 0 && h === 0) {
+      if (this.disabled || !drawing) return;
+
+      if (w === 0 && h === 0) {
         this.paintPixel(x, y);
       } else if (w > h) {
         this.lineLandscape(lastX, lastY, x, y);
@@ -475,15 +481,6 @@ export class JsPaint {
     }
   }
 
-  download() {
-    const link = document.createElement('A');
-
-    link.download = `${ FILENAMES[Math.floor(Math.random() * FILENAMES.length)] }${ FILENAME_ADJECTIVES[Math.floor(Math.random() * FILENAME_ADJECTIVES.length)] }.png`;
-    link.href = this.canvas.toDataURL();
-    link.target = '_blank';
-    link.click();
-  }
-
   enable() {
     this.disabled = false;
   }
@@ -494,24 +491,62 @@ export class JsPaint {
     AudioService.stop();
   }
 
-  // LOAD IMAGE:
-
-  async magicDrawing() {
+  clear() {
     if (!this.pristine) {
       // TODO: Replace with a custom HTML modal:
 
       // eslint-disable-next-line no-alert, no-restricted-globals
       const continueAndReplace = confirm(
         // eslint-disable-next-line max-len
-        'This will clear the current canvas and replace it with a random predefined drawing. Are you sure you want to proceed?',
+        'You will lose your current progress. Are you sure you want to proceed?',
       );
 
-      if (!continueAndReplace) {
-        return;
-      }
+      if (continueAndReplace) this.reset({ vibrate: true });
 
-      this.reset({ vibrate: true });
+      return continueAndReplace;
     }
+
+    return true;
+  }
+
+  download() {
+    const link = document.createElement('A');
+
+    link.download = `${ FILENAMES[Math.floor(Math.random() * FILENAMES.length)] }${ FILENAME_ADJECTIVES[Math.floor(Math.random() * FILENAME_ADJECTIVES.length)] }.png`;
+    link.href = this.canvas.toDataURL();
+    link.target = '_blank';
+    link.click();
+  }
+
+  // DRAW (UPLOAD) IMAGE:
+
+  drawImage(canvas) {
+    const { ctx, unit } = this;
+
+    const roundedWidth = Math.round(canvas.width / unit) * unit;
+    const roundedHeight = Math.round(canvas.height / unit) * unit;
+
+    if (roundedWidth === 0 || roundedHeight === 0) return;
+
+    const isClear = this.clear();
+
+    if (!isClear) return;
+
+    const dx = Math.round((window.innerWidth - roundedWidth) / 2 / unit) * unit;
+    const dy = Math.round((window.innerHeight - roundedHeight) / 2 / unit) * unit;
+
+    // TODO: Consider setting `scale` globally in JsPaint:
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+    ctx.drawImage(canvas, dx, dy);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+  }
+
+  // DRAW (MAGIC) IMAGE:
+
+  async magicDrawing() {
+    const isClear = this.confirmClear();
+
+    if (!isClear) return;
 
     const previousColor = this.color;
 

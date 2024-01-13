@@ -39,15 +39,26 @@ Don't hesitate to report any issue you find in this website/project by opening a
 TODOs & Bug
 -----------
 
+### Doing:
+
+- [x] Implement `JsPaint.drawImage()` function and `DropZone` component.
+- [x] Fix `Nav` not showing the right cursor when the menu is opened.
+- [x] Fix custom cursor movement logic.
+
+- [ ] Hide (custom) cursor while resizing.
+- [ ] Close menu when enabling focus mode.
+- [ ] Adjust side paddings to be included in the header links and button.
+
+- [ ] Add custom metadata (`devicePixelRatio`, `date`) to downloaded file.
+- [ ] Check metadata to upload (`Use PNG metadata to know if an image was generated...`).
+
+- [ ] Hide "Hiring?" label in screenshot mode and focus mode.
+- [ ] Focus mode should ONLY show a hamburger icon in the footer.
+- [ ] Hide "Hiring", as I'm not looking anymore.
+
+- [ ] `TODO: Consider updating the cursor position continuously if in interactive mode:`
+
 ### Bugs
-
-- Adjust side paddings to be included in the header links and button.
-
-- Hide "Hiring?" label in screenshot mode.
-
-- Close menu when enabling focus mode.
-
-- Hide (custom) cursor while resizing.
 
 - Improve performance on large high-res screens. See:
   - https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas
@@ -60,7 +71,6 @@ TODOs & Bug
 - The canvas looks blurry on screens with decimal DPI values. See https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas.
 
 <br />
-
 
 ### JS Paint Features
 

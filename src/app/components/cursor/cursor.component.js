@@ -70,9 +70,20 @@ export class Cursor {
   }
 
   setMode(mode) {
+    console.log('CURSOR =', mode);
+
+    if (mode === 'hidden') {
+      this.hide();
+
+      return;
+    }
+
+    this.show();
+
     if (mode === 'interact') {
       this.root.classList.add(Cursor.C_IS_INTERACTIVE);
-    } else if (mode === 'paint') {
+    } else {
+      // mode === 'paint' || mode === 'hidden'
       this.root.classList.remove(Cursor.C_IS_INTERACTIVE);
     }
   }

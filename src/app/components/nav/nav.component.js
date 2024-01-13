@@ -13,7 +13,6 @@ export class Nav {
   static S_LOGO_LINK = '.nav__logoLink';
   static S_VIBRATION_BUTTON = '#vibration';
   static S_SOUND_BUTTON = '#sound';
-  static S_DROP_ZONE = '#dropZone';
   static S_MENU_FILE_INPUT = '#menuFileInput';
 
   // CSS classes:
@@ -28,7 +27,6 @@ export class Nav {
   menu = document.querySelector(Nav.S_MENU);
   actions = document.querySelectorAll(Nav.S_ACTIONS);
   logoLink = document.querySelector(Nav.S_LOGO_LINK);
-  dropZone = document.querySelector(Nav.S_DROP_ZONE);
   menuFileInput = document.querySelector(Nav.S_MENU_FILE_INPUT);
 
   // Callback:
@@ -48,10 +46,6 @@ export class Nav {
     this.handleMagicButtonClick = this.handleMagicButtonClick.bind(this);
     this.handleMenuButtonClick = this.handleMenuButtonClick.bind(this);
     this.handleMenuClick = this.handleMenuClick.bind(this);
-    this.handleDrop = this.handleDrop.bind(this);
-    this.handleDragOver = this.handleDragOver.bind(this);
-    this.handleDragLeave = this.handleDragLeave.bind(this);
-    this.handleDragEnter = this.handleDragEnter.bind(this);
     this.handleFileUpload = this.handleFileUpload.bind(this);
 
     this.addEventListeners();
@@ -167,143 +161,8 @@ export class Nav {
     }
   }
 
-  handleDrop(e) {
-    e.preventDefault();
-
-    const file = e.dataTransfer.files[0] || e.dataTransfer.items.filter((item) => item.kind === 'file')[0]?.getAsFile();
-
-    this.uploadImage(file);
-
-    this.handleDragLeave();
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  handleDragOver(e) {
-    e.preventDefault();
-  }
-
-  handleDragLeave() {
-    this.dropZone.removeEventListener('drop', this.handleDrop);
-    this.dropZone.removeEventListener('dragover', this.handleDragOver);
-    this.dropZone.removeEventListener('dragleave', this.handleDragLeave);
-    this.dropZone.setAttribute('hidden', true);
-  }
-
-  handleDragEnter() {
-    this.dropZone.addEventListener('drop', this.handleDrop);
-    this.dropZone.addEventListener('dragover', this.handleDragOver);
-    this.dropZone.addEventListener('dragleave', this.handleDragLeave);
-    this.dropZone.removeAttribute('hidden');
-  }
-
   handleFileUpload(e) {
-    const { currentTarget } = e;
-
-    this.uploadImage(currentTarget.files[0]);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  uploadImage(imageFile) {
-    console.log('imageFile =', imageFile);
-
-    if (imageFile) {
-      // TODO: Check image type
-    } else {
-      // TODO: Show error message...
-    }
-
-    function eightBit(img, pixelSize) {
-      const adjustToDevice = true;
-
-      const scale = adjustToDevice ? (window.devicePixelRatio || 1) : 1;
-
-      const imageWidth = img.width;
-      const imageHeight = img.height;
-
-      const canvas = document.createElement('CANVAS');
-      const ctx = canvas.getContext('2d');
-
-      // !adjustToDevice:
-
-      // const canvasWidth = imageWidth;
-      // const canvasHeight = imageHeight;
-
-      // const scaledImageWidth = imageWidth / scale / pixelSize;
-      // const scaledImageHeight = imageHeight / scale / pixelSize;
-
-      // adjustToDevice:
-
-      const canvasWidth = imageWidth / scale;
-      const canvasHeight = imageHeight / scale;
-
-      const scaledImageWidth = canvasWidth / pixelSize;
-      const scaledImageHeight = canvasHeight / pixelSize;
-
-      // Common:
-
-      canvas.setAttribute('width', canvasWidth);
-      canvas.setAttribute('height', canvasHeight);
-
-      ctx.mozImageSmoothingEnabled = false;
-      ctx.webkitImageSmoothingEnabled = false;
-      ctx.imageSmoothingEnabled = false;
-
-      // !adjustToDevice:
-      // ctx.drawImage(img, 0, 0, imageWidth, imageHeight, 0, 0, scaledImageWidth, scaledImageHeight);
-      // ctx.drawImage(canvas, 0, 0, scaledImageWidth, scaledImageHeight, 0, 0, imageWidth, imageHeight);
-
-      // adjustToDevice:
-      ctx.drawImage(img, 0, 0, imageWidth, imageHeight, 0, 0, scaledImageWidth, scaledImageHeight);
-      ctx.drawImage(canvas, 0, 0, scaledImageWidth, scaledImageHeight, 0, 0, canvasWidth, canvasHeight);
-
-      canvas.style.position = 'fixed';
-      canvas.style.top = '0';
-      canvas.style.left = '0';
-      canvas.style.zIndex = 999999;
-      canvas.style.imageRendering = 'pixelated';
-      // !adjustToDevice:
-      // canvas.style.width = `${ imageWidth }px`;
-      // canvas.style.height = `${ imageHeight }px`;
-      // adjustToDevice:
-      canvas.style.width = `${ canvasWidth }px`;
-      canvas.style.height = `${ canvasHeight }px`;
-
-      // document.body.appendChild(canvas);
-
-      const mainCanvas = document.querySelector('.jsPaint__root');
-      const mainCtx = mainCanvas.getContext('2d');
-
-      mainCtx.mozImageSmoothingEnabled = false;
-      mainCtx.webkitImageSmoothingEnabled = false;
-      mainCtx.imageSmoothingEnabled = false;
-
-      // !adjustToDevice:
-      // mainCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
-      // mainCtx.drawImage(canvas, 0, 0);
-      // mainCtx.drawImage(canvas, 0, 0, imageWidth, imageHeight, 0, 0, imageWidth * scale, imageHeight * scale);
-
-      // adjustToDevice:
-      mainCtx.drawImage(canvas, 0, 0, imageWidth, imageHeight, 0, 0, imageWidth * scale, imageHeight * scale);
-
-      // adjustToDevice alternative:
-      // mainCtx.scale(scale, scale);
-      // mainCtx.drawImage(canvas, 0, 0);
-
-      mainCtx.setTransform(1, 0, 0, 1, 0, 0);
-    }
-
-    const pixelSize = 8;
-
-    const img = new Image();
-
-    img.onload = () => {
-      // Free memory:
-      URL.revokeObjectURL(img.src);
-
-      eightBit(img, pixelSize);
-    };
-
-    img.src = URL.createObjectURL(imageFile);
+    this.onAction(AppActions.UPLOAD, e.currentTarget.files[0]);
   }
 
   open() {
