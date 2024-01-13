@@ -46,19 +46,26 @@ TODOs & Bug
 - [x] Fix custom cursor movement logic.
 
 - [x] Fix cursor show/hide logic (hide cursor when it leaves the page and while resizing).
-- [ ] Close menu when enabling focus mode.
-- [ ] Adjust side paddings to be included in the header links and button.
+- [x] Close menu when enabling focus mode.
+- [x] Ruler should be below Nav.
+- [x] Add semi-transparent blurred backgrounds.
+
+- [ ] Fix accessibility sound.
 
 - [ ] Add custom metadata (`devicePixelRatio`, `date`) to downloaded file.
 - [ ] Check metadata to upload (`Use PNG metadata to know if an image was generated...`).
 
-- [ ] Hide "Hiring?" label in screenshot mode and focus mode.
+- [ ] Hide "Hiring?" label in focus mode.
 - [ ] Focus mode should ONLY show a hamburger icon in the footer.
 - [ ] Hide "Hiring", as I'm not looking anymore.
+- [ ] Change wand icon.
 
 - [ ] `TODO: Consider updating the cursor position continuously if in interactive mode:`
+- [ ] `TODO: Replace the `this.lastDrawingIndex !== randomIndex` with AbortController and signals:`
 
 ### Bugs
+
+- Adjust side paddings to be included in the header links and button.
 
 - Improve performance on large high-res screens. See:
   - https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas
@@ -98,6 +105,10 @@ TODOs & Bug
 
 
 ### Other Features
+
+- Rebuild nav so that actions are just icons at the bottom of the screen and move settings to their own page.
+
+- Add gimmicky sounds to some clicks: paint splash sound (color), recycle bin sound to clear...
 
 - Add an option to send drawings to me (to Supabase, maybe).
 

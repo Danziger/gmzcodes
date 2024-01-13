@@ -546,7 +546,7 @@ export class JsPaint {
   // DRAW (MAGIC) IMAGE:
 
   async magicDrawing() {
-    const isClear = this.confirmClear();
+    const isClear = this.clear();
 
     if (!isClear) return;
 

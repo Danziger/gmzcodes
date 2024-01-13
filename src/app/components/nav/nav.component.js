@@ -91,7 +91,7 @@ export class Nav {
     }
 
     // If we clicked a non-switch action or something else:
-    if (isChecked === null) {
+    if (isChecked === null || id === 'ruler') {
       this.close();
     }
 

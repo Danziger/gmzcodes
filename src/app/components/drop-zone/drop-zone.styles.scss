@@ -9,8 +9,10 @@
 
         position: fixed;
         inset: 0;
-        background: white;
-        z-index: 999;
+        transform: translateZ(0);
+        background: rgba(255,255,255,.75);
+        backdrop-filter: blur(16px);
+        z-index: 50;
         padding: 24px;
         text-align: center;
         display: flex;
