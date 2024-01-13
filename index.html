@@ -102,7 +102,7 @@
     }
   </script>
 
-<meta name="author" content="Daniel Gámez Franco"><meta name="description" content="👨‍💻 Dani Gamez's personal website PWA built using JavaScript, SCSS and HTML5."><link rel="icon" href="./favicon.ico"><script defer="defer" src="./main.75c74977ebf0a503.js"></script><link href="./main.16946530969ccfc9.css" rel="stylesheet"></head>
+<meta name="author" content="Daniel Gámez Franco"><meta name="description" content="👨‍💻 Dani Gamez's personal website PWA built using JavaScript, SCSS and HTML5."><link rel="icon" href="./favicon.ico"><script defer="defer" src="./main.b18d1917b98cc822.js"></script><link href="./main.204db60b1b11e3d0.css" rel="stylesheet"></head>
 
 <body class="app__root">
   <div class="app__container">
@@ -164,6 +164,14 @@
         </li>
 
         <li class="nav__li" role="menuitem">
+          <label class="nav__action" id="upload" tabindex="-1">
+            <span class="nav__actionTitle">Upload Image</span>
+            <span class="nav__actionDescription">Continue you work where you left off.</span>
+            <input type="file" class="nav__fileInput" id="menuFileInput" accept="image/*">
+          </label>
+        </li>
+
+        <li class="nav__li" role="menuitem">
           <button class="nav__action" role="switch" aria-checked="false" id="ruler" tabindex="-1">
             <span class="nav__actionTitle">Focus Mode</span>
             <span class="nav__actionDescription">Hide all my personal information and focus on your creation.</span>
@@ -186,7 +194,7 @@
 
         <li class="nav__li" role="menuitem">
           <a class="nav__githubLink link__root" tabindex="-1" style="--x-1: 89%; --w-1: 0%; --x-2: 13%; --w-2: 13%; --x-3: 41%; --w-3: 30%;" href="https://github.com/Danziger/gmzcodes" target="_blank" rel="noopener" title="Visit GitHub Repo">
-            <img class="nav__githubLinkIcon" src="icons/github-s-e-16.png" aria-hidden="true">
+            <img class="nav__githubLinkIcon" src="icons/github-t-e-16.png" aria-hidden="true">
             <span class="link__underline link__underline--hidden nav__githubLinkUnderline" id="github">GitHub</span>
             <span class="link__linkEffect nav__githubLinkEffect" aria-hidden="true">GitHub</span>
           </a>
@@ -309,6 +317,21 @@
   <div class="cursor__brush"></div>
 
   <div class="cursor__position" data-position-label="0, 0"></div>
+</div>
+
+
+  <div class="dropZone__root" hidden>
+  <p><strong>Drop an image to upload.</strong></p>
+</div>
+
+<div class="dropZone__root dropZone--hasError" hidden>
+  <p><strong>Invalid file.</strong></p>
+
+  <p>Try again with a different image or image type (e.g. PNG, JPG...).</p>
+
+  <button class="dropZone__closeErrorButton">
+    Close
+  </button>
 </div>
 
 </body>
