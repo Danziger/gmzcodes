@@ -39,22 +39,6 @@ Don't hesitate to report any issue you find in this website/project by opening a
 TODOs & Bug
 -----------
 
-### Doing:
-
-- [x] Implement `JsPaint.drawImage()` function and `DropZone` component.
-- [x] Fix `Nav` not showing the right cursor when the menu is opened.
-- [x] Fix custom cursor movement logic.
-
-- [x] Fix cursor show/hide logic (hide cursor when it leaves the page and while resizing).
-- [x] Close menu when enabling focus mode.
-- [x] Move `Ruler` below `Nav`.
-- [x] Add semi-transparent blurred backgrounds to `Nav`'s menu and `DropArea`.
-
-- [x] Fix accessibility sound.
-
-- [x] Add custom metadata (`devicePixelRatio`, `lastModified`, dimensions) to downloaded file.
-- [x] Check custom metadata on uploaded files and skip the 8-bit transform.
-
 ### Bugs
 
 - Update the cursor position continuously if in interactive mode.
