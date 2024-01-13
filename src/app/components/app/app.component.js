@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { addMetadataFromBase64DataURI, addMetadata, getMetadata } from 'meta-png';
+import { getMetadata } from 'meta-png';
 
 import { Ruler } from '../ruler/ruler.component';
 import { JsPaint } from '../js-paint/js-paint.component';
@@ -10,6 +9,7 @@ import { initializeLinks } from '../link/link.utils';
 import { TORINO_VIDEOS } from '../torino/torino.constants';
 import { Nav } from '../nav/nav.component';
 import { DropZone } from '../drop-zone/drop-zone.component';
+import { ImageUploadFields } from '../../utils/image-upload/image-upload.constants';
 
 import { AppActions } from './app.constants';
 
@@ -295,8 +295,8 @@ export class App {
       const arrayBufferView = new Uint8Array(arrayBuffer);
 
       return {
-        devicePixelRatio: parseFloat(getMetadata(arrayBufferView, 'devicePixelRatio'), 10) || null,
-        lastModified: parseInt(getMetadata(arrayBufferView, 'lastModified'), 10) || 0,
+        devicePixelRatio: parseFloat(getMetadata(arrayBufferView, ImageUploadFields.devicePixelRatio), 10) || null,
+        lastModified: parseInt(getMetadata(arrayBufferView, ImageUploadFields.lastModified), 10) || 0,
       };
     });
 

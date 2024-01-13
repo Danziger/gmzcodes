@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { addMetadataFromBase64DataURI, addMetadata, getMetadata } from 'meta-png';
+import { addMetadata } from 'meta-png';
 
 import { IS_DESKTOP, HAS_TOUCH, HAS_CURSOR } from '../../constants/browser.constants';
 import { rgbToHex } from '../../utils/color/color.utils';
@@ -8,6 +7,7 @@ import { VibrationService } from '../../utils/vibration/vibration.service';
 import { clamp, randomInt } from '../../utils/math/math.utils';
 import { waitOneFrame } from '../../utils/promises/promises.utils';
 import { loadImage } from '../../utils/image-loader/image-loader.utils';
+import { ImageUploadFields } from '../../utils/image-upload/image-upload.constants';
 
 import { COLOR_TO_FREQ, FILENAMES, FILENAME_ADJECTIVES } from './js-paint.constants';
 
@@ -520,8 +520,8 @@ export class JsPaint {
     this.canvas.toBlob(async (blob) => {
       let uintArr = new Uint8Array(await blob.arrayBuffer());
 
-      uintArr = addMetadata(uintArr, 'devicePixelRatio', this.scale);
-      uintArr = addMetadata(uintArr, 'lastModified', Date.now());
+      uintArr = addMetadata(uintArr, ImageUploadFields.devicePixelRatio, window.devicePixelRatio);
+      uintArr = addMetadata(uintArr, ImageUploadFields.lastModified, Date.now());
 
       const blobWithMetadata = new Blob([uintArr], { type: 'image/png' });
 
@@ -550,8 +550,8 @@ export class JsPaint {
   drawImage(canvas) {
     const { ctx, unit } = this;
 
-    const roundedWidth = Math.round(canvas.width / unit) * unit;
-    const roundedHeight = Math.round(canvas.height / unit) * unit;
+    const roundedWidth = roundStep(canvas.width, unit);
+    const roundedHeight = roundStep(canvas.height, unit);
 
     if (roundedWidth === 0 || roundedHeight === 0) return;
 
@@ -559,8 +559,8 @@ export class JsPaint {
 
     if (!isClear) return;
 
-    const dx = Math.round((window.innerWidth - roundedWidth) / 2 / unit) * unit;
-    const dy = Math.round((window.innerHeight - roundedHeight) / 2 / unit) * unit;
+    const dx = roundStep((window.innerWidth - roundedWidth) / 2, unit);
+    const dy = roundStep((window.innerHeight - roundedHeight) / 2, unit);
 
     // TODO: Consider setting `scale` globally in JsPaint:
     ctx.scale(window.devicePixelRatio, window.devicePixelRatio);

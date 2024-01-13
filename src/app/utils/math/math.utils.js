@@ -17,3 +17,7 @@ export function randomInt(min, max) {
 
   return Math.floor(Math.random() * (intMax - intMin + 1)) + intMin;
 }
+
+export function roundStep(x, step) {
+  return Math.round(x / step) * step;
+}
