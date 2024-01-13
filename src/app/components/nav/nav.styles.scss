@@ -277,6 +277,8 @@
 
     &__action {
         position: relative;
+        display: block;
+        box-sizing: border-box;
         border: 0;
         background: transparent;
         max-width: 480px;
@@ -414,14 +416,17 @@
         }
     }
 
-    &__uploader {
+    &__fileInput {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        left: 0;
+    }
+
+    &__dropZone {
         position: fixed;
         inset: 0;
         background: red;
         z-index: 999;
-
-        &Input {
-            opacity: 0;
-        }
     }
 }

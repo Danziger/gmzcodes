@@ -175,16 +175,16 @@ export class Nav {
     this.uploadImage(file);
 
     this.handleDragLeave();
-
   }
 
+  // eslint-disable-next-line class-methods-use-this
   handleDragOver(e) {
-    if (this) console.log('OVER');
-
     e.preventDefault();
   }
 
   handleDragLeave() {
+    this.dropZone.removeEventListener('drop', this.handleDrop);
+    this.dropZone.removeEventListener('dragover', this.handleDragOver);
     this.dropZone.removeEventListener('dragleave', this.handleDragLeave);
     this.dropZone.setAttribute('hidden', true);
   }
@@ -202,26 +202,94 @@ export class Nav {
     this.uploadImage(currentTarget.files[0]);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   uploadImage(imageFile) {
-    console.log('uploadImage =', imageFile);
+    console.log('imageFile =', imageFile);
 
-    if (this) console.log(URL.createObjectURL(imageFile));
+    if (imageFile) {
+      // TODO: Check image type
+    } else {
+      // TODO: Show error message...
+    }
 
-    function eightBit(canvas, image, pixelSize) {
-      canvas.width = image.width;
-      canvas.height = image.height;
+    function eightBit(img, pixelSize) {
+      const adjustToDevice = true;
 
-      const scaledW = canvas.width / pixelSize;
-      const scaledH = canvas.height / pixelSize;
+      const scale = adjustToDevice ? (window.devicePixelRatio || 1) : 1;
 
+      const imageWidth = img.width;
+      const imageHeight = img.height;
+
+      const canvas = document.createElement('CANVAS');
       const ctx = canvas.getContext('2d');
+
+      // !adjustToDevice:
+
+      // const canvasWidth = imageWidth;
+      // const canvasHeight = imageHeight;
+
+      // const scaledImageWidth = imageWidth / scale / pixelSize;
+      // const scaledImageHeight = imageHeight / scale / pixelSize;
+
+      // adjustToDevice:
+
+      const canvasWidth = imageWidth / scale;
+      const canvasHeight = imageHeight / scale;
+
+      const scaledImageWidth = canvasWidth / pixelSize;
+      const scaledImageHeight = canvasHeight / pixelSize;
+
+      // Common:
+
+      canvas.setAttribute('width', canvasWidth);
+      canvas.setAttribute('height', canvasHeight);
 
       ctx.mozImageSmoothingEnabled = false;
       ctx.webkitImageSmoothingEnabled = false;
       ctx.imageSmoothingEnabled = false;
 
-      ctx.drawImage(image, 0, 0, scaledW, scaledH);
-      ctx.drawImage(canvas, 0, 0, scaledW, scaledH, 0, 0, image.width, image.height);
+      // !adjustToDevice:
+      // ctx.drawImage(img, 0, 0, imageWidth, imageHeight, 0, 0, scaledImageWidth, scaledImageHeight);
+      // ctx.drawImage(canvas, 0, 0, scaledImageWidth, scaledImageHeight, 0, 0, imageWidth, imageHeight);
+
+      // adjustToDevice:
+      ctx.drawImage(img, 0, 0, imageWidth, imageHeight, 0, 0, scaledImageWidth, scaledImageHeight);
+      ctx.drawImage(canvas, 0, 0, scaledImageWidth, scaledImageHeight, 0, 0, canvasWidth, canvasHeight);
+
+      canvas.style.position = 'fixed';
+      canvas.style.top = '0';
+      canvas.style.left = '0';
+      canvas.style.zIndex = 999999;
+      canvas.style.imageRendering = 'pixelated';
+      // !adjustToDevice:
+      // canvas.style.width = `${ imageWidth }px`;
+      // canvas.style.height = `${ imageHeight }px`;
+      // adjustToDevice:
+      canvas.style.width = `${ canvasWidth }px`;
+      canvas.style.height = `${ canvasHeight }px`;
+
+      // document.body.appendChild(canvas);
+
+      const mainCanvas = document.querySelector('.jsPaint__root');
+      const mainCtx = mainCanvas.getContext('2d');
+
+      mainCtx.mozImageSmoothingEnabled = false;
+      mainCtx.webkitImageSmoothingEnabled = false;
+      mainCtx.imageSmoothingEnabled = false;
+
+      // !adjustToDevice:
+      // mainCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      // mainCtx.drawImage(canvas, 0, 0);
+      // mainCtx.drawImage(canvas, 0, 0, imageWidth, imageHeight, 0, 0, imageWidth * scale, imageHeight * scale);
+
+      // adjustToDevice:
+      mainCtx.drawImage(canvas, 0, 0, imageWidth, imageHeight, 0, 0, imageWidth * scale, imageHeight * scale);
+
+      // adjustToDevice alternative:
+      // mainCtx.scale(scale, scale);
+      // mainCtx.drawImage(canvas, 0, 0);
+
+      mainCtx.setTransform(1, 0, 0, 1, 0, 0);
     }
 
     const pixelSize = 8;
@@ -232,7 +300,7 @@ export class Nav {
       // Free memory:
       URL.revokeObjectURL(img.src);
 
-      eightBit(document.querySelector('canvas'), img, pixelSize);
+      eightBit(img, pixelSize);
     };
 
     img.src = URL.createObjectURL(imageFile);
