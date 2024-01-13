@@ -4,7 +4,7 @@ import { IS_DESKTOP, HAS_TOUCH, HAS_CURSOR } from '../../constants/browser.const
 import { rgbToHex } from '../../utils/color/color.utils';
 import { AudioService } from '../../utils/audio/audio.service';
 import { VibrationService } from '../../utils/vibration/vibration.service';
-import { clamp, randomInt } from '../../utils/math/math.utils';
+import { clamp, randomInt, roundStep } from '../../utils/math/math.utils';
 import { waitOneFrame } from '../../utils/promises/promises.utils';
 import { loadImage } from '../../utils/image-loader/image-loader.utils';
 import { ImageUploadFields } from '../../utils/image-upload/image-upload.constants';
