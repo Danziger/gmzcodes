@@ -69,7 +69,7 @@ export class DropZone {
 
     this.onAction(AppActions.UPLOAD, file);
 
-    this.handleDragLeave();
+    this.handleDragLeave(this.errorRoot.hasAttribute('hidden') ? e : null);
   }
 
   // Error:

@@ -45,7 +45,7 @@ TODOs & Bug
 - [x] Fix `Nav` not showing the right cursor when the menu is opened.
 - [x] Fix custom cursor movement logic.
 
-- [ ] Hide (custom) cursor while resizing.
+- [x] Fix cursor show/hide logic (hide cursor when it leaves the page and while resizing).
 - [ ] Close menu when enabling focus mode.
 - [ ] Adjust side paddings to be included in the header links and button.
 
@@ -69,6 +69,8 @@ TODOs & Bug
   - Consider adding other brush shapes, like any other standard drawing app (e.g https://www.youtube.com/watch?v=3GqUM4mEYKA)
 
 - The canvas looks blurry on screens with decimal DPI values. See https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas.
+
+- Make the canvas size multiple of `unit`, so that "partial pixels" are downloaded without cropping.
 
 <br />
 

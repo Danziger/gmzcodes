@@ -218,6 +218,8 @@ export class JsPaint {
   }
 
   handleStop() {
+    if (!this.isSpacePressed && !this.isMousePressed) return;
+
     this.isMousePressed = false;
 
     this.stopDrawing();
