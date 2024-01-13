@@ -29,7 +29,8 @@
 
     &--hasActiveHover {
         a,
-        button {
+        button,
+        label {
             cursor: none;
         }
     }
@@ -51,7 +52,8 @@
         overscroll-behavior: initial;
 
         a,
-        button {
+        button,
+        label {
             cursor: pointer;
         }
     }

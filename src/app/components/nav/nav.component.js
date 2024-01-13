@@ -13,6 +13,7 @@ export class Nav {
   static S_LOGO_LINK = '.nav__logoLink';
   static S_VIBRATION_BUTTON = '#vibration';
   static S_SOUND_BUTTON = '#sound';
+  static S_MENU_FILE_INPUT = '#menuFileInput';
 
   // CSS classes:
   static C_MENU_OPEN = 'isOpen';
@@ -26,6 +27,7 @@ export class Nav {
   menu = document.querySelector(Nav.S_MENU);
   actions = document.querySelectorAll(Nav.S_ACTIONS);
   logoLink = document.querySelector(Nav.S_LOGO_LINK);
+  menuFileInput = document.querySelector(Nav.S_MENU_FILE_INPUT);
 
   // Callback:
   onAction;
@@ -44,13 +46,23 @@ export class Nav {
     this.handleMagicButtonClick = this.handleMagicButtonClick.bind(this);
     this.handleMenuButtonClick = this.handleMenuButtonClick.bind(this);
     this.handleMenuClick = this.handleMenuClick.bind(this);
+    this.handleFileUpload = this.handleFileUpload.bind(this);
 
     this.addEventListeners();
   }
 
   addEventListeners() {
-    this.magicWandButton.addEventListener('click', this.handleMagicButtonClick);
+    // Hamburger button:
     this.menuButton.addEventListener('click', this.handleMenuButtonClick);
+
+    // Magic wand:
+    this.magicWandButton.addEventListener('click', this.handleMagicButtonClick);
+
+    // File upload:
+
+    window.addEventListener('dragenter', this.handleDragEnter);
+
+    this.menuFileInput.addEventListener('change', this.handleFileUpload);
   }
 
   handleMagicButtonClick() {
@@ -79,7 +91,7 @@ export class Nav {
     }
 
     // If we clicked a non-switch action or something else:
-    if (isChecked === null) {
+    if (isChecked === null || id === 'ruler') {
       this.close();
     }
 
@@ -147,6 +159,10 @@ export class Nav {
 
       if (handled) e.preventDefault();
     }
+  }
+
+  handleFileUpload(e) {
+    this.onAction(AppActions.UPLOAD, e.currentTarget.files[0]);
   }
 
   open() {

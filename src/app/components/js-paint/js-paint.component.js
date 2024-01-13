@@ -1,10 +1,13 @@
+import { addMetadata } from 'meta-png';
+
 import { IS_DESKTOP, HAS_TOUCH, HAS_CURSOR } from '../../constants/browser.constants';
 import { rgbToHex } from '../../utils/color/color.utils';
 import { AudioService } from '../../utils/audio/audio.service';
 import { VibrationService } from '../../utils/vibration/vibration.service';
-import { clamp, randomInt } from '../../utils/math/math.utils';
+import { clamp, randomInt, roundStep } from '../../utils/math/math.utils';
 import { waitOneFrame } from '../../utils/promises/promises.utils';
 import { loadImage } from '../../utils/image-loader/image-loader.utils';
+import { ImageUploadFields } from '../../utils/image-upload/image-upload.constants';
 
 import { COLOR_TO_FREQ, FILENAMES, FILENAME_ADJECTIVES } from './js-paint.constants';
 
@@ -218,6 +221,8 @@ export class JsPaint {
   }
 
   handleStop() {
+    if (!this.isSpacePressed && !this.isMousePressed) return;
+
     this.isMousePressed = false;
 
     this.stopDrawing();
@@ -320,6 +325,11 @@ export class JsPaint {
     canvas.setAttribute('height', window.innerHeight * scale);
 
     ctx.fillStyle = JsPaint.BACKGROUND_COLOR;
+
+    ctx.mozImageSmoothingEnabled = false;
+    ctx.webkitImageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
+
     ctx.fillRect(0, 0, window.innerWidth * scale, window.innerHeight * scale);
 
     this.pristine = true;
@@ -386,18 +396,21 @@ export class JsPaint {
 
       if (!cursor) return;
 
-      cursor.update(x * unit + offsetLeft, y * unit + offsetTop, `${ x + 1 } , ${ y + 1 }`);
+      // TODO: Consider updating the cursor position continuously if in interactive mode:
+      if (hasPositionChanged) cursor.update(x * unit + offsetLeft, y * unit + offsetTop, `${ x + 1 } , ${ y + 1 }`);
 
-      if (!hasPositionChanged || this.disabled) return;
+      if (!drawing) cursor.setModeForElement(target);
 
-      if (!drawing) {
-        cursor.setModeForElement(target);
-      } else if (w === 0 && h === 0) {
-        this.paintPixel(x, y);
-      } else if (w > h) {
-        this.lineLandscape(lastX, lastY, x, y);
-      } else {
-        this.linePortrait(lastX, lastY, x, y);
+      if (this.disabled) return;
+
+      if (drawing) {
+        if (w === 0 && h === 0) {
+          this.paintPixel(x, y);
+        } else if (w > h) {
+          this.lineLandscape(lastX, lastY, x, y);
+        } else {
+          this.linePortrait(lastX, lastY, x, y);
+        }
       }
 
       if (AudioService.enabled) {
@@ -475,15 +488,6 @@ export class JsPaint {
     }
   }
 
-  download() {
-    const link = document.createElement('A');
-
-    link.download = `${ FILENAMES[Math.floor(Math.random() * FILENAMES.length)] }${ FILENAME_ADJECTIVES[Math.floor(Math.random() * FILENAME_ADJECTIVES.length)] }.png`;
-    link.href = this.canvas.toDataURL();
-    link.target = '_blank';
-    link.click();
-  }
-
   enable() {
     this.disabled = false;
   }
@@ -494,24 +498,84 @@ export class JsPaint {
     AudioService.stop();
   }
 
-  // LOAD IMAGE:
+  clear() {
+    if (this.pristine) {
+      this.reset({ vibrate: true });
+
+      return true;
+    }
+
+    // TODO: Replace with a custom HTML modal:
+
+    // eslint-disable-next-line no-alert, no-restricted-globals
+    const continueAndReplace = confirm(
+      // eslint-disable-next-line max-len
+      'You will lose your current progress. Are you sure you want to proceed?',
+    );
+
+    if (continueAndReplace) this.reset({ vibrate: true });
+
+    return continueAndReplace;
+  }
+
+  download() {
+    this.canvas.toBlob(async (blob) => {
+      let uintArr = new Uint8Array(await blob.arrayBuffer());
+
+      uintArr = addMetadata(uintArr, ImageUploadFields.devicePixelRatio, window.devicePixelRatio);
+      uintArr = addMetadata(uintArr, ImageUploadFields.lastModified, Date.now());
+
+      const blobWithMetadata = new Blob([uintArr], { type: 'image/png' });
+
+      const link = document.createElement('A');
+
+      // eslint-disable-next-line max-len
+      link.download = `${ FILENAMES[Math.floor(Math.random() * FILENAMES.length)] }${ FILENAME_ADJECTIVES[Math.floor(Math.random() * FILENAME_ADJECTIVES.length)] }.png`;
+      link.href = URL.createObjectURL(blobWithMetadata);
+      link.target = '_blank';
+      link.click();
+    }, 'image/png');
+
+    // TODO: Use this as fallback in case the code above throws an error:
+
+    // const link = document.createElement('A');
+
+    // eslint-disable-next-line max-len
+    // link.download = `${ FILENAMES[Math.floor(Math.random() * FILENAMES.length)] }${ FILENAME_ADJECTIVES[Math.floor(Math.random() * FILENAME_ADJECTIVES.length)] }.png`;
+    // link.href = this.canvas.toDataURL();
+    // link.target = '_blank';
+    // link.click();
+  }
+
+  // DRAW (UPLOAD) IMAGE:
+
+  drawImage(canvas) {
+    const { ctx, unit } = this;
+
+    const roundedWidth = roundStep(canvas.width, unit);
+    const roundedHeight = roundStep(canvas.height, unit);
+
+    if (roundedWidth === 0 || roundedHeight === 0) return;
+
+    const isClear = this.clear();
+
+    if (!isClear) return;
+
+    const dx = roundStep((window.innerWidth - roundedWidth) / 2, unit);
+    const dy = roundStep((window.innerHeight - roundedHeight) / 2, unit);
+
+    // TODO: Consider setting `scale` globally in JsPaint:
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    ctx.drawImage(canvas, dx, dy);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+  }
+
+  // DRAW (MAGIC) IMAGE:
 
   async magicDrawing() {
-    if (!this.pristine) {
-      // TODO: Replace with a custom HTML modal:
+    const isClear = this.clear();
 
-      // eslint-disable-next-line no-alert, no-restricted-globals
-      const continueAndReplace = confirm(
-        // eslint-disable-next-line max-len
-        'This will clear the current canvas and replace it with a random predefined drawing. Are you sure you want to proceed?',
-      );
-
-      if (!continueAndReplace) {
-        return;
-      }
-
-      this.reset({ vibrate: true });
-    }
+    if (!isClear) return;
 
     const previousColor = this.color;
 
@@ -572,6 +636,9 @@ export class JsPaint {
 
     try {
 
+      // TODO: Use a new instance for this:
+      // AudioService.enable();
+
       for (let y = 0; y < imageHeight; ++y) {
         const translatedY = initialY + y;
 
@@ -596,8 +663,13 @@ export class JsPaint {
             if (paintedPixels % 8 === 0) {
               // TODO: Replace the `this.lastDrawingIndex !== randomIndex` with AbortController and signals:
 
+              // AudioService.playFreq(50);
+              // AudioService.resume();
+
               // eslint-disable-next-line no-await-in-loop
               await waitOneFrame(1);
+
+              // AudioService.stop();
             }
           }
 
@@ -606,6 +678,8 @@ export class JsPaint {
           }
         }
       }
+
+      // AudioService.disable();
 
       // Paint last pixel in the right color:
 

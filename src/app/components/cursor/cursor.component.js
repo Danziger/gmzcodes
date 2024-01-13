@@ -1,4 +1,4 @@
-import { IS_DESKTOP } from '../../constants/browser.constants';
+import { HAS_CURSOR, IS_DESKTOP } from '../../constants/browser.constants';
 
 export class Cursor {
 
@@ -15,10 +15,24 @@ export class Cursor {
   position = document.querySelector(Cursor.S_POSITION);
   body = document.body;
 
-  constructor() {
+  // Callback:
+  onAction;
+
+  constructor({
+    onAction,
+    enabled,
+  }) {
+    this.onAction = onAction;
+
     if (IS_DESKTOP) {
       document.documentElement.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
       document.documentElement.addEventListener('mouseout', this.handleMouseOut.bind(this));
+    }
+
+    if (enabled) {
+      this.show();
+    } else {
+      this.hide();
     }
   }
 
@@ -70,9 +84,18 @@ export class Cursor {
   }
 
   setMode(mode) {
+    if (mode === 'hidden') {
+      this.hide();
+
+      return;
+    }
+
+    this.show();
+
     if (mode === 'interact') {
       this.root.classList.add(Cursor.C_IS_INTERACTIVE);
-    } else if (mode === 'paint') {
+    } else {
+      // mode === 'paint' || mode === 'hidden'
       this.root.classList.remove(Cursor.C_IS_INTERACTIVE);
     }
   }

@@ -1,3 +1,5 @@
+import { getMetadata } from 'meta-png';
+
 import { Ruler } from '../ruler/ruler.component';
 import { JsPaint } from '../js-paint/js-paint.component';
 import { IS_DESKTOP, IS_BROWSER_SUPPORTED, HAS_TOUCH, HAS_CURSOR } from '../../constants/browser.constants';
@@ -6,6 +8,8 @@ import { Footer } from '../footer/footer.component';
 import { initializeLinks } from '../link/link.utils';
 import { TORINO_VIDEOS } from '../torino/torino.constants';
 import { Nav } from '../nav/nav.component';
+import { DropZone } from '../drop-zone/drop-zone.component';
+import { ImageUploadFields } from '../../utils/image-upload/image-upload.constants';
 
 import { AppActions } from './app.constants';
 
@@ -32,6 +36,7 @@ export class App {
     footer: null,
     ruler: null,
     cursor: null,
+    dropZone: null,
   };
 
   constructor() {
@@ -88,6 +93,8 @@ export class App {
       enabled: HAS_CURSOR,
     });
 
+    const dropZone = new DropZone({ onAction });
+
     if (HAS_CURSOR) {
       // TODO: Should the addition or removal of this be triggered from within Cursor?
       this.root.classList.add(App.C_HAS_ACTIVE_HOVER);
@@ -104,8 +111,9 @@ export class App {
       [AppActions.MAGIC_DRAWING]: this.jsPaint.magicDrawing.bind(this.jsPaint),
       [AppActions.DISABLE]: this.jsPaint.disable.bind(this.jsPaint),
       [AppActions.ENABLE]: this.jsPaint.enable.bind(this.jsPaint),
-      [AppActions.CLEAR]: this.jsPaint.reset.bind(this.jsPaint),
+      [AppActions.CLEAR]: this.jsPaint.clear.bind(this.jsPaint),
       [AppActions.DOWNLOAD]: this.jsPaint.download.bind(this.jsPaint),
+      [AppActions.UPLOAD]: this.handleFileUpload.bind(this),
       [AppActions.CHANGE_COLOR]: this.handleColorChange.bind(this),
 
       [AppActions.CHANGE_RULER_MODE]: this.handleRulerModeChange.bind(this),
@@ -116,6 +124,7 @@ export class App {
     uiControls.footer = footer;
     uiControls.ruler = ruler;
     uiControls.cursor = cursor;
+    uiControls.dropZone = dropZone;
   }
 
   showFallback() {
@@ -183,6 +192,130 @@ export class App {
   }
 
   // handleToggleGlobalClass
+
+  async handleFileUpload(imageFile) {
+    if (!imageFile || !imageFile.type.startsWith('image/')) {
+      this.uiControls.dropZone.showError();
+
+      return;
+    }
+
+    this.uiControls.nav.close();
+
+    const { jsPaint } = this;
+
+    function eightBit(img, metadata, pixelSize) {
+      const {
+        devicePixelRatio = 1,
+        innerWidth,
+        innerHeight,
+      } = window;
+
+      if (
+        metadata.devicePixelRatio === devicePixelRatio
+        && img.width === innerWidth * devicePixelRatio
+        && img.height === innerHeight * devicePixelRatio
+        && imageFile.lastModified - metadata.lastModified < 4000
+      ) {
+        console.log('DIRECT UPLOAD');
+
+        jsPaint.ctx.drawImage(img, 0, 0);
+
+        return;
+      }
+
+      console.log('RESIZED UPLOAD');
+
+      const useDevicePixelRatio = false;
+      const scale = (useDevicePixelRatio ? devicePixelRatio : metadata.devicePixelRatio) || 1;
+
+      const imageWidth = img.width;
+      const imageHeight = img.height;
+
+      const canvas = document.createElement('CANVAS');
+      const ctx = canvas.getContext('2d');
+
+      const canvasWidth = imageWidth / scale;
+      const canvasHeight = imageHeight / scale;
+
+      const scaledImageWidth = canvasWidth / pixelSize;
+      const scaledImageHeight = canvasHeight / pixelSize;
+
+      // Common:
+
+      canvas.setAttribute('width', canvasWidth);
+      canvas.setAttribute('height', canvasHeight);
+
+      ctx.mozImageSmoothingEnabled = false;
+      ctx.webkitImageSmoothingEnabled = false;
+      ctx.imageSmoothingEnabled = false;
+
+      // TODO: Add try-catch?
+
+      ctx.drawImage(img, 0, 0, imageWidth, imageHeight, 0, 0, scaledImageWidth, scaledImageHeight);
+      ctx.drawImage(canvas, 0, 0, scaledImageWidth, scaledImageHeight, 0, 0, canvasWidth, canvasHeight);
+
+      // This can be used to provide an upload + resizing UI so that users can choose the scale and preview the result:
+
+      // canvas.style.position = 'fixed';
+      // canvas.style.top = '0';
+      // canvas.style.left = '0';
+      // canvas.style.zIndex = 999999;
+      // canvas.style.imageRendering = 'pixelated';
+      // canvas.style.width = `${ canvasWidth }px`;
+      // canvas.style.height = `${ canvasHeight }px`;
+
+      // document.body.appendChild(canvas);
+
+      jsPaint.drawImage(canvas);
+    }
+
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+
+        img.onload = () => {
+          resolve(img);
+        };
+
+        img.onerror = reject;
+
+        img.src = src;
+      });
+    }
+
+    const imageSrc = URL.createObjectURL(imageFile);
+
+    const imagePromise = loadImage(imageSrc);
+
+    const metadataPromise = fetch(imageSrc).then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error, status = ${ response.status }`);
+      }
+
+      return response.arrayBuffer();
+    }).then((arrayBuffer) => {
+      const arrayBufferView = new Uint8Array(arrayBuffer);
+
+      return {
+        devicePixelRatio: parseFloat(getMetadata(arrayBufferView, ImageUploadFields.devicePixelRatio), 10) || null,
+        lastModified: parseInt(getMetadata(arrayBufferView, ImageUploadFields.lastModified), 10) || 0,
+      };
+    });
+
+    const [
+      metadata,
+      image,
+    ] = await Promise.allSettled([
+      metadataPromise,
+      imagePromise,
+    ]);
+
+    // Free memory:
+    URL.revokeObjectURL(imageSrc);
+
+    eightBit(image.value, metadata.value, jsPaint.unit);
+  }
 
   handleColorChange(hexColor) {
     this.jsPaint.setColor(hexColor);

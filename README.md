@@ -41,13 +41,13 @@ TODOs & Bug
 
 ### Bugs
 
+- Update the cursor position continuously if in interactive mode.
+
+- Focus mode should only show the colors and a hamburger icon in the `Footer`. Hide "Hiring?" label and the whole `Nav`.
+
+- Change wand icon.
+
 - Adjust side paddings to be included in the header links and button.
-
-- Hide "Hiring?" label in screenshot mode.
-
-- Close menu when enabling focus mode.
-
-- Hide (custom) cursor while resizing.
 
 - Improve performance on large high-res screens. See:
   - https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas
@@ -59,12 +59,13 @@ TODOs & Bug
 
 - The canvas looks blurry on screens with decimal DPI values. See https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas.
 
+- Make the canvas size multiple of `unit`, so that "partial pixels" are downloaded without cropping.
+
+- When the wand is clicked multiple times, the drawing algorithm should only run for the last click.
+
 <br />
 
-
 ### JS Paint Features
-
-- Image upload. See https://medium.com/@agbales/how-to-make-8-bit-art-with-javascript-eea808a70ba2
 
 - Move cursor position to a corner.
 
@@ -88,6 +89,12 @@ TODOs & Bug
 
 
 ### Other Features
+
+- Rebuild nav so that actions are just icons at the bottom of the screen and move settings to their own page.
+
+- Add an anchor to quickly launch / access the focus mode.
+
+- Add gimmicky sounds to some clicks: paint splash sound (color), recycle bin sound to clear...
 
 - Add an option to send drawings to me (to Supabase, maybe).
 

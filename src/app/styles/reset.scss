@@ -32,6 +32,8 @@ button {
     border: 0;
     margin: 0;
     outline: none;
+    font: inherit;
+    line-height: inherit;
 }
 
 [hidden] {

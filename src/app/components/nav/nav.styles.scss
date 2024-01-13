@@ -210,7 +210,8 @@
         height: 100%;
         width: 100%;
         transform: translateZ(0);
-        background: white;
+        background: rgba(255,255,255,.75);
+        backdrop-filter: blur(16px);
         transition: opacity linear 250ms;
         pointer-events: none;
         opacity: 0;
@@ -268,6 +269,8 @@
         margin: 0 auto;
         padding-top: 96px;
         padding-bottom: 96px;
+        border-right: 1px solid rgba(255, 255, 255, .25);
+        border-left: 1px solid rgba(255, 255, 255, .25);
     }
 
     &__li {
@@ -277,6 +280,8 @@
 
     &__action {
         position: relative;
+        display: block;
+        box-sizing: border-box;
         border: 0;
         background: transparent;
         max-width: 480px;
@@ -412,5 +417,12 @@
                 left: 56px;
             }
         }
+    }
+
+    &__fileInput {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        left: 0;
     }
 }
