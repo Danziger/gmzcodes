@@ -52,19 +52,16 @@ TODOs & Bug
 
 - [x] Fix accessibility sound.
 
-- [ ] Add custom metadata (`devicePixelRatio`, `date`) to downloaded file.
-- [ ] Check metadata to upload (`Use PNG metadata to know if an image was generated...`).
-
-- [ ] Hide "Hiring?" label in focus mode.
-- [ ] Focus mode should ONLY show a hamburger icon in the footer.
-- [ ] Hide "Hiring", as I'm not looking anymore.
-- [ ] Change wand icon.
-- [ ] Add an anchor to quickly launch / access the focus mode.
-
-- [ ] `TODO: Consider updating the cursor position continuously if in interactive mode:`
-- [ ] `TODO: Replace the `this.lastDrawingIndex !== randomIndex` with AbortController and signals:`
+- [x] Add custom metadata (`devicePixelRatio`, `lastModified`, dimensions) to downloaded file.
+- [x] Check custom metadata on uploaded files and skip the 8-bit transform.
 
 ### Bugs
+
+- Update the cursor position continuously if in interactive mode.
+
+- Focus mode should only show the colors and a hamburger icon in the `Footer`. Hide "Hiring?" label and the whole `Nav`.
+
+- Change wand icon.
 
 - Adjust side paddings to be included in the header links and button.
 
@@ -79,6 +76,8 @@ TODOs & Bug
 - The canvas looks blurry on screens with decimal DPI values. See https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas.
 
 - Make the canvas size multiple of `unit`, so that "partial pixels" are downloaded without cropping.
+
+- When the wand is clicked multiple times, the drawing algorithm should only run for the last click.
 
 <br />
 
@@ -108,6 +107,8 @@ TODOs & Bug
 ### Other Features
 
 - Rebuild nav so that actions are just icons at the bottom of the screen and move settings to their own page.
+
+- Add an anchor to quickly launch / access the focus mode.
 
 - Add gimmicky sounds to some clicks: paint splash sound (color), recycle bin sound to clear...
 

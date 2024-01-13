@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { addMetadataFromBase64DataURI, addMetadata, getMetadata } from 'meta-png';
+
 import { Ruler } from '../ruler/ruler.component';
 import { JsPaint } from '../js-paint/js-paint.component';
 import { IS_DESKTOP, IS_BROWSER_SUPPORTED, HAS_TOUCH, HAS_CURSOR } from '../../constants/browser.constants';
@@ -190,7 +193,7 @@ export class App {
 
   // handleToggleGlobalClass
 
-  handleFileUpload(imageFile) {
+  async handleFileUpload(imageFile) {
     if (!imageFile || !imageFile.type.startsWith('image/')) {
       this.uiControls.dropZone.showError();
 
@@ -199,14 +202,29 @@ export class App {
 
     const { jsPaint } = this;
 
-    function eightBit(img, pixelSize) {
-      // TODO: Use PNG metadata to know if an image was generated with this tool and with what devicePixelRatio.
-      // Those that are "originals" (we should include a hash) should be uploaded as-is, without any kind of resizing.
+    function eightBit(img, metadata, pixelSize) {
+      const {
+        devicePixelRatio = 1,
+        innerWidth,
+        innerHeight,
+      } = window;
+
+      if (
+        metadata.devicePixelRatio === devicePixelRatio
+        && img.width === innerWidth * devicePixelRatio
+        && img.height === innerHeight * devicePixelRatio
+        && imageFile.lastModified - metadata.lastModified < 4000
+      ) {
+        console.log('DIRECT UPLOAD');
+
+        jsPaint.ctx.drawImage(img, 0, 0);
+        return;
+      }
+
+      console.log('RESIZED UPLOAD');
 
       const useDevicePixelRatio = false;
-
-      const { devicePixelRatio = 1 } = window;
-      const scale = useDevicePixelRatio ? devicePixelRatio : 1;
+      const scale = (useDevicePixelRatio ? devicePixelRatio : metadata.devicePixelRatio) || 1;
 
       const imageWidth = img.width;
       const imageHeight = img.height;
@@ -249,16 +267,51 @@ export class App {
       jsPaint.drawImage(canvas);
     }
 
-    const img = new Image();
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
 
-    img.onload = () => {
-      // Free memory:
-      URL.revokeObjectURL(img.src);
+        img.onload = () => {
+          resolve(img);
+        };
 
-      eightBit(img, jsPaint.unit);
-    };
+        img.onerror = reject;
 
-    img.src = URL.createObjectURL(imageFile);
+        img.src = src;
+      });
+    }
+
+    const imageSrc = URL.createObjectURL(imageFile);
+
+    const imagePromise = loadImage(imageSrc);
+
+    const metadataPromise = fetch(imageSrc).then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error, status = ${ response.status }`);
+      }
+
+      return response.arrayBuffer();
+    }).then((arrayBuffer) => {
+      const arrayBufferView = new Uint8Array(arrayBuffer);
+
+      return {
+        devicePixelRatio: parseFloat(getMetadata(arrayBufferView, 'devicePixelRatio'), 10) || null,
+        lastModified: parseInt(getMetadata(arrayBufferView, 'lastModified'), 10) || 0,
+      };
+    });
+
+    const [
+      metadata,
+      image,
+    ] = await Promise.allSettled([
+      metadataPromise,
+      imagePromise,
+    ]);
+
+    // Free memory:
+    URL.revokeObjectURL(imageSrc);
+
+    eightBit(image.value, metadata.value, jsPaint.unit);
   }
 
   handleColorChange(hexColor) {

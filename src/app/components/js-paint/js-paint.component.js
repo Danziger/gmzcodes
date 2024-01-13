@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { addMetadataFromBase64DataURI, addMetadata, getMetadata } from 'meta-png';
+
 import { IS_DESKTOP, HAS_TOUCH, HAS_CURSOR } from '../../constants/browser.constants';
 import { rgbToHex } from '../../utils/color/color.utils';
 import { AudioService } from '../../utils/audio/audio.service';
@@ -514,12 +517,32 @@ export class JsPaint {
   }
 
   download() {
-    const link = document.createElement('A');
+    this.canvas.toBlob(async (blob) => {
+      let uintArr = new Uint8Array(await blob.arrayBuffer());
 
-    link.download = `${ FILENAMES[Math.floor(Math.random() * FILENAMES.length)] }${ FILENAME_ADJECTIVES[Math.floor(Math.random() * FILENAME_ADJECTIVES.length)] }.png`;
-    link.href = this.canvas.toDataURL();
-    link.target = '_blank';
-    link.click();
+      uintArr = addMetadata(uintArr, 'devicePixelRatio', this.scale);
+      uintArr = addMetadata(uintArr, 'lastModified', Date.now());
+
+      const blobWithMetadata = new Blob([uintArr], { type: 'image/png' });
+
+      const link = document.createElement('A');
+
+      // eslint-disable-next-line max-len
+      link.download = `${ FILENAMES[Math.floor(Math.random() * FILENAMES.length)] }${ FILENAME_ADJECTIVES[Math.floor(Math.random() * FILENAME_ADJECTIVES.length)] }.png`;
+      link.href = URL.createObjectURL(blobWithMetadata);
+      link.target = '_blank';
+      link.click();
+    }, 'image/png');
+
+    // TODO: Use this as fallback in case the code above throws an error:
+
+    // const link = document.createElement('A');
+
+    // eslint-disable-next-line max-len
+    // link.download = `${ FILENAMES[Math.floor(Math.random() * FILENAMES.length)] }${ FILENAME_ADJECTIVES[Math.floor(Math.random() * FILENAME_ADJECTIVES.length)] }.png`;
+    // link.href = this.canvas.toDataURL();
+    // link.target = '_blank';
+    // link.click();
   }
 
   // DRAW (UPLOAD) IMAGE:
@@ -540,7 +563,7 @@ export class JsPaint {
     const dy = Math.round((window.innerHeight - roundedHeight) / 2 / unit) * unit;
 
     // TODO: Consider setting `scale` globally in JsPaint:
-    ctx.scale(devicePixelRatio, devicePixelRatio);
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     ctx.drawImage(canvas, dx, dy);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
@@ -611,6 +634,9 @@ export class JsPaint {
 
     try {
 
+      // TODO: Use a new instance for this:
+      // AudioService.enable();
+
       for (let y = 0; y < imageHeight; ++y) {
         const translatedY = initialY + y;
 
@@ -635,8 +661,13 @@ export class JsPaint {
             if (paintedPixels % 8 === 0) {
               // TODO: Replace the `this.lastDrawingIndex !== randomIndex` with AbortController and signals:
 
+              // AudioService.playFreq(50);
+              // AudioService.resume();
+
               // eslint-disable-next-line no-await-in-loop
               await waitOneFrame(1);
+
+              // AudioService.stop();
             }
           }
 
@@ -645,6 +676,8 @@ export class JsPaint {
           }
         }
       }
+
+      // AudioService.disable();
 
       // Paint last pixel in the right color:
 
