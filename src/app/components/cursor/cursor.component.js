@@ -1,4 +1,4 @@
-import { HAS_CURSOR, IS_DESKTOP } from '../../constants/browser.constants';
+import { IS_DESKTOP } from '../../constants/browser.constants';
 
 export class Cursor {
 

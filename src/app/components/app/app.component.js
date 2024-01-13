@@ -181,14 +181,14 @@ export class App {
     if (actionHandler) actionHandler(payload);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   handleAddGlobalClass() {
     // TODO: TO avoid changing this.body.classList from each component...
-    console.log(!!this);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   handleRemoveGlobalClass() {
     // TODO: TO avoid changing this.body.classList from each component...
-    console.log(!!this);
   }
 
   // handleToggleGlobalClass

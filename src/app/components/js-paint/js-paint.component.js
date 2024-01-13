@@ -597,7 +597,7 @@ export class JsPaint {
     const imageURL = preMadeImages[randomIndex];
     const artistSlug = imageURL.split('-by-').pop().replace('-compressed.png', '');
     const artistMetadataURL = `drawings/artists/${ artistSlug }/${ artistSlug }.json`;
-    const artistProfilePictureURL = `drawings/artists/${ artistSlug }/${ artistSlug }-profile-picture.jpeg`;
+    // const artistProfilePictureURL = `drawings/artists/${ artistSlug }/${ artistSlug }-profile-picture.jpeg`;
 
     const imagePromise = loadImage(imageURL);
 
@@ -694,7 +694,10 @@ export class JsPaint {
       footer.showAttribution(artistInfo);
 
     } catch (err) {
-      if (err.name !== 'Aborted') console.error(err);
+      if (err.name !== 'Aborted') {
+        // eslint-disable-next-line no-console
+        console.error(err);
+      }
 
       // Drawing aborted, either because the the magic drawing button has been clicked again,
       // or because the magic drawing was aborted for any other reason (e.g. resize):

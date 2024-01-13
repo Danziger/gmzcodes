@@ -9,7 +9,7 @@
         "browser": true
     },
     "rules":{
-        "no-use-before-define": ["warn"],
+        "no-use-before-define": [0],
         "import/prefer-default-export": [0],
         "import/order": [2, {
             "groups": ["builtin", "external", "parent", "sibling", "index"],
