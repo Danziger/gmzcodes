@@ -200,6 +200,8 @@ export class App {
       return;
     }
 
+    this.uiControls.nav.close();
+
     const { jsPaint } = this;
 
     function eightBit(img, metadata, pixelSize) {
@@ -218,6 +220,7 @@ export class App {
         console.log('DIRECT UPLOAD');
 
         jsPaint.ctx.drawImage(img, 0, 0);
+
         return;
       }
 

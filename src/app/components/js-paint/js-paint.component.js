@@ -499,21 +499,23 @@ export class JsPaint {
   }
 
   clear() {
-    if (!this.pristine) {
-      // TODO: Replace with a custom HTML modal:
+    if (this.pristine) {
+      this.reset({ vibrate: true });
 
-      // eslint-disable-next-line no-alert, no-restricted-globals
-      const continueAndReplace = confirm(
-        // eslint-disable-next-line max-len
-        'You will lose your current progress. Are you sure you want to proceed?',
-      );
-
-      if (continueAndReplace) this.reset({ vibrate: true });
-
-      return continueAndReplace;
+      return true;
     }
 
-    return true;
+    // TODO: Replace with a custom HTML modal:
+
+    // eslint-disable-next-line no-alert, no-restricted-globals
+    const continueAndReplace = confirm(
+      // eslint-disable-next-line max-len
+      'You will lose your current progress. Are you sure you want to proceed?',
+    );
+
+    if (continueAndReplace) this.reset({ vibrate: true });
+
+    return continueAndReplace;
   }
 
   download() {
