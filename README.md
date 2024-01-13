@@ -47,10 +47,10 @@ TODOs & Bug
 
 - [x] Fix cursor show/hide logic (hide cursor when it leaves the page and while resizing).
 - [x] Close menu when enabling focus mode.
-- [x] Ruler should be below Nav.
-- [x] Add semi-transparent blurred backgrounds.
+- [x] Move `Ruler` below `Nav`.
+- [x] Add semi-transparent blurred backgrounds to `Nav`'s menu and `DropArea`.
 
-- [ ] Fix accessibility sound.
+- [x] Fix accessibility sound.
 
 - [ ] Add custom metadata (`devicePixelRatio`, `date`) to downloaded file.
 - [ ] Check metadata to upload (`Use PNG metadata to know if an image was generated...`).
@@ -59,6 +59,7 @@ TODOs & Bug
 - [ ] Focus mode should ONLY show a hamburger icon in the footer.
 - [ ] Hide "Hiring", as I'm not looking anymore.
 - [ ] Change wand icon.
+- [ ] Add an anchor to quickly launch / access the focus mode.
 
 - [ ] `TODO: Consider updating the cursor position continuously if in interactive mode:`
 - [ ] `TODO: Replace the `this.lastDrawingIndex !== randomIndex` with AbortController and signals:`

@@ -398,14 +398,16 @@ export class JsPaint {
 
       if (!drawing) cursor.setModeForElement(target);
 
-      if (this.disabled || !drawing) return;
+      if (this.disabled) return;
 
-      if (w === 0 && h === 0) {
-        this.paintPixel(x, y);
-      } else if (w > h) {
-        this.lineLandscape(lastX, lastY, x, y);
-      } else {
-        this.linePortrait(lastX, lastY, x, y);
+      if (drawing) {
+        if (w === 0 && h === 0) {
+          this.paintPixel(x, y);
+        } else if (w > h) {
+          this.lineLandscape(lastX, lastY, x, y);
+        } else {
+          this.linePortrait(lastX, lastY, x, y);
+        }
       }
 
       if (AudioService.enabled) {
