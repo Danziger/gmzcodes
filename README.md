@@ -85,6 +85,8 @@ TODOs & Bug
 
 - Fill tool.
 
+- Upload / scale panel and controls.
+
 <br />
 
 

@@ -217,17 +217,18 @@ export class App {
         && img.height === innerHeight * devicePixelRatio
         && imageFile.lastModified - metadata.lastModified < 4000
       ) {
-        console.log('DIRECT UPLOAD');
+        // eslint-disable-next-line no-console
+        console.info('Direct upload');
 
         jsPaint.ctx.drawImage(img, 0, 0);
 
         return;
       }
 
-      console.log('RESIZED UPLOAD');
-
       const useDevicePixelRatio = false;
       const scale = (useDevicePixelRatio ? devicePixelRatio : metadata.devicePixelRatio) || 1;
+
+      // TODO: Automatically adjust scale to fit or cover.
 
       const imageWidth = img.width;
       const imageHeight = img.height;
@@ -301,6 +302,11 @@ export class App {
         devicePixelRatio: parseFloat(getMetadata(arrayBufferView, ImageUploadFields.devicePixelRatio), 10) || null,
         lastModified: parseInt(getMetadata(arrayBufferView, ImageUploadFields.lastModified), 10) || 0,
       };
+    }).catch((err) => {
+      // eslint-disable-next-line no-console
+      console.error(err);
+
+      return {};
     });
 
     const [
