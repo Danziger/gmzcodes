@@ -333,7 +333,7 @@ export class JsPaint {
     ctx.fillRect(0, 0, window.innerWidth * scale, window.innerHeight * scale);
 
     this.pristine = true;
-    this.lastDrawingIndex = null;
+    // this.lastDrawingIndex = null;
 
     const { nav, footer } = this.uiControls;
 
@@ -577,8 +577,6 @@ export class JsPaint {
 
     if (!isClear) return;
 
-    const previousColor = this.color;
-
     this.disable();
 
     const preMadeImages = [
@@ -704,9 +702,10 @@ export class JsPaint {
     } finally {
       // Leave everything as it was:
 
-      if (this.lastDrawingIndex === null) {
+      if (this.lastDrawingIndex === randomIndex) {
         this.enable();
-        this.setColor(previousColor);
+        // TODO: This change should propagate to the Footer component's UI!
+        this.setColor('#000000');
       }
     }
   }

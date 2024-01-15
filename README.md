@@ -41,6 +41,10 @@ TODOs & Bug
 
 ### Bugs
 
+- Footer's UI current color can get out of sync when using the Magic Paint button repeatedly (`// TODO: This change should propagate...`)
+
+- Change / disable cursor while using Magic Paint.
+
 - Update the cursor position continuously if in interactive mode.
 
 - Focus mode should only show the colors and a hamburger icon in the `Footer`. Hide "Hiring?" label and the whole `Nav`.
