@@ -93,7 +93,7 @@ module.exports = (env, {
         filename: path.resolve(__dirname, 'dist/index.html'),
         template: path.resolve(__dirname, 'src/app/components/app/app.template.ejs'),
         title: 'GMZcodes - Dani Gámez Franco',
-        description: 'Dani Gámez Franco - Lead Web3 Full-Stack Software Engineer - Summa Cum Laude Computer Science Engineer - Top 1.5% at StackOverflow - JS, TS, React, Next.js, Node.js, GraphQL, DynamoDB, Clean Software Architecture',
+        description: 'Dani Gámez Franco - Lead Web3 Full-Stack Software Engineer - Summa Cum Laude Computer Science Engineer - Top 1.5% at StackOverflow - JS, TS, React, Next.js, Node.js, tRPC, DynamoDB, Clean Software Architecture',
         favicon: path.resolve(__dirname, 'static/favicon.ico'),
         inlineSource: '.(js|css)$', // Inline JS and CSS.
         minify: PROD ? {
