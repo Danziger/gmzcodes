@@ -5,7 +5,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <title>GMZcodes - <%= htmlWebpackPlugin.options.description %></title>
+  <title>GMZcodes - <%= htmlWebpackPlugin.options.description %>
+  </title>
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="<%= htmlWebpackPlugin.options.title %>" />
@@ -27,20 +28,15 @@
   <meta name="description" content="<%= htmlWebpackPlugin.options.description %>" />
   <meta name="author" content="Dani Gámez Franco" />
   <meta name="screen-orientation" content="portrait">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
 
   <link rel="canonical" href="https://gmzcodes.com" />
 
 
-  <!-- PWA -->
-
-  <meta name="theme-color" content="white" />
-  <link rel="manifest" href="manifest.json" />
-
-
   <!-- ICONS -->
 
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
   <link rel="icon" href="logo/gmzcodes-t-e-16.png" type="image/png" sizes="16x16">
   <link rel="icon" href="logo/gmzcodes-t-e-32.png" type="image/png" sizes="32x32">
@@ -74,7 +70,8 @@
 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Cardo:700|Josefin+Sans&display=swap" as="style" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cardo:700|Josefin+Sans&display=swap" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cardo:700|Josefin+Sans&display=swap"
+    media="print" onload="this.media='all'" />
 
 
   <!-- JSON-LD -->
@@ -106,20 +103,22 @@
 
 <body class="app__root">
   <div class="app__container">
-    <%- include ../nav/nav.template.ejs %>
+    <%- include('src/app/components/nav/nav.template.ejs') %>
 
-    <%- include ../content/content.template.ejs %>
+      <%- include('src/app/components/content/content.template.ejs') %>
 
-    <%- include ../footer/footer.template.ejs %>
+        <%- include('src/app/components/footer/footer.template.ejs') %>
   </div>
 
-  <%- include ../js-paint/js-paint.template.ejs %>
+  <%- include('src/app/components/js-paint/js-paint.template.ejs') %>
 
-  <%- include ../ruler/ruler.template.ejs %>
+    <%- include('src/app/components/ruler/ruler.template.ejs') %>
 
-  <%- include ../cursor/cursor.template.ejs %>
+      <%- include('src/app/components/cursor/cursor.template.ejs') %>
 
-  <%- include ../drop-zone/drop-zone.template.ejs %>
+        <%- include('src/app/components/drop-zone/drop-zone.template.ejs') %>
+
+          <script type="module" src="/src/app/main.js"></script>
 </body>
 
 </html>

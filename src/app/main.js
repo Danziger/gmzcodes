@@ -1,3 +1,4 @@
+import './main.scss';
 import { App } from './components/app/app.component';
 
 // eslint-disable-next-line no-console
@@ -12,14 +13,14 @@ window.disableScreenshotMode = () => app.disableScreenshotMode();
 window.v = () => {
   const buildDate = new Date(process.env.BUILD_DATE);
 
-  return `${ buildDate.toDateString() } at ${ buildDate.toLocaleTimeString() } | ${ process.env.COMMIT_HASH }`;
+  return `${buildDate.toDateString()} at ${buildDate.toLocaleTimeString()} | ${process.env.COMMIT_HASH}`;
 };
 
 // Init viewport dimensions:
 
 if (visualViewport) {
   const updateViewportDimensions = () => {
-    if (visualViewport) document.documentElement.style.setProperty('--viewportHeight', `${ visualViewport.height }px`);
+    if (visualViewport) document.documentElement.style.setProperty('--viewportHeight', `${visualViewport.height}px`);
   };
 
   updateViewportDimensions();
@@ -34,7 +35,7 @@ if ('serviceWorker' in navigator) {
     if (process.env.DEV) {
       navigator.serviceWorker.getRegistrations().then((registrations) => {
         // eslint-disable-next-line no-console
-        console.log(`Unregistering all ${ registrations.length } ServiceWorkers`);
+        console.log(`Unregistering all ${registrations.length} ServiceWorkers`);
 
         registrations.forEach((registration) => registration.unregister());
       });
