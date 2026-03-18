@@ -1,4 +1,3 @@
-import './main.scss';
 import { App } from './components/app/app.component';
 
 // eslint-disable-next-line no-console
