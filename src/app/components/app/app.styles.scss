@@ -1,11 +1,11 @@
-@import '../../styles/variables/variables';
-@import '../../styles/mixins/media-queries';
+@use '../../styles/variables/variables';
+@use '../../styles/mixins/media-queries';
 
 .app {
     $root: &;
 
     &__root {
-        --c-ruler: #{$c-base};
+        --c-ruler: #{variables.$c-base};
         --c-current: #000;
 
         position: fixed;
@@ -71,7 +71,7 @@
         width: 100%;
         height: 100%;
 
-        @include above(xs) {
+        @include media-queries.above(xs) {
             padding: 0 32px;
         }
 

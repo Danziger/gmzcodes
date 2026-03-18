@@ -1,5 +1,5 @@
-@import '../../styles/animations/shake';
-@import '../../styles/mixins/media-queries';
+@use '../../styles/animations/shake';
+@use '../../styles/mixins/media-queries';
 
 .dropZone {
     $root: &;

@@ -1,4 +1,4 @@
-@import '../../styles/mixins/media-queries';
+@use '../../styles/mixins/media-queries';
 
 .content {
     &__root {
@@ -62,7 +62,7 @@
         line-height: 1;
         font-size: 32px;
 
-        @include above(xs) {
+        @include media-queries.above(xs) {
             font-size: 64px;
         }
     }

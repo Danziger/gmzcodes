@@ -1,5 +1,5 @@
-@import '../../styles/animations/breathe';
-@import '../../styles/variables/variables';
+@use '../../styles/animations/breathe';
+@use '../../styles/variables/variables';
 
 .cursor {
     $root: &;
@@ -32,7 +32,7 @@
                 top: 100%;
                 width: 0;
                 right: calc(100% + 8px);
-                border-bottom: 1px solid $c-base;
+                border-bottom: 1px solid variables.$c-base;
                 border-color: var(--c-ruler);
                 transition: right linear 250ms, width linear 250ms;
                 opacity: .25;
@@ -52,7 +52,7 @@
                 top: 100%;
                 width: 0;
                 left: calc(100% + 40px);
-                border-bottom: 1px solid $c-base;
+                border-bottom: 1px solid variables.$c-base;
                 border-color: var(--c-ruler);
                 transition: right linear 250ms, width linear 250ms;
                 opacity: .0625;
@@ -74,7 +74,7 @@
                 left: 100%;
                 height: 0;
                 bottom: calc(100% + 8px);
-                border-right: 1px solid $c-base;
+                border-right: 1px solid variables.$c-base;
                 border-color: var(--c-ruler);
                 transition: bottom linear 250ms, height linear 250ms;
                 opacity: .25;
@@ -94,7 +94,7 @@
                 left: 100%;
                 height: 0;
                 top: calc(100% + 40px);
-                border-right: 1px solid $c-base;
+                border-right: 1px solid variables.$c-base;
                 border-color: var(--c-ruler);
                 transition: bottom linear 250ms, height linear 250ms;
                 opacity: .0625;
@@ -169,8 +169,8 @@
             left: 0;
             width: 32px;
             height: 32px;
-            border-top: 2px solid $c-base;
-            border-left: 2px solid $c-base;
+            border-top: 2px solid variables.$c-base;
+            border-left: 2px solid variables.$c-base;
             border-color: var(--c-ruler);
             background: #000;
             backface-visibility: hidden;

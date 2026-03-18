@@ -1,4 +1,4 @@
-@import '../../styles/mixins/media-queries';
+@use '../../styles/mixins/media-queries';
 
 .footer {
     &__root {
@@ -6,7 +6,7 @@
         display: flex;
         align-items: center;
 
-        @include above(xs) {
+        @include media-queries.above(xs) {
             margin-bottom: 16px;
         }
     }
