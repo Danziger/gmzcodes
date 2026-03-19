@@ -16,11 +16,11 @@
         mix-blend-mode: difference;
         transform: translateZ(0);
 
-        .app--hasActiveHover > & {
+        .app--hasActiveHover>& {
             visibility: visible;
         }
 
-        .app--showScreenshot > & {
+        .app--showScreenshot>& {
             display: none;
         }
     }
@@ -37,8 +37,8 @@
                 transition: right linear 250ms, width linear 250ms;
                 opacity: .25;
 
-                #{$root}--isInteractive > &,
-                #{$root}--isClickable > & {
+                #{$root}--isInteractive>&,
+                #{$root}--isClickable>& {
                     right: calc(100% + 24px);
                 }
 
@@ -57,8 +57,8 @@
                 transition: right linear 250ms, width linear 250ms;
                 opacity: .0625;
 
-                #{$root}--isInteractive > &,
-                #{$root}--isClickable > & {
+                #{$root}--isInteractive>&,
+                #{$root}--isClickable>& {
                     left: calc(100% + 24px);
                 }
 
@@ -79,8 +79,8 @@
                 transition: bottom linear 250ms, height linear 250ms;
                 opacity: .25;
 
-                #{$root}--isInteractive > &,
-                #{$root}--isClickable > & {
+                #{$root}--isInteractive>&,
+                #{$root}--isClickable>& {
                     bottom: calc(100% + 24px);
                 }
 
@@ -99,8 +99,8 @@
                 transition: bottom linear 250ms, height linear 250ms;
                 opacity: .0625;
 
-                #{$root}--isInteractive > &,
-                #{$root}--isClickable > & {
+                #{$root}--isInteractive>&,
+                #{$root}--isClickable>& {
                     top: calc(100% + 24px);
                 }
 
@@ -129,8 +129,8 @@
             background: rgba(255, 0, 0, .25);
         }
 
-        #{$root}--isInteractive > &,
-        #{$root}--isClickable > & {
+        #{$root}--isInteractive>&,
+        #{$root}--isClickable>& {
             border-radius: 100%;
             background: var(--c-ruler);
             filter: none;
@@ -140,7 +140,7 @@
             }
         }
 
-        #{$root}--isClickable > & {
+        #{$root}--isClickable>& {
             transform: scale(4);
             animation: breathe .5s;
             animation-iteration-count: infinite;
@@ -181,8 +181,8 @@
             content: attr(data-position-label);
         }
 
-        #{$root}--isInteractive > &,
-        #{$root}--isClickable > & {
+        #{$root}--isInteractive>&,
+        #{$root}--isClickable>& {
             opacity: 0;
         }
     }

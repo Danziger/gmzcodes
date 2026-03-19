@@ -37,7 +37,7 @@ export class Cursor {
   }
 
   update(x, y, label) {
-    this.root.style.transform = `translate(${ x }px, ${ y }px)`;
+    this.root.style.transform = `translate3d(${x}px, ${y}px, 0)`;
     this.position.setAttribute('data-position-label', label);
   }
 
