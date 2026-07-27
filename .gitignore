@@ -6,3 +6,4 @@ dist/
 .nx/cache
 *.tsbuildinfo
 coverage/
+.nx/
