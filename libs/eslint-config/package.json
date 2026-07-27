@@ -1,0 +1,58 @@
+{
+  "name": "@gmzcodes/eslint-config",
+  "version": "1.0.0",
+  "description": "Shared ESLint, Stylelint, and EditorConfig presets for Astro, Next.js, React, Node, and plain JS/TS projects.",
+  "homepage": "https://gmzcodes.com/libs/eslint-config",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Danziger/gmzcodes.git",
+    "directory": "libs/eslint-config"
+  },
+  "bugs": {
+    "url": "https://github.com/Danziger/gmzcodes/issues"
+  },
+  "author": {
+    "name": "Daniel Gámez Franco",
+    "url": "https://gmzcodes.com"
+  },
+  "license": "UNLICENSED",
+  "private": false,
+  "type": "module",
+  "exports": {
+    "./base": "./src/base.mjs",
+    "./browser": "./src/browser.mjs",
+    "./node": "./src/node.mjs",
+    "./react": "./src/react.mjs",
+    "./next": "./src/next.mjs",
+    "./astro": "./src/astro.mjs",
+    "./stylelint": "./stylelint.config.mjs",
+    "./editorconfig": "./editorconfig"
+  },
+  "files": [
+    "src",
+    "stylelint.config.mjs",
+    "editorconfig"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "eslint": ">=9.0.0",
+    "typescript-eslint": ">=8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "typescript-eslint": { "optional": true }
+  },
+  "dependencies": {
+    "@eslint/js": "^9.30.1",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^16.2.0"
+  },
+  "optionalDependencies": {
+    "eslint-config-next": "^16.1.1",
+    "eslint-plugin-astro": "^1.3.1",
+    "typescript-eslint": "^8.35.1"
+  }
+}

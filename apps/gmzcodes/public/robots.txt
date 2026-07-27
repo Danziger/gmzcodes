@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://gmzcodes.com/sitemap.txt

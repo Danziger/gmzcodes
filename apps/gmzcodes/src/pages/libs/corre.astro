@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import sitePage from '../../styles/site-page.module.scss';
+---
+
+<BaseLayout>
+  <main class={sitePage.main}>
+    <h1>@gmzcodes/corre</h1>
+    <p>Declaratively control how and when your code is executed. React hooks for timers and animation frames.</p>
+    <div id="corre-docs-root"></div>
+    <section>
+      <h2>Install</h2>
+      <pre><code>pnpm add @gmzcodes/corre</code></pre>
+    </section>
+    <p class={sitePage.nav}>
+      <a href="/libs">← Libs</a> · <a href="/">Home</a>
+    </p>
+  </main>
+</BaseLayout>
+
+<script>
+  import { createElement } from 'react';
+  import { createRoot } from 'react-dom/client';
+  import { CorreDocs } from '../../components/libs/corre/CorreDocs';
+
+  const root = document.getElementById('corre-docs-root');
+  if (root) {
+    createRoot(root).render(createElement(CorreDocs));
+  }
+</script>

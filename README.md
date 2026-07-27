@@ -1,167 +1,90 @@
-<h1 align="center">GMZcodes</h1>
+# GMZcodes Monorepo
 
-<p align="center">
-    👨‍💻 Dani Gamez's personal website PWA built using vanilla JavaScript, SCSS and HTML5.
-</p><p align="center">
-    🚀 Check it out at <a href="https://gmzcodes.com">https://gmzcodes.com</a>!
-</p>
+Personal site, shared libraries, and tooling — powered by [Nx](https://nx.dev) and [pnpm](https://pnpm.io).
 
-<br />
+- **Site:** [gmzcodes.com](https://gmzcodes.com) (`apps/gmzcodes` — Astro)
+- **Libs:** `@gmzcodes/corre`, `@gmzcodes/eslint-config`
+- **Archive:** previous Vite PWA lives in [`old/`](old/)
 
+## Quick start
 
-<p align="center">
-    <a href="https://gmzcodes.com" target="_blank">
-        <img src="./static/og-images/dani-gamez-franco-personal-website.png" />
-    </a>
-</p>
+```bash
+pnpm install
+pnpm dev          # nx dev gmzcodes
+pnpm build        # nx build gmzcodes
+pnpm test         # nx run-many -t test
+pnpm deploy       # build + gh-pages
+```
 
-<br />
+## Workspace layout
 
+```
+apps/gmzcodes/         Astro site (portfolio, blog, libs docs)
+libs/corre/            @gmzcodes/corre — React timing hooks
+libs/eslint-config/    @gmzcodes/eslint-config — shared lint presets
+old/                   Archived pre-monorepo Vite project
+```
 
-Running It (Development)
-------------------------
+## Creating a new lib
 
-Take a look at `package.json`, the scripts are self-explanatory, but otherwise `npm install` and `npm start` work in `90%` of teh cases :D
+```bash
+nx g @nx/js:library my-lib \
+  --directory=libs/my-lib \
+  --importPath=@gmzcodes/my-lib \
+  --bundler=vite \
+  --unitTestRunner=vitest \
+  --publishable
 
-The project will be accessible at http://localhost:8080/.
+# Set "private": false in libs/my-lib/package.json
+# Add README with install, usage, and publishing steps
 
-<br />
+nx build my-lib
+nx test my-lib
+```
 
+Consume within the monorepo:
 
-Reporting a problem
--------------------
+```json
+"@gmzcodes/my-lib": "workspace:*"
+```
 
-Don't hesitate to report any issue you find in this website/project by opening a new issue in this repository, but please make sure that problem hasn't been reported before by another user.
+Optional: add a docs page on the site under `apps/gmzcodes/src/pages/libs/`.
 
-<br />
+## Publishing to npm
 
+Publishable packages live under `libs/*` with `"private": false` and the `@gmzcodes` scope.
 
-TODOs & Bug
------------
+```bash
+npm login   # @gmzcodes scope
 
-### Bugs
+# Dry-run version bump + changelog
+nx release --dry-run
 
-- Footer's UI current color can get out of sync when using the Magic Paint button repeatedly (`// TODO: This change should propagate...`)
+# Publish one package
+nx release publish --projects=corre
 
-- Change / disable cursor while using Magic Paint.
+# Publish all changed libs
+nx release publish
+```
 
-- Update the cursor position continuously if in interactive mode.
+Nx Release uses **independent versioning** per lib (`nx.json` → `release.projectsRelationship: independent`).
 
-- Focus mode should only show the colors and a hamburger icon in the `Footer`. Hide "Hiring?" label and the whole `Nav`.
+- Monorepo consumers: `"@gmzcodes/corre": "workspace:*"` (no publish needed)
+- External consumers: `pnpm add @gmzcodes/corre`
 
-- Change wand icon.
+CI can run `nx release publish` with an `NPM_TOKEN` secret on tag push or manual dispatch.
 
-- Adjust side paddings to be included in the header links and button.
+## Common Nx commands
 
-- Improve performance on large high-res screens. See:
-  - https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas
-  - https://github.com/karellodewijk/canvas-webgl
-  - https://github.com/jagenjo/Canvas2DtoWebGL
-  - https://www.reddit.com/r/webgl/comments/sc4024/is_webgl_fast_than_canvas_api_for_drawing_a_bunch/
-  - Consider breaking down the canvas into smaller ones (tiles).
-  - Consider adding other brush shapes, like any other standard drawing app (e.g https://www.youtube.com/watch?v=3GqUM4mEYKA)
+```bash
+nx graph
+nx affected -t build
+nx run-many -t lint
+nx build corre
+nx dev gmzcodes
+```
 
-- The canvas looks blurry on screens with decimal DPI values. See https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas.
+## Requirements
 
-- Make the canvas size multiple of `unit`, so that "partial pixels" are downloaded without cropping.
-
-- When the wand is clicked multiple times, the drawing algorithm should only run for the last click.
-
-<br />
-
-### JS Paint Features
-
-- Move cursor position to a corner.
-
-- Multiple types and sizes of brushes (square, circle).
-
-- Consider a non-pixel-art version of the app where you can use a regular "pen" brush.
-
-- Custom colors.
-
-- Undo/redo.
-
-- Resize and keep canvas.
-
-- Multitouch on mobile.
-
-- Block trajectory in X/Y or diagonal axis.
-
-- Fill tool.
-
-- Upload / scale panel and controls.
-
-<br />
-
-
-### Other Features
-
-- Rebuild nav so that actions are just icons at the bottom of the screen and move settings to their own page.
-
-- Add an anchor to quickly launch / access the focus mode.
-
-- Add gimmicky sounds to some clicks: paint splash sound (color), recycle bin sound to clear...
-
-- Add an option to send drawings to me (to Supabase, maybe).
-
-- Show artist picture.
-
-- Add "Hiring?" and attribution inside the menu too.
-
-- Toggle cursor type (native (default + pen), custom, both). Consider using 2 settings, one for regular interaction and the other one for drawing.
-
-- Consider removing vibration toggle (it can be done from the phone).
-
-<br />
-
-
-### Tech Debt
-
-- Update dependencies.
-
-- Use a `<template>` for `.content__warningHeader`.
-
-- Review aria tags and code organization.
-
-<br />
-
-
-Some other sites I've built
----------------------------
-
-- **[Stylophone.js](https://danziger.github.io/stylophonejs/)**
-
-  🎹 The classic Stylophone, now in your phone and computer.
-
-- **[Key.js](https://keyjs.dev)**
-
-  ⌨ Press any key to get the JavaScript keyboard event event key, code, which, keyCode and more properties!
-
-- **[Slot.js](https://danziger.github.io/slotjs/)**
-
-  🎰 Circular slot machine mobile-first SPA built with JavaScript, CSS variables and Emojis!
-
-- **[Stars.js](https://danziger.github.io/starsjs/)**
-
-  ✨ Generate a rotating galaxy in a canvas.
-
-- **[Job.js](https://danziger.github.io/jobjs/)**
-
-  💼 Sharable image summaries for your open positions: Share your jobs as an image on LinkedIn and Instagram to get a visibility boost and more applicants!
-
-<br />
-
-
-Author
-------
-
-<img
-    src="https://s.gravatar.com/avatar/ff1de7f1a325c8005379a310949f7f23?s=128"
-    alt="Dani Gámez Franco"
-    align="left" />
-
-Dani Gámez Franco
-
-LinkedIn: https://www.linkedin.com/in/danigamezfranco/
-
-Stack Overflow: https://stackoverflow.com/users/3723993/danziger
+- Node.js ≥ 22
+- pnpm ≥ 10.30

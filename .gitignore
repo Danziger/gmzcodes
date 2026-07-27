@@ -2,3 +2,7 @@
 .vscode/
 node_modules/
 dist/
+.astro/
+.nx/cache
+*.tsbuildinfo
+coverage/

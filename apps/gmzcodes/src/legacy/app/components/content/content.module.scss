@@ -1,0 +1,74 @@
+@use '../../styles/mixins/media-queries';
+
+.root {
+  position: relative;
+  padding: 48px 0;
+  margin: 0 0 auto;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 18px;
+  line-height: 1.25;
+  transition: opacity linear 250ms;
+  opacity: 1;
+
+  :global(body[data-app-ruler]) & {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  :global(body[data-app-screenshot]) & {
+    padding: 32px 0;
+    margin: 0;
+  }
+}
+
+.videoFigure {
+  position: relative;
+  width: 100%;
+  margin: 16px 0;
+}
+
+.videoDescription {
+  margin: 0;
+  padding-top: 16px;
+  color: #000;
+  font-size: 12px;
+}
+
+.videoPlaceholder {
+  position: relative;
+  background: rgba(0, 0, 0, 0.0625);
+  border-radius: 2px;
+  overflow: hidden;
+  display: block;
+  margin: 0;
+  padding-bottom: 42.5%;
+}
+
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.title {
+  margin: 0;
+}
+
+.name {
+  display: block;
+  font-family: Cardo, serif;
+  line-height: 1;
+  font-size: 32px;
+
+  @include media-queries.above(xs) {
+    font-size: 64px;
+  }
+}
+
+.role,
+.p,
+.links {
+  margin: 0;
+  padding-top: 16px;
+}

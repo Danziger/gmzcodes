@@ -1,0 +1,20 @@
+{
+  "name": "gmzcodes",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@gmzcodes/corre": "workspace:*",
+    "@gmzcodes/eslint-config": "workspace:*",
+    "core-js": "^3.49.0",
+    "meta-png": "^1.0.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "sass": "^1.98.0"
+  },
+  "devDependencies": {
+    "@vite-pwa/astro": "^1.2.0",
+    "@vitejs/plugin-react": "^4.5.2",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,16 @@
+# GMZcodes
+
+> 👨‍💻 Dani Gamez's personal website PWA built using vanilla JavaScript, SCSS and HTML5.
+> 🚀 Check it out at https://gmzcodes.com!
+
+## Description
+
+Dani Gámez Franco - Staff Web3 Software Engineer / Architect - Summa Cum Laude Computer Science Engineer - Top 1.5% at StackOverflow - JS, TS, React, Next.js, Node.js, tRPC, Clean Software Architecture
+
+## Author
+
+- **Name:** Dani Gámez Franco
+- **Website:** https://gmzcodes.com
+- **LinkedIn:** https://www.linkedin.com/in/danigamezfranco/
+- **GitHub:** https://github.com/Danziger
+- **Stack Overflow:** https://stackoverflow.com/users/3723993/danziger

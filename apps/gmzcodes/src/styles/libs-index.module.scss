@@ -1,0 +1,20 @@
+.cards {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.cardTitle {
+    margin: 0 0 0.5rem;
+}
+
+.cardMeta {
+    margin: 0.5rem 0;
+}

@@ -1,0 +1,814 @@
+{
+  "version": "6.0",
+  "nxVersion": "23.0.1",
+  "pathMappings": {
+    "@gmzcodes/corre": [
+      "libs/corre/src/index.ts"
+    ],
+    "@gmzcodes/eslint-config": [
+      "libs/eslint-config/src/index.mjs"
+    ],
+    "@gmzcodes/eslint-config/*": [
+      "libs/eslint-config/src/*"
+    ]
+  },
+  "nxJsonPlugins": [
+    {
+      "name": "@geekvetica/nx-astro",
+      "version": "^1.0.4",
+      "options": {
+        "buildTargetName": "build",
+        "devTargetName": "dev",
+        "previewTargetName": "preview",
+        "checkTargetName": "check",
+        "syncTargetName": "sync"
+      }
+    }
+  ],
+  "fileMap": {
+    "projectFileMap": {
+      "corre": [
+        {
+          "file": "libs/corre/README.md",
+          "hash": "7820870925501301221"
+        },
+        {
+          "file": "libs/corre/package.json",
+          "hash": "15581056255200677177",
+          "deps": [
+            "npm:react",
+            "npm:react-dom",
+            "npm:@testing-library/react",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:@vitejs/plugin-react",
+            "npm:jsdom",
+            "npm:vite@8.1.3",
+            "npm:vite-plugin-dts",
+            "npm:vitest"
+          ]
+        },
+        {
+          "file": "libs/corre/project.json",
+          "hash": "10434396750089894731"
+        },
+        {
+          "file": "libs/corre/src/index.spec.ts",
+          "hash": "12244771933783416760",
+          "deps": [
+            "npm:@testing-library/react",
+            "npm:vitest"
+          ]
+        },
+        {
+          "file": "libs/corre/src/index.ts",
+          "hash": "12652338978235351363"
+        },
+        {
+          "file": "libs/corre/src/interval/interval.hook.ts",
+          "hash": "6598969708381077399",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/corre/src/raf/raf.hook.ts",
+          "hash": "18105251326294389714",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/corre/src/throttled-callback/throttled-callback.hook.ts",
+          "hash": "394910132032101117",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/corre/src/throttled-raf/throttled-raf.hook.ts",
+          "hash": "4113901294431028111",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/corre/src/timeout/timeout.hook.ts",
+          "hash": "82930539908202716",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "libs/corre/tsconfig.json",
+          "hash": "6503755026651328191"
+        },
+        {
+          "file": "libs/corre/tsconfig.lib.json",
+          "hash": "8279832790053745355"
+        },
+        {
+          "file": "libs/corre/tsconfig.spec.json",
+          "hash": "14666716119619812302"
+        },
+        {
+          "file": "libs/corre/vite.config.ts",
+          "hash": "11000946763988707613",
+          "deps": [
+            "npm:vite@8.1.3",
+            "npm:@vitejs/plugin-react",
+            "npm:vite-plugin-dts"
+          ]
+        }
+      ],
+      "eslint-config": [
+        {
+          "file": "libs/eslint-config/README.md",
+          "hash": "7110986932080187315"
+        },
+        {
+          "file": "libs/eslint-config/editorconfig",
+          "hash": "3349428932160804115"
+        },
+        {
+          "file": "libs/eslint-config/package.json",
+          "hash": "1693190468911370343",
+          "deps": [
+            "npm:eslint-config-next",
+            "npm:eslint-plugin-astro",
+            "npm:typescript-eslint",
+            "npm:eslint",
+            "npm:@eslint/js",
+            "npm:eslint-plugin-import",
+            "npm:eslint-plugin-react",
+            "npm:eslint-plugin-react-hooks",
+            "npm:globals"
+          ]
+        },
+        {
+          "file": "libs/eslint-config/project.json",
+          "hash": "10533213824713265926"
+        },
+        {
+          "file": "libs/eslint-config/src/astro.mjs",
+          "hash": "3628369841721351941",
+          "deps": [
+            "npm:eslint-plugin-import",
+            "npm:globals",
+            [
+              "npm:eslint-plugin-astro",
+              "dynamic"
+            ]
+          ]
+        },
+        {
+          "file": "libs/eslint-config/src/base.mjs",
+          "hash": "7022160929657338098",
+          "deps": [
+            "npm:@eslint/js",
+            "npm:eslint-plugin-import",
+            "npm:globals"
+          ]
+        },
+        {
+          "file": "libs/eslint-config/src/browser.mjs",
+          "hash": "12357753651018719044",
+          "deps": [
+            "npm:eslint-plugin-import",
+            "npm:globals"
+          ]
+        },
+        {
+          "file": "libs/eslint-config/src/next.mjs",
+          "hash": "15562149032835524664",
+          "deps": [
+            [
+              "npm:eslint-config-next",
+              "dynamic"
+            ]
+          ]
+        },
+        {
+          "file": "libs/eslint-config/src/node.mjs",
+          "hash": "17353007995705797600",
+          "deps": [
+            "npm:eslint-plugin-import",
+            "npm:globals"
+          ]
+        },
+        {
+          "file": "libs/eslint-config/src/react.mjs",
+          "hash": "2715935736586834922",
+          "deps": [
+            "npm:eslint-plugin-react",
+            "npm:eslint-plugin-react-hooks"
+          ]
+        },
+        {
+          "file": "libs/eslint-config/stylelint.config.mjs",
+          "hash": "11606849690248057567"
+        }
+      ],
+      "gmzcodes": [
+        {
+          "file": "apps/gmzcodes/.gitignore",
+          "hash": "6516091733981142303"
+        },
+        {
+          "file": "apps/gmzcodes/astro.config.mjs",
+          "hash": "10678469046336917298",
+          "deps": [
+            "npm:astro",
+            "npm:@vite-pwa/astro",
+            "npm:@vitejs/plugin-react"
+          ]
+        },
+        {
+          "file": "apps/gmzcodes/package.json",
+          "hash": "7984763697239109858",
+          "deps": [
+            "npm:@vite-pwa/astro",
+            "npm:@vitejs/plugin-react",
+            "npm:typescript",
+            "corre",
+            "eslint-config",
+            "npm:core-js",
+            "npm:meta-png",
+            "npm:react",
+            "npm:react-dom",
+            "npm:sass"
+          ]
+        },
+        {
+          "file": "apps/gmzcodes/project.json",
+          "hash": "4158358762056030471"
+        },
+        {
+          "file": "apps/gmzcodes/public/BingSiteAuth.xml",
+          "hash": "13638040609606055117"
+        },
+        {
+          "file": "apps/gmzcodes/public/CNAME",
+          "hash": "9185924429652948181"
+        },
+        {
+          "file": "apps/gmzcodes/public/dani-gamez-franco-cv-2026.02.11.pdf",
+          "hash": "4087842807178823070"
+        },
+        {
+          "file": "apps/gmzcodes/public/debug/square-complete-2.5.png",
+          "hash": "14395326964756980596"
+        },
+        {
+          "file": "apps/gmzcodes/public/debug/square-complete.png",
+          "hash": "15911668900474273583"
+        },
+        {
+          "file": "apps/gmzcodes/public/debug/square-incomplete.png",
+          "hash": "974706371885939317"
+        },
+        {
+          "file": "apps/gmzcodes/public/drawings/artists/daniel-sheldon/daniel-sheldon-profile-picture.jpg",
+          "hash": "16411821531715304718"
+        },
+        {
+          "file": "apps/gmzcodes/public/drawings/artists/daniel-sheldon/daniel-sheldon.json",
+          "hash": "7756316502797819086"
+        },
+        {
+          "file": "apps/gmzcodes/public/drawings/monkey-by-daniel-sheldon-compressed.png",
+          "hash": "9463244584030417455"
+        },
+        {
+          "file": "apps/gmzcodes/public/drawings/monkey-by-daniel-sheldon.png",
+          "hash": "14077388481722319927"
+        },
+        {
+          "file": "apps/gmzcodes/public/drawings/superhero-by-daniel-sheldon-compressed.png",
+          "hash": "456606201189993138"
+        },
+        {
+          "file": "apps/gmzcodes/public/drawings/superhero-by-daniel-sheldon.png",
+          "hash": "397847923267055424"
+        },
+        {
+          "file": "apps/gmzcodes/public/favicon.ico",
+          "hash": "5194864279994113545"
+        },
+        {
+          "file": "apps/gmzcodes/public/favicon.svg",
+          "hash": "4412345838296617021"
+        },
+        {
+          "file": "apps/gmzcodes/public/googled698dfba7b29af8c.html",
+          "hash": "1281347319309701051"
+        },
+        {
+          "file": "apps/gmzcodes/public/icons/github-t-e-16.png",
+          "hash": "17074451748644476582"
+        },
+        {
+          "file": "apps/gmzcodes/public/icons/magic-wand-t-e-32.gif",
+          "hash": "10335690392010995028"
+        },
+        {
+          "file": "apps/gmzcodes/public/llms.txt",
+          "hash": "16488360479344785512"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-112.png",
+          "hash": "5968595551457094990"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-120.png",
+          "hash": "12049223374419712753"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-128.png",
+          "hash": "6421377304691960414"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-144.png",
+          "hash": "16347036786575167095"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-152.png",
+          "hash": "12569825556816933655"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-16.png",
+          "hash": "14916814214839687733"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-160.png",
+          "hash": "11320791764561536833"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-167.png",
+          "hash": "3765272481249691542"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-176.png",
+          "hash": "5202941964054806972"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-180.png",
+          "hash": "14021682920335763275"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-192.png",
+          "hash": "14710450321369799547"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-256.png",
+          "hash": "17937193550374476768"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-32.png",
+          "hash": "233451912933571179"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-48.png",
+          "hash": "15195509648076571640"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-512.png",
+          "hash": "2547410952314314549"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-57.png",
+          "hash": "7511985167329119498"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-64.png",
+          "hash": "11935613705966440143"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-76.png",
+          "hash": "3133713596254145747"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-s-e-96.png",
+          "hash": "6282736990156767542"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-112.png",
+          "hash": "6855133833670866634"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-120.png",
+          "hash": "5587833390359632274"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-128.png",
+          "hash": "5172854761820106159"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-144.png",
+          "hash": "13210180024305863818"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-152.png",
+          "hash": "15462638538004674464"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-16.png",
+          "hash": "9985040995367021360"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-160.png",
+          "hash": "13585154301212801968"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-167.png",
+          "hash": "13590824712247434093"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-176.png",
+          "hash": "2650096991041505260"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-180.png",
+          "hash": "6594949111224922964"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-192.png",
+          "hash": "7224422509600895279"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-256.png",
+          "hash": "10584462870832571697"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-32.png",
+          "hash": "315509603696796958"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-48.png",
+          "hash": "17089097624835650542"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-512-mask.png",
+          "hash": "10934853290971379129"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-512.png",
+          "hash": "5575483169304594703"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-57.png",
+          "hash": "2373186438854558520"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-64.png",
+          "hash": "11903950132200525479"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-76.png",
+          "hash": "18050388390152463430"
+        },
+        {
+          "file": "apps/gmzcodes/public/logo/gmzcodes-t-e-96.png",
+          "hash": "8017974594484910902"
+        },
+        {
+          "file": "apps/gmzcodes/public/manifest.json",
+          "hash": "1205054873076039324"
+        },
+        {
+          "file": "apps/gmzcodes/public/og-images/dani-gamez-franco-personal-website.png",
+          "hash": "2054543421670968074"
+        },
+        {
+          "file": "apps/gmzcodes/public/robots.txt",
+          "hash": "16751090059094585124"
+        },
+        {
+          "file": "apps/gmzcodes/public/sitemap.txt",
+          "hash": "15878372046391908260"
+        },
+        {
+          "file": "apps/gmzcodes/public/sw.js",
+          "hash": "9966025446028659717"
+        },
+        {
+          "file": "apps/gmzcodes/public/videos/gran-torino-trailer-finger-gun-house-scene.mp4",
+          "hash": "9418607308812997674"
+        },
+        {
+          "file": "apps/gmzcodes/public/videos/gran-torino-trailer-finger-gun-street-scene.mp4",
+          "hash": "9705240818120291365"
+        },
+        {
+          "file": "apps/gmzcodes/public/videos/gran-torino-trailer-get-off-my-lawn-scene.mp4",
+          "hash": "13490033034771595875"
+        },
+        {
+          "file": "apps/gmzcodes/public/videos/gran-torino-trailer-throwing-ie-user-out-scene.mp4",
+          "hash": "14629777689171718394"
+        },
+        {
+          "file": "apps/gmzcodes/src/components/libs/corre/CorreDocs.module.scss",
+          "hash": "11150869432629558695"
+        },
+        {
+          "file": "apps/gmzcodes/src/components/libs/corre/CorreDocs.tsx",
+          "hash": "11607078655333986878",
+          "deps": [
+            "npm:react",
+            "corre"
+          ]
+        },
+        {
+          "file": "apps/gmzcodes/src/components/portfolio/Content.astro",
+          "hash": "5531412744228745854"
+        },
+        {
+          "file": "apps/gmzcodes/src/components/portfolio/Cursor.astro",
+          "hash": "17058463893320770311"
+        },
+        {
+          "file": "apps/gmzcodes/src/components/portfolio/DropZone.astro",
+          "hash": "186650024705974456"
+        },
+        {
+          "file": "apps/gmzcodes/src/components/portfolio/Footer.astro",
+          "hash": "17531680688982049"
+        },
+        {
+          "file": "apps/gmzcodes/src/components/portfolio/JsPaint.astro",
+          "hash": "12979255939057989212"
+        },
+        {
+          "file": "apps/gmzcodes/src/components/portfolio/Nav.astro",
+          "hash": "10534266226925652842"
+        },
+        {
+          "file": "apps/gmzcodes/src/components/portfolio/Ruler.astro",
+          "hash": "12552003630924831145"
+        },
+        {
+          "file": "apps/gmzcodes/src/entry.client.ts",
+          "hash": "16906510214507159442"
+        },
+        {
+          "file": "apps/gmzcodes/src/env.d.ts",
+          "hash": "6716096588882420403"
+        },
+        {
+          "file": "apps/gmzcodes/src/layouts/BaseLayout.astro",
+          "hash": "6982741461808351447"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/body-state.js",
+          "hash": "9507372276202442210"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/app/app.component.js",
+          "hash": "4254957574473347745",
+          "deps": [
+            "npm:meta-png"
+          ]
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/app/app.constants.js",
+          "hash": "16596482926226080704"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/app/app.module.scss",
+          "hash": "17894925641197383507"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/content/content.module.scss",
+          "hash": "13002770578900658114"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/cursor/cursor.component.js",
+          "hash": "3678827124146046786"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/cursor/cursor.module.scss",
+          "hash": "1173460131049222487"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/drop-zone/drop-zone.component.js",
+          "hash": "484412162271447462"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/drop-zone/drop-zone.module.scss",
+          "hash": "6717598973807692052"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/footer/footer.component.js",
+          "hash": "12610557663164996682"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/footer/footer.module.scss",
+          "hash": "17853589972292369457"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/js-paint/js-paint.component.js",
+          "hash": "9421118872539307091",
+          "deps": [
+            "npm:meta-png"
+          ]
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/js-paint/js-paint.constants.js",
+          "hash": "2215210280090914951"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/js-paint/js-paint.module.scss",
+          "hash": "15907216827161727456"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/link/link.module.scss",
+          "hash": "16445618854002783025"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/link/link.utils.js",
+          "hash": "7346586667077606412"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/nav/nav.component.js",
+          "hash": "7987335466903272155"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/nav/nav.module.scss",
+          "hash": "16107002389182294707"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/ruler/ruler.component.js",
+          "hash": "4237271223309603676"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/ruler/ruler.module.scss",
+          "hash": "5457404450590253550"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/components/torino/torino.constants.js",
+          "hash": "17446069785483642812"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/constants/browser.constants.js",
+          "hash": "2981500330387197454"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/main.js",
+          "hash": "14974905793660239380"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/portfolio-dom.js",
+          "hash": "10452094364709562929"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/styles/animations/break.scss",
+          "hash": "9044032818995408129"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/styles/animations/breathe.scss",
+          "hash": "11052040828856727962"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/styles/animations/shake.scss",
+          "hash": "6304643747386397242"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/styles/mixins/_media-queries.scss",
+          "hash": "17009122746082990928"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/styles/reset.scss",
+          "hash": "7903620962947360600"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/styles/utils/focus.scss",
+          "hash": "13597849588541267110"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/styles/variables/_variables.scss",
+          "hash": "8321432427760886049"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/utils/audio/audio.service.js",
+          "hash": "13494681453503175892"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/utils/color/color.utils.js",
+          "hash": "11634721274907434293"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/utils/image-loader/image-loader.utils.js",
+          "hash": "15976941634578932506"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/utils/image-upload/image-upload.constants.js",
+          "hash": "15844790624033998944"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/utils/math/math.utils.js",
+          "hash": "16013819569098369086"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/utils/promises/promises.utils.js",
+          "hash": "5762215446511014236"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/utils/vibration/vibration.service.js",
+          "hash": "13484776821204105173"
+        },
+        {
+          "file": "apps/gmzcodes/src/legacy/app/utils/vibration/vibration.utils.js",
+          "hash": "1702119884282034929"
+        },
+        {
+          "file": "apps/gmzcodes/src/pages/blog/hello.astro",
+          "hash": "16143761732457249168"
+        },
+        {
+          "file": "apps/gmzcodes/src/pages/blog/index.astro",
+          "hash": "11311364349984806936"
+        },
+        {
+          "file": "apps/gmzcodes/src/pages/index.astro",
+          "hash": "5601119279844544856"
+        },
+        {
+          "file": "apps/gmzcodes/src/pages/libs/corre.astro",
+          "hash": "7025807898228361734"
+        },
+        {
+          "file": "apps/gmzcodes/src/pages/libs/index.astro",
+          "hash": "9284610390728743842"
+        },
+        {
+          "file": "apps/gmzcodes/src/styles/libs-index.module.scss",
+          "hash": "972009140936742973"
+        },
+        {
+          "file": "apps/gmzcodes/src/styles/portfolio-global.scss",
+          "hash": "17458226432283527096"
+        },
+        {
+          "file": "apps/gmzcodes/src/styles/site-page.module.scss",
+          "hash": "11505087031780734808"
+        },
+        {
+          "file": "apps/gmzcodes/tsconfig.base.json",
+          "hash": "500292417359135611"
+        },
+        {
+          "file": "apps/gmzcodes/tsconfig.json",
+          "hash": "17294588306371336637"
+        }
+      ]
+    },
+    "nonProjectFiles": [
+      {
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "16947950526782471995"
+      },
+      {
+        "file": ".npmrc",
+        "hash": "2143727616016563684"
+      },
+      {
+        "file": ".nxignore",
+        "hash": "17072103293500516677"
+      },
+      {
+        "file": "README.md",
+        "hash": "8029375473402778382"
+      },
+      {
+        "file": "nx.json",
+        "hash": "12036493141487930655"
+      },
+      {
+        "file": "package.json",
+        "hash": "8436440364734045250"
+      },
+      {
+        "file": "pnpm-lock.yaml",
+        "hash": "11798437138581116238"
+      },
+      {
+        "file": "pnpm-workspace.yaml",
+        "hash": "11514286390298023205"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "3101326855440365990"
+      },
+      {
+        "file": "tsconfig.json",
+        "hash": "18247546401193235644"
+      }
+    ]
+  },
+  "externalNodesHash": "6464794896657828852"
+}

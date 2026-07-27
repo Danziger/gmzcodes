@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import sitePage from '../../styles/site-page.module.scss';
+import libsIndex from '../../styles/libs-index.module.scss';
+
+const libs = [
+  {
+    name: 'corre',
+    description: 'Declarative React hooks for setTimeout, setInterval, requestAnimationFrame, and throttling.',
+    npmName: '@gmzcodes/corre',
+    status: 'stable',
+    docsPath: '/libs/corre',
+  },
+  {
+    name: 'eslint-config',
+    description: 'Shared ESLint, Stylelint, and EditorConfig presets for Astro, Next.js, React, Node, and plain JS/TS.',
+    npmName: '@gmzcodes/eslint-config',
+    status: 'stable',
+    docsPath: null,
+  },
+];
+---
+
+<BaseLayout>
+  <main class={sitePage.main}>
+    <h1>Libs</h1>
+    <p>Open-source packages from the GMZcodes monorepo.</p>
+    <ul class={libsIndex.cards}>
+      {
+        libs.map((lib) => (
+          <li class={libsIndex.card}>
+            <h2 class={libsIndex.cardTitle}>{lib.name}</h2>
+            <p>{lib.description}</p>
+            <p class={libsIndex.cardMeta}>
+              <code>{lib.npmName}</code> · {lib.status}
+            </p>
+            {lib.docsPath ? (
+              <a href={lib.docsPath}>Documentation →</a>
+            ) : (
+              <span>See package README on npm/GitHub</span>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+    <p class={sitePage.nav}><a href="/">← Home</a></p>
+  </main>
+</BaseLayout>

@@ -1,0 +1,32 @@
+---
+import footerStyles from '../../legacy/app/components/footer/footer.module.scss';
+---
+
+<footer class={footerStyles.root} data-portfolio="footer-root">
+  <ul class={footerStyles.colors} data-portfolio="footer-colors">
+    <li class={footerStyles.item}>
+      <button class={footerStyles.sample} style="--bg: #FFFFFF; --shadow: rgba(0, 0, 0, .125);" title="White (#FFF)" aria-label="White (#FFF)"></button>
+    </li>
+    <li class={footerStyles.item}>
+      <button class={footerStyles.sample} style="--bg: #FFFF00; --shadow: rgba(255, 200, 0, .75);" title="Yellow (#FF0)" aria-label="Yellow (#FF0)"></button>
+    </li>
+    <li class={footerStyles.item}>
+      <button class={footerStyles.sample} style="--bg: #FF00FF; --shadow: rgba(255, 0, 255, .5);" title="Magenta (#F0F)" aria-label="Magenta (#F0F)"></button>
+    </li>
+    <li class={footerStyles.item}>
+      <button class={footerStyles.sample} style="--bg: #0000FF; --shadow: rgba(0, 0, 255, .5);" title="Blue (#00F)" aria-label="Blue (#00F)"></button>
+    </li>
+    <li class={footerStyles.item}>
+      <button class:list={[footerStyles.sample, footerStyles.sampleCurrent]} style="--bg: #000000; --shadow: rgba(0, 0, 0, .5);" title="Black (#000)" aria-label="Black (#000)"></button>
+    </li>
+  </ul>
+
+  <a href="https://danielsheldon.co.za/" target="_blank" rel="noopener" class:list={[footerStyles.note, footerStyles.attribution]} hidden data-portfolio="footer-attribution">
+    <span class={footerStyles.attributionByName} data-portfolio="footer-attribution-name">By Daniel</span>
+    <span class={footerStyles.attributionSurname} data-portfolio="footer-attribution-surname">Sheldon</span>
+  </a>
+
+  <a href="https://www.linkedin.com/in/danigamezfranco/" target="_blank" rel="noopener" class:list={[footerStyles.note, footerStyles.hiring]} data-portfolio="footer-hiring">
+    Hiring?
+  </a>
+</footer>
