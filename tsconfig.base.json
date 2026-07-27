@@ -1,0 +1,40 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "bundler",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@gmzcodes/corre": [
+        "libs/corre/src/index.ts"
+      ],
+      "@gmzcodes/eslint-config": [
+        "libs/eslint-config/src/index.mjs"
+      ],
+      "@gmzcodes/eslint-config/*": [
+        "libs/eslint-config/src/*"
+      ]
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "node_modules",
+    "tmp",
+    "old"
+  ]
+}

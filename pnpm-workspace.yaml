@@ -1,0 +1,8 @@
+packages:
+  - apps/*
+  - libs/*
+
+autoInstallPeers: true
+onlyBuiltDependencies:
+  - nx
+  - esbuild

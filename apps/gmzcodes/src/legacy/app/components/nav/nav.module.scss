@@ -1,0 +1,423 @@
+@use '../../styles/animations/shake';
+@use '../../styles/mixins/media-queries';
+
+    .root {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    // LOGO:
+
+    .logoLink {
+        position: relative;
+        padding: 32px 0 8px;
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        outline: none;
+        overflow: visible;
+        z-index: 2;
+        margin-right: auto;
+
+        :global(body[data-app-screenshot]) & {
+            padding-top: 8px;
+        }
+
+        :global(body[data-app-hover]) &:hover .logoImg {
+            animation: shake .5s;
+            animation-iteration-count: infinite;
+        }
+    }
+
+    .logoImg {
+        height: 32px;
+        width: 32px;
+        margin-right: 16px;
+        transform: translate(0, -2px);
+        pointer-events: none;
+        border: 0;
+    }
+
+    .logoUnderline {
+        line-height: 16px;
+    }
+
+    .logoLinkEffect {
+        top: 39px;
+        left: 48px;
+
+        &::before {
+            top: 0;
+        }
+
+        &::after {
+            top: 5px;
+        }
+    }
+
+    // TOP-RIGHT BUTTONS:
+
+    .button {
+        position: relative;
+        box-sizing: border-box;
+        padding: 32px 16px 8px;
+        width: 56px;
+
+        @include media-queries.above(xs) {
+            padding: 32px 24px 8px;
+            width: 72px;
+        }
+
+        .buttonIcon {
+            pointer-events: none;
+            width: 24px;
+            height: 24px;
+        }
+
+        :global(body[data-app-hover]) &:hover > .buttonIcon {
+            animation: shake .5s;
+            animation-iteration-count: infinite;
+        }
+
+        :global(body[data-app-hover]) &:hover .icon {
+            animation: shake-variables .5s;
+            animation-iteration-count: infinite;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 0;
+            height: 0;
+            z-index: -1;
+            background: #000;
+            border-radius: 100%;
+            transform: translate(-50%, -50%);
+            transition: all linear 100ms;
+        }
+
+        :global(body[data-app-focus]) &:focus::after {
+            width: 6px;
+            height: 6px;
+        }
+
+        :global(body[data-app-screenshot]) & {
+            display: none;
+        }
+    }
+
+    .onePageLoveSvg {
+        transform: translate(0, 4px);
+
+        & .cls-1 {
+            fill: #F0F;
+        }
+
+        & .cls-2 {
+            clip-path: url('#clip-path')
+        }
+
+        & .cls-3 {
+            fill: #707;
+        }
+
+        & .cls-4 {
+            fill: #FFF;
+        }
+    }
+
+    .menuButton {
+        z-index: 2;
+        margin-right: -16px;
+
+        @include media-queries.above(xs) {
+            margin-right: -24px;
+        }
+    }
+
+    // HAMBURGER ICON:
+
+    .icon,
+    .icon::before,
+    .icon::after {
+        position: absolute;
+        display: block;
+        left: 0;
+        transition: all linear 150ms;
+        border-radius: 4px;
+        background: black;
+    }
+
+    .icon {
+        height: 2px;
+        width: 24px;
+        top: 46px;
+        left: 50%;
+        transform: translate(-50%, 0) var(--shakeTransform, translate(0, 0));
+        pointer-events: none;
+
+        &::before,
+        &::after {
+            content: '';
+            height: 100%;
+            width: 100%;
+            transform-origin: 200% center;
+        }
+
+        &::before {
+            top: 5px;
+        }
+
+        &::after {
+            top: -5px;
+        }
+
+        &.iconClose {
+            transform: translate(-50%, -2px) scale3d(.8, .8, .8) var(--shakeTransform, translate(0, 0));
+            background: transparent;
+
+            &::before,
+            &::after {
+                top: 0;
+                transform-origin: 50% 50%;
+            }
+
+            &::before {
+                transform: rotate3d(0, 0, 1, 45deg);
+            }
+
+            &::after {
+                transform: rotate3d(0, 0, 1, -45deg);
+            }
+        }
+    }
+
+    // MENU:
+
+    .menuWrapper {
+        position: fixed;
+        top: 0;
+        right: 0;
+        max-height: var(--viewportHeight, 100vh);
+        height: 100%;
+        width: 100%;
+        transform: translateZ(0);
+        background: rgba(255,255,255,.75);
+        backdrop-filter: blur(16px);
+        transition: opacity linear 250ms;
+        pointer-events: none;
+        opacity: 0;
+        z-index: 1;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.menuOpen {
+            pointer-events: auto;
+            opacity: 1;
+        }
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 16px;
+            height: 72px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        &::before {
+            background: linear-gradient(180deg, rgba(255,255,255,.9) 50%, rgba(255,255,255,0));
+            top: 0;
+        }
+
+        &::after {
+            background: linear-gradient(0deg, rgba(255,255,255,1), rgba(255,255,255,0));
+            bottom: 0;
+
+            @include media-queries.above(xs) {
+                height: 88px;
+            }
+        }
+    }
+
+    .menuScroll {
+        overflow: hidden auto;
+        margin: auto;
+        max-height: var(--viewportHeight, 100vh);
+        width: 100%;
+        overscroll-behavior: none;
+    }
+
+    .menu {
+        list-style: none;
+        padding: 0;
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+        padding-top: 96px;
+        padding-bottom: 96px;
+        border-right: 1px solid rgba(255, 255, 255, .25);
+        border-left: 1px solid rgba(255, 255, 255, .25);
+    }
+
+    .li {
+        width: 100%;
+        flex: 1 0 auto;
+    }
+
+    .action {
+        position: relative;
+        display: block;
+        box-sizing: border-box;
+        border: 0;
+        background: transparent;
+        max-width: 480px;
+        text-align: left;
+        outline: none;
+        padding: 12px 74px 12px 16px;
+        font-size: 24px;
+        width: 100%;
+        font-family: 'Josefin Sans', sans-serif;
+        line-height: 1.25;
+
+        @include media-queries.above(xs) {
+            padding: 16px 90px 16px 32px;
+        }
+
+        .actionTitle,
+        .actionDescription {
+            display: block;
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        .actionTitle {
+            color: #000;
+            font-weight: bold;
+        }
+
+        .actionDescription {
+            color: #00F;
+            margin-top: 8px;
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0 4px;
+            border-radius: 4px;
+            z-index: -1;
+            border: 1px dotted transparent;
+
+            @include media-queries.above(xs) {
+                left: 16px;
+                right: 16px;
+            }
+        }
+
+        :global(body[data-app-hover]) &:hover::before {
+            background: rgba(0, 0, 0, .03125);
+        }
+
+        :global(body[data-app-focus]) &:focus::before {
+            border: 1px dotted black;
+        }
+
+        &::after {
+            position: absolute;
+            top: 50%;
+            right: 16px;
+            display: block;
+            padding: 8px 8px 4px;
+            text-transform: uppercase;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 12px;
+            line-height: 1.25;
+            font-weight: bold;
+            margin-left: auto;
+            border-radius: 128px;
+            color: #000;
+            pointer-events: none;
+            width: 42px;
+            text-align: center;
+            box-sizing: border-box;
+            transform: translate(0, -50%);
+            background: #FFF;
+
+            @include media-queries.above(xs) {
+                right: 32px;
+            }
+        }
+
+        &[aria-checked='true']::after {
+            content: 'On';
+            box-shadow: 0 0 24px 4px rgba(255, 0, 255, .25);
+        }
+
+        &[aria-checked='false']::after {
+            content: 'Off';
+            box-shadow: 0 0 24px 4px rgba(0, 0, 0, .25);
+        }
+    }
+
+    .githubLink {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        padding: 32px 32px 16px 16px;
+        margin-top: 16px;
+
+        @include media-queries.above(xs) {
+            padding: 32px 32px 16px;
+        }
+
+        &::before {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 16px;
+            right: 0;
+            border-top: 2px solid black;
+
+            @include media-queries.above(xs) {
+                left: 32px;
+            }
+        }
+
+        .githubLinkIcon {
+            pointer-events: none;
+            margin: -4px 8px 0 0;
+            width: 16px;
+            height: 16px;
+        }
+
+        :global(body[data-app-hover]) &:hover > .githubLinkIcon {
+            animation: shake .5s;
+            animation-iteration-count: infinite;
+        }
+
+        .githubLinkEffect {
+            top: 32px;
+            left: 40px;
+
+            @include media-queries.above(xs) {
+                left: 56px;
+            }
+        }
+    }
+
+    .fileInput {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        left: 0;
+    }

@@ -1,0 +1,13 @@
+---
+import dropZoneStyles from '../../legacy/app/components/drop-zone/drop-zone.module.scss';
+---
+
+<div class={dropZoneStyles.root} hidden data-portfolio="drop-zone-root">
+  <p><strong>Drop an image to upload.</strong></p>
+</div>
+
+<div class:list={[dropZoneStyles.root, dropZoneStyles.hasError]} hidden data-portfolio="drop-zone-error">
+  <p><strong>Invalid file.</strong></p>
+  <p>Try again with a different image or image type (e.g. PNG, JPG...).</p>
+  <button class={dropZoneStyles.closeErrorButton} data-portfolio="drop-zone-close">Close</button>
+</div>

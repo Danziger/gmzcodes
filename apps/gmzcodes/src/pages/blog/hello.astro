@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import sitePage from '../../styles/site-page.module.scss';
+---
+
+<BaseLayout>
+  <main class={sitePage.main}>
+    <article>
+      <header>
+        <h1>Hello</h1>
+        <time datetime="2026-07-05">7/5/2026</time>
+      </header>
+      <p>Welcome to the GMZcodes monorepo blog. This is the first post — more soon.</p>
+    </article>
+    <p class={sitePage.nav}>
+      <a href="/blog">← Blog</a> · <a href="/">Home</a>
+    </p>
+  </main>
+</BaseLayout>

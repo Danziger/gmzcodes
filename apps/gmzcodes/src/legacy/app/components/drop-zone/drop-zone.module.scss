@@ -1,0 +1,53 @@
+@use '../../styles/animations/shake';
+
+.root {
+  --drop-zone-accent: blue;
+
+  position: fixed;
+  inset: 0;
+  transform: translateZ(0);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  z-index: 50;
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: black;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 2px solid var(--drop-zone-accent, black);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+
+  > p {
+    pointer-events: none;
+    margin: 0;
+
+    + p {
+      margin-top: 16px;
+    }
+  }
+}
+
+.hasError {
+  --drop-zone-accent: red;
+}
+
+.closeErrorButton {
+  padding: 16px 12px 12px;
+  background: red;
+  box-shadow: 0 0 24px 4px rgba(255, 0, 0, 0.25);
+  margin-top: 16px;
+  color: white;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  line-height: 1;
+}

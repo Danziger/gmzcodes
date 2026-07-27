@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/portfolio/Nav.astro';
+import Content from '../components/portfolio/Content.astro';
+import Footer from '../components/portfolio/Footer.astro';
+import JsPaint from '../components/portfolio/JsPaint.astro';
+import Ruler from '../components/portfolio/Ruler.astro';
+import Cursor from '../components/portfolio/Cursor.astro';
+import DropZone from '../components/portfolio/DropZone.astro';
+import appStyles from '../legacy/app/components/app/app.module.scss';
+---
+
+<BaseLayout bodyClass={appStyles.root}>
+  <div class={appStyles.container}>
+    <Nav />
+    <Content />
+    <Footer />
+  </div>
+
+  <JsPaint />
+  <Ruler />
+  <Cursor />
+  <DropZone />
+
+  <script>
+    import '../entry.client';
+  </script>
+</BaseLayout>

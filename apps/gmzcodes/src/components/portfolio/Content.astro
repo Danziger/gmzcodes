@@ -1,0 +1,57 @@
+---
+import contentStyles from '../../legacy/app/components/content/content.module.scss';
+import linkStyles from '../../legacy/app/components/link/link.module.scss';
+---
+
+<main class={contentStyles.root} data-portfolio="content-root">
+  <header hidden aria-hidden="true" data-portfolio="content-warning-header">
+    <h1 class={contentStyles.title}>
+      <strong class={contentStyles.name}>Oops</strong>
+      <div class={contentStyles.role}>It looks like you are using a crappy browser... UNCOOL.</div>
+    </h1>
+    <p class={contentStyles.p}>So... Get the f**k off my site!</p>
+    <figure class={contentStyles.videoFigure}>
+      <div class={contentStyles.videoPlaceholder} data-portfolio="content-video-placeholder"></div>
+      <figcaption class={contentStyles.videoDescription} data-portfolio="content-video-description">
+        Scene from
+        <a href="https://www.youtube.com/watch?v=XwMz7Bz-T68" target="_blank" rel="noopener" class={linkStyles.root}>
+          <span class={linkStyles.underline} data-portfolio="link-underline">Gran Torino's</span>
+        </a>
+        trailer.
+      </figcaption>
+    </figure>
+    <p class={contentStyles.p}>Ok... You can check out my public profiles anyway:</p>
+  </header>
+
+  <header data-portfolio="content-regular-header">
+    <h1 class={contentStyles.title}>
+      <strong class={contentStyles.name}>Dani Gámez Franco</strong>
+      <div class={contentStyles.role}>
+        Staff Web3 Software Engineer / Architect,
+        Summa Cum Laude Computer Science Engineer,
+        Top 1.5% at StackOverflow
+      </div>
+    </h1>
+    <p class={contentStyles.p}>JS, TS, React, Next.js, Node.js, tRPC, Clean Software Architecture</p>
+  </header>
+
+  <section class={contentStyles.links}>
+    <a href="https://www.linkedin.com/in/danigamezfranco/" target="_blank" rel="noopener" class={linkStyles.root}>
+      <span class={linkStyles.underline} data-portfolio="link-underline">LinkedIn</span>
+    </a>
+    <a href="https://stackoverflow.com/users/3723993/danziger" target="_blank" rel="noopener" class={linkStyles.root}>
+      <span class={linkStyles.underline} data-portfolio="link-underline">Stack&nbsp;Overflow</span>
+    </a>
+    <a href="https://github.com/danziger" target="_blank" rel="noopener" class={linkStyles.root}>
+      <span class={linkStyles.underline} data-portfolio="link-underline">GitHub</span>
+    </a>
+    <a href="https://www.npmjs.com/~danziger" target="_blank" rel="noopener" class={linkStyles.root}>
+      <span class={linkStyles.underline} data-portfolio="link-underline">NPM</span>
+    </a>
+    <a href="/dani-gamez-franco-cv-2026.02.11.pdf" target="_blank" rel="noopener" class={linkStyles.root}>
+      <span class={linkStyles.underline} data-portfolio="link-underline">CV</span>
+    </a>
+    <a href="/blog" class={linkStyles.root}><span class={linkStyles.underline} data-portfolio="link-underline">Blog</span></a>
+    <a href="/libs" class={linkStyles.root}><span class={linkStyles.underline} data-portfolio="link-underline">Libs</span></a>
+  </section>
+</main>

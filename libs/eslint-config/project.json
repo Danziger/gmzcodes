@@ -1,0 +1,19 @@
+{
+  "name": "eslint-config",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/eslint-config/src",
+  "projectType": "library",
+  "tags": ["scope:lib", "type:publishable"],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "echo 'lint eslint-config'"
+      }
+    },
+    "nx-release-publish": {
+      "executor": "@nx/js:release-publish",
+      "options": {}
+    }
+  }
+}

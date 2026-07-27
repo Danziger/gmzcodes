@@ -1,0 +1,133 @@
+@use '../../styles/mixins/media-queries';
+@use '../../styles/animations/shake';
+
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  @include media-queries.above(xs) {
+    margin-bottom: 16px;
+  }
+}
+
+.colors {
+  display: flex;
+  align-items: flex-start;
+  list-style: none;
+  margin: 0 -4px;
+  box-sizing: border-box;
+  padding: 0 16px 0 0;
+}
+
+.item {
+  display: block;
+}
+
+.sample {
+  position: relative;
+  border: 0;
+  outline: none;
+  padding: 24px 4px 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-sizing: content-box;
+  background: transparent;
+  color: var(--color, #000);
+
+  :global(body[data-app-screenshot]) & {
+    padding-top: 16px;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 24px 4px 16px;
+    z-index: -1;
+    border-radius: 128px;
+    background: var(--bg, #fff);
+    transition: transform linear 100ms;
+    box-shadow: 0 0 24px 4px var(--shadow, rgba(0, 0, 0, 0.25));
+
+    :global(body[data-app-screenshot]) & {
+      top: 16px;
+    }
+  }
+
+  :global(body[data-app-hover]) &:hover::before {
+    transform: scale(1.25);
+    box-shadow: 0 0 24px 8px var(--shadow, rgba(0, 0, 0, 0.25));
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    z-index: -1;
+    background: #000;
+    border-radius: 100%;
+    transform: translate(-50%, -50%);
+    transition: all linear 100ms;
+
+    :global(body[data-app-screenshot]) & {
+      display: none;
+    }
+  }
+
+  :global(body[data-app-focus]) &:focus::after {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+.sampleCurrent::after {
+  width: 10px;
+  height: 10px;
+}
+
+.note {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+  line-height: 1;
+  color: white !important;
+  margin: 0 0 0 auto;
+  transform: translate(0, 3px);
+  white-space: nowrap;
+
+  :global(body[data-app-hover]) &:hover {
+    animation: shake 0.5s infinite;
+  }
+}
+
+.hiring {
+  padding: 8px 6px 4px;
+  background: red;
+  box-shadow: 0 0 24px 4px rgba(255, 0, 0, 0.25);
+}
+
+.attribution {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.attributionByName,
+.attributionSurname {
+  padding: 8px 8px 4px;
+  background: black;
+  box-shadow: 0 0 24px 4px rgba(255, 0, 255, 0.25);
+  pointer-events: none;
+}
+
+.attributionSurname {
+  transform: translate(0, -4px);
+}

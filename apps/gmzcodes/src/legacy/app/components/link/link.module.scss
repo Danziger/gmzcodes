@@ -1,0 +1,103 @@
+@use '../../styles/animations/break';
+
+.root {
+  --x-1: 20%;
+  --w-1: 20%;
+  --x-2: 5%;
+  --w-2: 35%;
+  --x-3: 60%;
+  --w-3: 30%;
+
+  position: relative;
+}
+
+.underline {
+  position: relative;
+  pointer-events: none;
+  box-shadow: inset 0 -2px #f0f;
+  display: inline-block;
+  line-height: 19px;
+
+  :global(body[data-app-fallback]) & {
+    pointer-events: auto;
+  }
+}
+
+.underlineHidden {
+  composes: underline;
+  box-shadow: none;
+}
+
+.underline::before,
+.underline::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  display: none;
+}
+
+.underline::before {
+  bottom: 5px;
+  left: var(--x-1);
+  width: var(--w-1);
+  background: #f0f;
+}
+
+.underline::after {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #f0f;
+}
+
+:global(body[data-app-hover]) .root:hover .underline {
+  box-shadow: none;
+}
+
+:global(body[data-app-hover]) .root:hover > .underline::before,
+:global(body[data-app-hover]) .root:hover > .underline::after {
+  display: block;
+  animation: break 0.5s infinite;
+}
+
+:global(body[data-app-focus]) a:focus > .underline {
+  box-shadow: inset 0 -8px #f0f;
+}
+
+.linkEffect {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 9px;
+  overflow: hidden;
+  pointer-events: none;
+  line-height: 19px;
+  display: none;
+}
+
+:global(body[data-app-hover]) .root:hover > .linkEffect {
+  display: block;
+  animation: break 0.75s infinite;
+}
+
+.linkEffect::before,
+.linkEffect::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+}
+
+.linkEffect::before {
+  top: 2px;
+  left: var(--x-2);
+  width: var(--w-2);
+  background: #f0f;
+}
+
+.linkEffect::after {
+  top: 7px;
+  left: var(--x-3);
+  width: var(--w-3);
+  background: #f0f;
+}
